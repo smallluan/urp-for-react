@@ -1,7 +1,10 @@
-function App() {
+import { Divider } from './components/Divider/index.ts'
+export default function App() {
   return (
-    <div>hello world!</div>
+    <div>
+      <h1>Hello, React!</h1>
+      <Divider />
+      <p>Welcome to your React application.</p>
+    </div>
   )
 }
-
-export default App
