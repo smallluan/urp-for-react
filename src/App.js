@@ -4,7 +4,8 @@ export default function App() {
     <div>
       <h1>Hello, React!</h1>
       <Divider/>
-      <Divider></Divider>
+      <Divider dashed />
+      {/* <Divider></Divider> */}
       <Divider>就此分别</Divider>
       <Divider>
         <div>富强</div>

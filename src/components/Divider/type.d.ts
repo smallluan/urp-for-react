@@ -1,4 +1,4 @@
-import { Layout } from '../utils/types'
+import { Layout } from '../utils/types/index.ts'
 
 export interface DividerProps extends PropertiesType {
   children?: React.ReactNode[] | string | undefined
@@ -11,15 +11,3 @@ export interface PropertiesType {
   color?: string
 }
 
-/**
- * 所有可枚举的属性都应该被处理成这样，然后作为className的一部分
- * layout-horizontal
- * layout-vertical
- * dashed
- * align-left
- * align-center
- * align-right
- * 
- * 所有不可枚举的属性都应该作为style的一部分
- * --color: color
- */
