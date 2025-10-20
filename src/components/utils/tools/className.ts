@@ -11,14 +11,14 @@
  */
 export default function genClassNameFromProps<T>(
   props: T,
-  rootClassName: string = '',
-  prefix: string = '',
+  rootClassName = '',
+  prefix = '',
   excludeKeys: (keyof T)[] = []
 ): string {
   let className = ''
   prefix = prefix ? `${prefix}-` : ''
 
-  for (let key in props) {
+  for (const key in props) {
     if (excludeKeys.includes(key)) {
       continue
     }
