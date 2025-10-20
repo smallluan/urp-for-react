@@ -4,7 +4,7 @@ import './style.less'
 
 export default function Divider({ children, ...props }: DividerProps) {
 
-  const className = genClassNameFromProps<DividerProps>(props, 'urp-divider')
+  const className = genClassNameFromProps<DividerProps>(props, 'urp-divider', 'urp')
 
   if (typeof children === 'string') {
     return (
