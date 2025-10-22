@@ -9,7 +9,7 @@
  *              - 然后作为className的一部分
  *              - 例如 layout-horizontal 
  */
-export default function genClassNameFromProps<T>(
+export default function genClassNameFromProps<T extends object>(
   props: T,
   rootClassName = '',
   prefix = '',
@@ -34,5 +34,5 @@ export default function genClassNameFromProps<T>(
     }
   }
 
-  return (rootClassName + ' ' + className).trim()
+  return (rootClassName + className).trim()
 }

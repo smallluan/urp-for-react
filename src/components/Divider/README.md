@@ -32,4 +32,6 @@
 | `children`| 否       | React.ReactNode[] \| string \| undefined | `undefined`  | 分割线内容：<br>- 空值 → 纯分割线；<br>- 字符串 → 单文字；<br>- 数组 → 多文字。 |
 | `layout`  | 否       | `horizontal` \| `vertical`        | `horizontal` | 方向控制：<br>- 单内容时固定为 `horizontal`；<br>- 多内容时 `vertical` 生效。 |
 | `dashed`  | 否       | boolean                           | `false`      | 线型切换：`true` 为虚线，`false` 为实线（全样式兼容）。               |
-| `align`   | 否       | `left` \| `center` \| `right`     | `center`     | 文字对齐：仅单文字场景生效，多文字场景不生效。                        |
+| `align`   | 否       | `left` \| `center` \| `right`     | `center`     | 文字对齐：仅单文字场景生效，多文字场景不生效。              
+| `color`   | 否       | string | `gray` | 分割线的颜色。 |
+| `slope`   | 否       |  boolean    | `false` | 分割线是否倾斜（layout = vertical 时生效） |   
