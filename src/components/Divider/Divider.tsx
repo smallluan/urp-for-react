@@ -1,15 +1,19 @@
 /** import types */
-import type { DividerType, ContextType, LineType } from './type'
 import type React from 'react'
+import type { DividerType, ContextType, LineType } from './type'
+import { Layout } from '../utils/types/index.ts'
 
 /** import scripts */
 import { createContext, useContext } from 'react'
 import genClassNameFromProps from '../utils/tools/className.ts'
 import { getPartialProps } from '../utils/tools/properties.ts'
 import genStyleFromPrpos from '../utils/tools/style.ts'
-import defaultProperties, { lineDefaultProps, linePropsCode } from './properties.ts'
+import defaultProperties, { lineDefaultProps, linePropsCode, formateProps } from './properties.ts'
+import classNames  from 'classnames'
+
+/** import less */
 import './style.less'
-import { Layout } from '../utils/types/index.ts'
+
 
 /** context */
 const DividerContext = createContext<ContextType | undefined>(undefined)
@@ -17,56 +21,89 @@ const DividerContext = createContext<ContextType | undefined>(undefined)
 const useDividerContext = () => {
   const context = useContext(DividerContext)
   if (!context) {
-    throw new Error('useDividerContext must be used within a DividerContext.Provider')
+    throw new Error('Context must be used within a Provider')
   }
   return context
 }
 
-/** components */
-export default function Divider({ children, ...props }: DividerType) {
-  // 合并默认属性和传入属性
-  props = { ...defaultProperties, ...props }
+
+/** 
+ * 主组件(默认导出组件)
+*/
+export default function UrpDivider({ children, ...props }: DividerType) {
+  // 合并默认属性和传入属性，在子组件层不需要单独合并了
+  props = formateProps({ ...defaultProperties, ...props })
+
   // context 传值
   const contextValue = { children, props }
   const _styles = genStyleFromPrpos(props)
+
+  // 根据标签子元素数量不同进行不同的处理
   let innerElem = <Line/>
 
-  if (typeof children === 'string') {
-    innerElem = <PureDivide/>
+  if (children != null && !Array.isArray(children)) {
+    innerElem = <LineWithChild/>
   } else if (Array.isArray(children)) {
     if (props.layout === Layout.HORIZONTAL) {
-      innerElem = GenHorizontalGroup(children, props.dashed)
+      innerElem = <GenHorizontalGroup/>
     } else {
-      innerElem = GenVertialGroup(children, props.dashed, props.slope)
+      innerElem = <GenVertialGroup/>
     }
   }
 
+  // 合成 className
+  const _class = classNames('urp-divider', {
+    'urp-divider-vertical': props.layout === Layout.VERTICAL
+  })
+
   return (
+    // Divider 组件绝大多数是静态场景，使用 context 造成的影响很小
     <DividerContext.Provider value={contextValue}>
-      <div style={_styles} className='urp-divider'>
+      <div style={_styles} className={_class}>
         { innerElem }
       </div>
     </DividerContext.Provider>
   )
 }
 
+
+/**
+ * Line 单个线条组件
+ * @param _props - 外部组件传递给 Line 的私有属性，即在类型中不被继承的属性
+ */
 function Line(_props?: Partial<LineType>) {
   let { props = {} } = useDividerContext() as { props: LineType }
+
+  // 设置 props
   props = getPartialProps(props, linePropsCode)
   props.flex = _props?.flex || lineDefaultProps.flex
+
+  // 生成静态类名和动态样式
   const className = genClassNameFromProps(props, 'urp-line', 'urp-line')
   const _styles = genStyleFromPrpos(props)
+
+  // 返回线条的 jsx
   return <div style={_styles} className={className} />
 }
 
+
+/**
+ * 每个传入的元素子项
+ * @param param0 - 子项元素
+ */
 function ChildrenItem(
   { children }: { children?: React.ReactNode | undefined }
 ) {
   return <div className='children-item'>{ children }</div>
 }
 
-function PureDivide() {
+
+/**
+ * 携带内容的单线条(适配左右布局)
+ */
+function LineWithChild() {
   const { children, props = {} } = useDividerContext()
+  // 设置左、右线条的 flex
   let leftFlex = 1
   let rightFlex = 1
   if (props.align === 'left') {
@@ -76,7 +113,6 @@ function PureDivide() {
     leftFlex = 10
     rightFlex = 1
   }
-
   return (
     <>
       <Line flex={leftFlex} />
@@ -86,27 +122,38 @@ function PureDivide() {
   )
 }
 
-// TODO
-function GenHorizontalGroup(children, dashed) {
-  return <div>水平组分割线暂不支持</div>
+
+/**
+ * 水平组
+ */
+function GenHorizontalGroup() {
+  const children = useDividerContext().children as React.ReactNode[]
+  return (<>{
+    children.map((child, index) => {
+      return (
+        <div key={index} style={{ 'flex': 1 }}>
+          <UrpDivider >{ child }</UrpDivider>
+        </div>
+      )
+    })
+  }</>)
 }
 
-function GenVertialGroup(children, dashed, slope) {
-  return (
-    <>
-      {
-        children.map(
-          (child, index) =>  (
-            <div className="urp-divider" key={index}>
-              <ChildrenItem>{ child }</ChildrenItem>
-              {
-                index !== children.length - 1 &&
-                <Line/>
-              }
-            </div>
-          )
-        )
-      }
-    </>
-  )
+
+/**
+ * 垂直组
+ */
+function GenVertialGroup() {
+  const children = useDividerContext().children as React.ReactNode[]
+  return (<>{
+    children.map((child, index) =>  (
+      <div className="urp-divider" key={index}>
+        <ChildrenItem>{ child }</ChildrenItem>
+        {
+          index !== children.length - 1 &&
+          <Line/>
+        }
+      </div>
+    ))
+  }</>)
 }

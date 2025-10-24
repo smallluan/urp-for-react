@@ -26,10 +26,9 @@ export default function App() {
         <div>友善</div>
       </UrpDivider>
       <UrpDivider>
-        <div>富强</div>
-        <div>民主</div>
-        <div>文明</div>
-        <div>和谐</div>
+        <div>自由</div>
+        <div>平等</div>
+        <div>博爱</div>
       </UrpDivider>
     </div>
   )

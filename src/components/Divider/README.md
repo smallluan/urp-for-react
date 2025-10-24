@@ -18,7 +18,7 @@
    - 示例：`文字1 | 文字2 | 文字3`  
    *说明：多文字水平排布，用垂直分割线 `|` 间隔，兼容实线/虚线。*
 
-4. **多文字嵌入式分割线(暂不支持)**  
+4. **多文字嵌入式分割线**  
    - 示例：`──── 文字1 ──── 文字2 ──── 文字3 ────`  
    *说明：多文字嵌入水平线中，整体连贯，兼容实线/虚线。同时兼容 justify-content 布局*
 
@@ -26,7 +26,7 @@
 ## 二、参数定义（Props）
 | 参数名    | 是否必填 | 参数类型                          | 默认值       | 说明                                                                 |
 |-----------|----------|-----------------------------------|--------------|----------------------------------------------------------------------|
-| `children`| 否       | `React.ReactNode[] \| string \| undefined` | `undefined`  | 分割线内容：<br>- 空值 → 纯分割线；<br>- 字符串 → 单文字；<br>- 数组 → 多文字。 |
+| `children`| 否       | `React.ReactNode | `undefined`  | 分割线内容：<br>- 空值 → 纯分割线；<br>- 字符串 → 单文字；<br>- 数组 → 多文字。 |
 | `layout`  | 否       | `horizontal` \| `vertical`        | `horizontal` | 方向控制：<br>- 单内容时固定为 `horizontal`；<br>- 多内容时 `vertical` 生效。 |
 | `dashed`  | 否       | boolean                           | `false`      | 线型切换：`true` 为虚线，`false` 为实线（全样式兼容）。               |
 | `align`   | 否       | `left` \| `center` \| `right`\| `around`\|`between`     | `center`     | 文字对齐：around 和 between 是为多子元素提供的布局，在单子元素上使用时相当于 center。              
@@ -74,8 +74,16 @@
    <div>诚信</div>
    <div>友善</div>
 </UrpDivider>
+
+<!-- 水平分割组 -->
+ <UrpDivider>
+   <div>富强</div>
+   <div>民主</div>
+   <div>文明</div>
+   <div>和谐</div>
+</UrpDivider>
 ```
 
 ## 四、迭代历史
 - 2025-1024: 除水平分割组以外均实现。未实现水平分割组时，align 属性中 `around` \| `between` 无效。
-  
+- 2025-1024: 除水平分割组已实现，但未兼容 `around` \| `between` 属性
