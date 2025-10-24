@@ -13,7 +13,7 @@ export default function genStyleFromPrpos<T extends object>(
   for (const key in props) {
     const value = props[key]
 
-    if (isValidCSSValue<T>(value)) {
+    if (isValidCSSValue(String(value))) {
       styles[`--${String(key)}`] = String(value)
     }
   }
@@ -28,7 +28,8 @@ export default function genStyleFromPrpos<T extends object>(
  * @description - 函数的重点不在于包括所有的合法 CSS 值
  *              - 而是囊括所有的类型
  */
-function isValidCSSValue<T>(value: T[keyof T]): boolean {
+function isValidCSSValue(value: string): boolean {
+ 
   if (typeof value !== 'string' || !value.trim()) {
     return false
   }
