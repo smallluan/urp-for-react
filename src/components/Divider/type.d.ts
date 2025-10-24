@@ -13,6 +13,11 @@ export interface PropertiesType extends Omit<LineType, 'flex'> {
   space?: string
 }
 
-export interface DividerProps extends PropertiesType {
+export interface DividerType extends PropertiesType {
   children?: React.ReactNode[] | string | undefined
+}
+
+export interface ContextType {
+  children?: React.ReactNode[] | string | undefined,
+  props?:PropertiesType
 }

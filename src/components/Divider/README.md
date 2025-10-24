@@ -1,6 +1,3 @@
-可以用 Markdown 的列表、代码块和简单符号（如 `|`、`-`）模拟图形化展示，结合文字说明让样式分类更直观。以下是优化后的版本，用符号简化视觉表达：
-
-
 # Divider 组件文档
 
 ## 一、样式分类
@@ -40,43 +37,43 @@
 ## 三、如何使用
 ```html
 <!-- 水平分割线(实线) -->
-<Divider/>
+<UrpDivider/>
 
 <!-- 水平分割线(虚线) -->
-<Divider dashed />
+<UrpDivider dashed />
 
 <!-- 带文字的水平分割线 -->
-<Divider>分割线</Divider>
+<UrpDivider>分割线</UrpDivider>
 
 <!-- 文字左对齐 -->
-<Divider align='left'>分割线</Divider>
+<UrpDivider align='left'>分割线</UrpDivider>
 
 <!-- 文字右对齐 -->
-<Divider dashed align='right'>分割线</Divider>
+<UrpDivider dashed align='right'>分割线</UrpDivider>
 
 <!-- 垂直分割线 -->
-<Divider layout='vertical'>
+<UrpDivider layout='vertical'>
    <div>富强</div>
    <div>民主</div>
    <div>文明</div>
    <div>和谐</div>
-</Divider>
+</UrpDivider>
 
 <!-- 垂直虚线分割 -->
-<Divider layout='vertical' dashed>
+<UrpDivider layout='vertical' dashed>
    <div>自由</div>
    <div>平等</div>
    <div>公正</div>
    <div>法治</div>
-</Divider>
+</UrpDivider>
 
 <!-- 倾斜垂直分割 -->
-<Divider layout='vertical' dashed space='8px' slope>
+<UrpDivider layout='vertical' dashed space='8px' slope>
    <div>爱国</div>
    <div>敬业</div>
    <div>诚信</div>
    <div>友善</div>
-</Divider>
+</UrpDivider>
 ```
 
 ## 四、迭代历史
