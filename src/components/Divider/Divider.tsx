@@ -59,7 +59,11 @@ export default function UrpDivider({ children, ...props }: DividerType) {
   return (
     // Divider 组件绝大多数是静态场景，使用 context 造成的影响很小
     <DividerContext.Provider value={contextValue}>
-      <div style={_styles} className={_class}>
+      <div 
+        data-testid="urp-divider" 
+        style={_styles} 
+        className={_class}
+      >
         { innerElem }
       </div>
     </DividerContext.Provider>
