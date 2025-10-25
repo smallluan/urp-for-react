@@ -7,7 +7,7 @@ export const linePropsCode: Array<keyof LineType> = ['layout', 'dashed', 'color'
 export const lineDefaultProps: LineType = {
   layout: Layout.HORIZONTAL,
   dashed: false,
-  color: '#d7d7d7ff',
+  color: '#f3f3f3',
   slope: false,
   flex: 1,
 }
