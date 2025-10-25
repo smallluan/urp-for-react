@@ -8,7 +8,7 @@ import { createContext, useContext } from 'react'
 import genClassNameFromProps from '../utils/tools/className.ts'
 import { getPartialProps } from '../utils/tools/properties.ts'
 import genStyleFromPrpos from '../utils/tools/style.ts'
-import defaultProperties, { lineDefaultProps, linePropsCode, formateProps } from './properties.ts'
+import defaultProperties, { lineDefaultProps, linePropsCode, formatProps } from './properties.ts'
 import classNames  from 'classnames'
 
 /** import less */
@@ -32,7 +32,7 @@ const useDividerContext = () => {
 */
 export default function UrpDivider({ children, ...props }: DividerType) {
   // 合并默认属性和传入属性，在子组件层不需要单独合并了
-  props = formateProps({ ...defaultProperties, ...props })
+  props = formatProps({ ...defaultProperties, ...props })
 
   // context 传值
   const contextValue = { children, props }

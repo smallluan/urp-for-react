@@ -24,7 +24,7 @@ export default defaultProperties
  * 此处处理各个 prop 之间的约束关系
  * @param props - 传进来的 props
  */
-export function formateProps({ children, ...props }: DividerType) {
+export function formatProps({ children, ...props }: DividerType) {
   if (props.layout === Layout.HORIZONTAL) {
     // 为水平分割线时，不允许分割线倾斜
     props.slope = false
@@ -37,6 +37,15 @@ export function formateProps({ children, ...props }: DividerType) {
       ['around', 'between'].includes(props.align)
     ) {
       props.align = 'center'
+    }
+  } else {
+    // 子元素组水平布局时， align 默认是 around
+    // TODO 对 align 参数为 around 和 between 时的适配
+    if (
+      props.layout === Layout.HORIZONTAL &&
+      !['around', 'between'].includes(props.align as string)
+    ) {
+      props.align = 'around'
     }
   }
 
