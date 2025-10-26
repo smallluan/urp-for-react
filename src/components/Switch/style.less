@@ -1,0 +1,68 @@
+@import '../utils/styles/index.less';
+
+@animation-time: .2s;
+
+.urp-switch {
+  box-sizing: border-box;
+  position: relative;
+  width: 38px;
+  height: 20px;
+  border-radius: 100vh;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all @animation-time ease-in-out;
+}
+
+.urp-switch-state-open {
+  background-color: var(--urp-primary);
+}
+
+.urp-switch-state-close {
+  background-color: var(--urp-gray-5);
+}
+
+.urp-switch-slider {
+  box-sizing: border-box;
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-radius: 100vh;
+  transition: all @animation-time ease-in-out;
+  top: 50%;
+  transform: translateY(-50%); 
+  background-color: white;
+}
+
+.urp-switch-slider-state-open {
+  left: calc(100% - 14px - 4px);
+  animation: slider-open-animation @animation-time ease-in-out 1;
+}
+
+.urp-switch-slider-state-close {
+  left: 4px;
+  animation: slider-close-animation @animation-time ease-in-out 1;
+}
+
+@keyframes slider-open-animation {
+  0% {
+    width: 14px;
+  }
+  50% {
+    width: 20px;
+  }
+  100% {
+    width: 14px;
+  }
+}
+
+@keyframes slider-close-animation {
+  0% {
+    width: 14px;
+  }
+  50% {
+    width: 18px;
+  }
+  100% {
+    width: 14px;
+  }
+}
