@@ -1,3 +1,7 @@
+@import '../utils/styles/index.less';
+
+@slope-deg: 10deg;
+
 .urp-divider {
   display: flex;
   align-items: center;
@@ -17,7 +21,7 @@
 }
 
 .urp-line {
-  border: .1px solid var(--color);
+  border: .1px solid var(--color, var(--urp-font-3));
 }
 
 .urp-line-layout-horizontal {
@@ -29,7 +33,7 @@
 }
 
 .urp-line-slope {
-  transform: rotate(10deg);
+  transform: rotate(@slope-deg);
 }
 
 .urp-line-layout-vertical {
