@@ -10,12 +10,18 @@ export default function UrpSwitch(props: SwitchType) {
   const [state, setState] = useState(mergedProps.state)
 
   const switchClassName = genClassNameFromProps(
-    { state: state ? 'open' : 'close' }, 
+    { 
+      state: state ? 'open' : 'close', 
+      shape: mergedProps.shape
+    }, 
     'urp-switch',
     'urp-switch'
   )
   const sliderClassName = genClassNameFromProps(
-    { state: state ? 'open' : 'close' }, 
+    { 
+      state: state ? 'open' : 'close',
+      shape: mergedProps.shape
+    }, 
     'urp-switch-slider', 
     'urp-switch-slider'
   )

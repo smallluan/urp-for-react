@@ -9,6 +9,8 @@ export default function App() {
   return (
     <div>
       <UrpSwitch onStateChange={(newState) => switchStateChange(newState)} state={false} />
+      <div> ---  </div>
+      <UrpSwitch shape="react" onStateChange={(newState) => switchStateChange(newState)} state={false} />
     </div>
   )
 }
