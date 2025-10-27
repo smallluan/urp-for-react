@@ -8,9 +8,21 @@ export default function App() {
 
   return (
     <div>
-      <UrpSwitch onStateChange={(newState) => switchStateChange(newState)} state={false} />
+      <UrpSwitch onStateChange={(newState) => switchStateChange(newState)} state={true} />
       <div> ---  </div>
       <UrpSwitch shape="react" onStateChange={(newState) => switchStateChange(newState)} state={false} />
+      <div> ---  </div>
+      <UrpSwitch desc={['开', '关']} onStateChange={(newState) => switchStateChange(newState)} state={false} />
+      <div> ---  </div>
+      <UrpSwitch descIcon={['CheckOutlined', 'CloseOutlined']} onStateChange={(newState) => switchStateChange(newState)} state={false} />
+      <div> ---  </div>
+      <UrpSwitch descPos="outter" desc={['开', '关']} onStateChange={(newState) => switchStateChange(newState)} state={false} />
+      <div> ---  </div>
+      <UrpSwitch size="small" descPos="outter" descIcon={['CheckOutlined', 'CloseOutlined']} onStateChange={(newState) => switchStateChange(newState)} state={false} />
+        <div> ---  </div>
+      <UrpSwitch size="small" onStateChange={(newState) => switchStateChange(newState)} state={false} />
+      <div> ---  </div>
+      <UrpSwitch size="large" onStateChange={(newState) => switchStateChange(newState)} state={false} />
     </div>
   )
 }

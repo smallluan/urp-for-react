@@ -29,7 +29,10 @@
 |`state`|N|`boolean`|`false`|开关状态|
 |`loading`|N|`boolean`|`false`|开关是否正在加载，当加载时 `state` 变量为 `false`|
 |`shape`|N|`around \| react`|`around`|按钮形状，圆角按钮和矩形按钮|
-
+|`desc`|N|`Array<string>`|`[]`|文字描述|
+|`descIcon`|N|`Array<string>`|`[]`|图标描述。文字描述和图标描述同时存在时，图标描述覆盖文字描述|
+|`descPos`|N|`inner`\|`outter`|`inner`|描述信息所在的位置|
+|`size`|N|`normal \| small \| large`|`normal`|组件尺寸|
 ## 三、如何使用
 
 
@@ -37,3 +40,4 @@
 ## 四、迭代历史
 - 2025-1026: 搭建出基本按钮框架，实现了基本样式，开关动画。
 - 2025-1027: 添加 shape 参数，初步实现不同形状的开关
+- 2025-1027: 添加：desc，descIcon，descPos，size 四个参数对应的组件样式

@@ -9,6 +9,19 @@
   height: 20px;
   cursor: pointer;
   transition: all @animation-time ease-in-out;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  touch-action: manipulation; /* 移动端 */
+}
+
+.urp-switch-size-small {
+  zoom: .8;
+}
+
+.urp-switch-size-large {
+  zoom: 1.15;
 }
 
 .urp-switch-shape-around {
@@ -18,7 +31,6 @@
 .urp-switch-shape-react {
   border-radius: 4px;
 }
-
 
 .urp-switch-state-open {
   background-color: var(--urp-primary);
@@ -33,7 +45,11 @@
 
 .urp-switch-slider {
   box-sizing: border-box;
+  display: flex;
   position: absolute;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
   width: 14px;
   height: 14px;
   transition: all @animation-time ease-in-out;
@@ -58,6 +74,41 @@
 .urp-switch-slider-state-close {
   left: 4px;
   animation: slider-close-animation @animation-time ease-in-out 1;
+}
+
+.urp-desc-inner {
+  font-size: 8px;
+  transition: all @animation-time ease-in-out;
+}
+
+.urp-desc-inner-state-open {
+  color: var(--urp-primary);
+}
+
+.urp-desc-inner-state-close {
+  color: var(--urp-gray-5);
+}
+
+.urp-desc-outter {
+  display: flex;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  top: 50%;
+  transform: translateY(-50%); 
+  transition: all @animation-time ease-in-out;
+  font-size: 10px;
+}
+
+.urp-desc-outter-state-close {
+  right: 6px;
+  color: var(--urp-gray-7);
+}
+
+.urp-desc-outter-state-open {
+  right: calc(100% - 10px - 6px);
+  color: var(--urp-white);
 }
 
 @keyframes slider-open-animation {
