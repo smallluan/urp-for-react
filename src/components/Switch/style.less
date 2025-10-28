@@ -43,6 +43,24 @@
   }
 }
 
+.urp-switch-disabled {
+  cursor: not-allowed;
+}
+
+.urp-switch-state-close.urp-switch-disabled {
+  opacity: .8;
+  &:hover {
+    background-color: var(--urp-gray-5) !important;
+  }
+}
+
+.urp-switch-state-open.urp-switch-disabled {
+  opacity: .8;
+  &:hover {
+    background-color: var(--urp-primary) !important;
+  }
+}
+
 .urp-switch-slider {
   box-sizing: border-box;
   display: flex;

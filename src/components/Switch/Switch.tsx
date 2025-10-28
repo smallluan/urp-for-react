@@ -9,12 +9,14 @@ export default function UrpSwitch(props: SwitchType) {
   const mergedProps = { ...defaultProperties, ...props }
   const { onStateChange } = mergedProps
   const [state, setState] = useState(mergedProps.state)
+  // const [loading, setLoading] = useState(mergedProps.loading)
 
   const switchClassName = genClassNameFromProps(
     { 
       state: state ? 'open' : 'close', 
       shape: mergedProps.shape,
       size: mergedProps.size,
+      disabled: mergedProps.disabled
     }, 
     'urp-switch',
     'urp-switch'
@@ -43,11 +45,15 @@ export default function UrpSwitch(props: SwitchType) {
   )
 
   useEffect(() => {
+    setState(mergedProps.state)
+  }, [mergedProps.state])
+
+  useEffect(() => {
     onStateChange?.(state)
   }, [state, onStateChange])
 
   function stateChange() {
-    const canIChangeState = mergedProps.beforeStateChange?.() || false
+    const canIChangeState = (mergedProps.beforeStateChange?.() && !mergedProps.disabled) || false
     if (canIChangeState) {
       setState(!state)
     }
