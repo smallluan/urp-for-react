@@ -3,6 +3,7 @@ import { SwitchType } from "./type.ts"
 const defaultProperties: SwitchType = {
   state: false,
   loading: false,
+  disabled: false,
   shape: 'around',
   desc: [],
   descIcon: [],

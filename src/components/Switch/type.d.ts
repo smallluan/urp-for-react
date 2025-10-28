@@ -1,6 +1,7 @@
 export interface SwitchType {
   state: boolean,
   loading: boolean,
+  disabled: boolean,
   shape: 'around' | 'react',
   desc: [string, string] | [],
   descIcon: [string, string] | [],

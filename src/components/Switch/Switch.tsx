@@ -9,14 +9,13 @@ export default function UrpSwitch(props: SwitchType) {
   const mergedProps = { ...defaultProperties, ...props }
   const { onStateChange } = mergedProps
   const [state, setState] = useState(mergedProps.state)
-  // const [loading, setLoading] = useState(mergedProps.loading)
 
   const switchClassName = genClassNameFromProps(
     { 
       state: state ? 'open' : 'close', 
       shape: mergedProps.shape,
       size: mergedProps.size,
-      disabled: mergedProps.disabled
+      disabled: mergedProps.loading || mergedProps.disabled
     }, 
     'urp-switch',
     'urp-switch'
@@ -53,7 +52,11 @@ export default function UrpSwitch(props: SwitchType) {
   }, [state, onStateChange])
 
   function stateChange() {
-    const canIChangeState = (mergedProps.beforeStateChange?.() && !mergedProps.disabled) || false
+    const canIChangeState = (
+      mergedProps.beforeStateChange?.() && 
+      !mergedProps.disabled && 
+      !mergedProps.loading
+    ) || false
     if (canIChangeState) {
       setState(!state)
     }
@@ -61,6 +64,16 @@ export default function UrpSwitch(props: SwitchType) {
 
   const displayDesc = (descPos = 'inner', iconSize = 8) => {
     if (mergedProps.descPos !== descPos) return null
+
+    if (mergedProps.loading) {
+      return (
+         <UrpIcon 
+          size={iconSize + 2} 
+          type='LoadingOutlined'
+        />
+      )
+    }
+
     if (mergedProps.desc.length) {
       return state ? mergedProps.desc[0] : mergedProps.desc[1]
     } else if (mergedProps.descIcon.length) {
