@@ -58,17 +58,25 @@ export default function UrpSwitch(props: SwitchType) {
   }, [state, onStateChange])
 
   // 状态变化处理函数
-  const stateChange = () => {
-    const canIChangeState = (
-      mergedProps.beforeStateChange?.() && 
-      !mergedProps.disabled && 
-      !mergedProps.loading
-    ) || false
+  const stateChange = async () => {
+    let beforeResult = true
+
+    // 增加对异步函数的处理
+    if (mergedProps.beforeStateChange) {
+      beforeResult = await mergedProps.beforeStateChange()
+      beforeResult = Boolean(beforeResult)
+    }
+
+    // 判断是否可以改变状态
+    const canIChangeState = beforeResult && !mergedProps.disabled && !mergedProps.loading
+
+    // 满足条件则更新状态
     if (canIChangeState) {
-      setState(!state)
+      setState(prev => !prev)
     }
   }
 
+  // 描述组件
   const displayDesc = (descPos = 'inner', iconSize = 8) => {
     if (mergedProps.descPos !== descPos) return null
     // 加载状态图标
