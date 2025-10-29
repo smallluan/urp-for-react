@@ -5,7 +5,7 @@ export interface SwitchType {
   shape?: 'around' | 'react',
   desc?: [string, string] | [],
   descIcon?: [string, string] | [],
-  descPos?: 'inner' | 'outter',
+  descPos?: 'inner' | 'outer',
   size?: 'normal' | 'small' | 'large'
   beforeStateChange?: (...args) => boolean,
   onStateChange?: (newState: boolean) => any

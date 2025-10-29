@@ -40,12 +40,12 @@ export default function UrpSwitch(props: SwitchType) {
     'urp-desc-inner'
   )
   // 外部描述信息 className
-  const outterDescClassName = genClassNameFromProps(
+  const outerDescClassName = genClassNameFromProps(
     {
       state: state ? 'open' : 'close',
     },
-    'urp-desc-outter',
-    'urp-desc-outter'
+    'urp-desc-outer',
+    'urp-desc-outer'
   )
 
   // HOOK: 外部输入状态变化时，同步到内部状态
@@ -117,14 +117,14 @@ export default function UrpSwitch(props: SwitchType) {
   
   // 返回主结构
   return (
-    <div onClick={stateChange} className={switchClassName}>
+    <div data-testid="urp-switch"  onClick={stateChange} className={switchClassName}>
       <div className={sliderClassName}>
         <div className={descClassName}>
           { displayDesc() }
         </div>
       </div>
-      <div className={outterDescClassName}>
-        { displayDesc('outter', 10) }
+      <div className={outerDescClassName}>
+        { displayDesc('outer', 10) }
       </div>
     </div>
   )
