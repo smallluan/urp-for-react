@@ -1,12 +1,12 @@
 import { SwitchType } from "./type.ts"
 import './style.less'
 import { useEffect, useState } from "react"
-import defaultProperties from "./properties.ts"
+import defaultProperties, { formatProps } from "./properties.ts"
 import genClassNameFromProps from "../utils/tools/className.ts"
 import { UrpIcon } from '../Icon/index.ts'
 
 export default function UrpSwitch(props: SwitchType) {
-  const mergedProps = { ...defaultProperties, ...props }
+  const mergedProps = formatProps({ ...defaultProperties, ...props })
   const { onStateChange } = mergedProps
   const [state, setState] = useState(mergedProps.state)
   const [loading, setLoading] = useState(mergedProps.loading)
