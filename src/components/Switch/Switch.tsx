@@ -10,9 +10,10 @@ export default function UrpSwitch(props: SwitchType) {
   const { onStateChange } = mergedProps
   const [state, setState] = useState(mergedProps.state)
 
+  // 开关总体 className
   const switchClassName = genClassNameFromProps(
     { 
-      state: state ? 'open' : 'close', 
+      state: state ? 'open' : 'close',
       shape: mergedProps.shape,
       size: mergedProps.size,
       disabled: mergedProps.loading || mergedProps.disabled
@@ -20,6 +21,7 @@ export default function UrpSwitch(props: SwitchType) {
     'urp-switch',
     'urp-switch'
   )
+  // 滑块 className
   const sliderClassName = genClassNameFromProps(
     { 
       state: state ? 'open' : 'close',
@@ -28,6 +30,7 @@ export default function UrpSwitch(props: SwitchType) {
     'urp-switch-slider', 
     'urp-switch-slider'
   )
+  // 内部描述信息 className
   const descClassName = genClassNameFromProps(
     {
       state: state ? 'open' : 'close',
@@ -35,6 +38,7 @@ export default function UrpSwitch(props: SwitchType) {
     'urp-desc-inner',
     'urp-desc-inner'
   )
+  // 外部描述信息 className
   const outterDescClassName = genClassNameFromProps(
     {
       state: state ? 'open' : 'close',
@@ -43,15 +47,18 @@ export default function UrpSwitch(props: SwitchType) {
     'urp-desc-outter'
   )
 
+  // HOOK: 外部输入状态变化时，同步到内部状态
   useEffect(() => {
     setState(mergedProps.state)
   }, [mergedProps.state])
 
+  // HOOK: 内部状态变化，把最新的状态传递到外部
   useEffect(() => {
     onStateChange?.(state)
   }, [state, onStateChange])
 
-  function stateChange() {
+  // 状态变化处理函数
+  const stateChange = () => {
     const canIChangeState = (
       mergedProps.beforeStateChange?.() && 
       !mergedProps.disabled && 
@@ -64,7 +71,7 @@ export default function UrpSwitch(props: SwitchType) {
 
   const displayDesc = (descPos = 'inner', iconSize = 8) => {
     if (mergedProps.descPos !== descPos) return null
-
+    // 加载状态图标
     if (mergedProps.loading) {
       return (
          <UrpIcon 
@@ -73,7 +80,7 @@ export default function UrpSwitch(props: SwitchType) {
         />
       )
     }
-
+    // 非加载状态描述
     if (mergedProps.desc.length) {
       return state ? mergedProps.desc[0] : mergedProps.desc[1]
     } else if (mergedProps.descIcon.length) {
@@ -86,7 +93,8 @@ export default function UrpSwitch(props: SwitchType) {
     }
     return null
   }
-
+  
+  // 返回主结构
   return (
     <div onClick={stateChange} className={switchClassName}>
       <div className={sliderClassName}>
