@@ -74,7 +74,9 @@ export default function UrpSwitch(props: SwitchType) {
           resolve(mergedProps.beforeStateChange())
         }, 0)    // 0ms 延迟，确保进入下一个事件循环
       })
-      setLoading(false)
+      if (!loading) {
+        setLoading(false)
+      }
       beforeResult = Boolean(beforeResult)
     }
 
