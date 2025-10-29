@@ -40,3 +40,4 @@
 - 2025-1027: 添加：desc，descIcon，descPos，size 四个参数对应的组件样式
 - 2025-1028: 添加 disabled，loading 样式和初步处理
 - 2025-1028: beforeStateChange 函数支持对异步函数的处理
+- 2025-1028: beforeStateChange 处理异步函数时的 loading 效果

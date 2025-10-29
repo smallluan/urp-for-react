@@ -9,6 +9,7 @@ export default function UrpSwitch(props: SwitchType) {
   const mergedProps = { ...defaultProperties, ...props }
   const { onStateChange } = mergedProps
   const [state, setState] = useState(mergedProps.state)
+  const [loading, setLoading] = useState(mergedProps.loading)
 
   // 开关总体 className
   const switchClassName = genClassNameFromProps(
@@ -57,13 +58,23 @@ export default function UrpSwitch(props: SwitchType) {
     onStateChange?.(state)
   }, [state, onStateChange])
 
+  useEffect(() => {
+    setLoading(mergedProps.loading)
+  }, [mergedProps.loading])
+
   // 状态变化处理函数
   const stateChange = async () => {
     let beforeResult = true
 
     // 增加对异步函数的处理
     if (mergedProps.beforeStateChange) {
-      beforeResult = await mergedProps.beforeStateChange()
+      setLoading(true)
+      beforeResult = await new Promise(resolve => {
+        setTimeout(() => {
+          resolve(mergedProps.beforeStateChange())
+        }, 0)    // 0ms 延迟，确保进入下一个事件循环
+      })
+      setLoading(false)
       beforeResult = Boolean(beforeResult)
     }
 
@@ -80,7 +91,7 @@ export default function UrpSwitch(props: SwitchType) {
   const displayDesc = (descPos = 'inner', iconSize = 8) => {
     if (mergedProps.descPos !== descPos) return null
     // 加载状态图标
-    if (mergedProps.loading) {
+    if (loading) {
       return (
          <UrpIcon 
           size={iconSize + 2} 
