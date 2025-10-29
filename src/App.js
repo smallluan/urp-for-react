@@ -11,7 +11,7 @@ export default function App() {
 
   return (
     <div>
-      <UrpSwitch state={state} loading={state} />
+      <UrpSwitch state={state} desc={['开', '关']} loading={state} />
       {/* <UrpSwitch disabled={state} /> */}
       <div> ---  </div>
       <UrpSwitch 
