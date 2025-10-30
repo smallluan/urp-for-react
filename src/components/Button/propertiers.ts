@@ -1,6 +1,8 @@
 import { ButtonType } from "./type"
 
 const defaultProperties: Required<ButtonType> = {
+  children: '',
+  content: '确定',
   variant: 'base',
   theme: 'primary',
   shape: 'react',

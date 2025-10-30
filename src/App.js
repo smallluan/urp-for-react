@@ -4,7 +4,7 @@ export default function App() {
 
   return (
     <div>
-      <UrpButton/>
+      <UrpButton content='属性内'>标签内</UrpButton>
     </div>
   )
 }
