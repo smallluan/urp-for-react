@@ -30,6 +30,8 @@
 |`descIcon`|N|`Array<string>`|`[]`|图标描述。文字描述和图标描述同时存在时，图标描述覆盖文字描述|
 |`descPos`|N|`inner`\|`outter`|`inner`|描述信息所在的位置|
 |`size`|N|`normal \| small \| large`|`normal`|组件尺寸|
+|`onStateChange`|N|`function`|`() => {return true}`|开关状态变化回调|
+|`beforeStateChange`|N|`(async) function`|`() => true`|状态变化前处理函数，当前仅当该函数返回 `true` 时状态改变。函数可以是同步或者异步，`异步函数必须返回一个 Promise`|
 ## 三、如何使用
 
 
