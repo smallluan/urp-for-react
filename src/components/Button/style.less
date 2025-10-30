@@ -1,0 +1,93 @@
+@import '../utils/styles/index.less';
+
+.urp-button {
+  display: inline;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  touch-action: manipulation;
+  transition: all .1s ease-in-out;
+}
+
+/* theme 主题类 */
+.urp-button-theme-default {
+  background-color: var(--urp-default-color);
+  color: var(--urp-black);
+  &:hover {
+    background-color: var(--urp-default-color-hover);
+  }
+  &:active {
+    background-color: var(--urp-default-color-active);
+  }
+}
+
+.urp-button-theme-primary {
+  background-color: var(--urp-primary-color);
+  color: var(--urp-font-white-1);
+  &:hover {
+    background-color: var(--urp-primary-color-hover);
+  }
+  &:active {
+    background-color: var(--urp-primary-color-active);
+  }
+}
+
+.urp-button-theme-warning {
+  background-color: var(--urp-warning-color);
+  color: var(--urp-font-white-1);
+  &:hover {
+    background-color: var(--urp-warning-color-hover);
+  }
+  &:active {
+    background-color: var(--urp-warning-color-active);
+  }
+}
+
+.urp-button-theme-success {
+  background-color: var(--urp-success-color);
+  color: var(--urp-font-white-1);
+  &:hover {
+    background-color: var(--urp-success-color-hover);
+  }
+  &:active {
+    background-color: var(--urp-success-color-active);
+  }
+}
+
+.urp-button-theme-error {
+  background-color: var(--urp-error-color);
+  color: var(--urp-font-white-1);
+  &:hover {
+    background-color: var(--urp-error-color-hover);
+  }
+  &:active {
+    background-color: var(--urp-error-color-active);
+  }
+}
+
+/* shape 形状类 */
+.urp-button-shape-react {
+  border-radius: 4px;
+}
+
+.urp-button-shape-round {
+  border-radius: 100vh;
+}
+
+/* 尺寸类 */
+.urp-button-size-normal {
+  padding: 4px 12px;
+  font-size: 14px;
+}
+
+.urp-button-size-small {
+  padding: 4px 10px;
+  font-size: 12px;
+}
+
+.urp-button-size-large {
+  padding: 6px 14px;
+  font-size: 16px;
+}
