@@ -1,43 +1,114 @@
 /**
   色彩管理.less
-  命名规则: 组件库标准前缀 + 明/暗主题 + 色彩名 + 状态
-  当主题为明亮时，可以省略
+  接入 tdesign 颜色体系
 */
 
 :root {
-  --urp-primary: #0052d9;
-  --urp-primary-hover: #f2f3ff;
-  --urp-primary-click: #0034b5;
 
-  --urp-error: #d54941;
-  --urp-error-hover: #fff0ed;
-  --urp-error-click: #ad352f;
+  --urp-primary-color-1: #f2f3ff;
+  --urp-primary-color-2: #d9e1ff;
+  --urp-primary-color-3: #b5c7ff;
+  --urp-primary-color-4: #8eabff;
+  --urp-primary-color-5: #618dff;
+  --urp-primary-color-6: #366ef4;
+  --urp-primary-color-7: #0052d9;
+  --urp-primary-color-8: #003cab;
+  --urp-primary-color-9: #002a7c;
+  --urp-primary-color-10: #001a57;
 
-  --urp-warn: #e37318;
-  --urp-warn-hover: #fff1e9;
-  --urp-warn-click: #954500;
+  --urp-warning-color-1: #fff1e9;
+  --urp-warning-color-2: #ffd9c2;
+  --urp-warning-color-3: #ffb98c;
+  --urp-warning-color-4: #fa9550;
+  --urp-warning-color-5: #e37318;
+  --urp-warning-color-6: #be5a00;
+  --urp-warning-color-7: #954500;
+  --urp-warning-color-8: #713300;
+  --urp-warning-color-9: #532300;
+  --urp-warning-color-10: #3b1700;
 
-  --urp-success: #2ba471;
-  --urp-success-hover: #e3f9e9;
-  --urp-success-click: #006c45;
+  --urp-error-color-1: #fff0ed;
+  --urp-error-color-2: #ffd8d2;
+  --urp-error-color-3: #ffb9b0;
+  --urp-error-color-4: #ff9285;
+  --urp-error-color-5: #f6685d;
+  --urp-error-color-6: #d54941;
+  --urp-error-color-7: #ad352f;
+  --urp-error-color-8: #881f1c;
+  --urp-error-color-9: #68070a;
+  --urp-error-color-10: #490002;
 
-  --urp-font-1: rgba(0, 0, 0, 90%);
-  --urp-font-2: rgba(0, 0, 0, 60%);
-  --urp-font-3: rgba(0, 0, 0, 40%);
-  --urp-font-4: rgba(0, 0, 0, 26%);
+  --urp-success-color-1: #e3f9e9;
+  --urp-success-color-2: #c6f3d7;
+  --urp-success-color-3: #92dab2;
+  --urp-success-color-4: #56c08d;
+  --urp-success-color-5: #2ba471;
+  --urp-success-color-6: #008858;
+  --urp-success-color-7: #006c45;
+  --urp-success-color-8: #005334;
+  --urp-success-color-9: #003b23;
+  --urp-success-color-10: #002515;
 
-  --urp-dark-font-1: rgba(255, 255, 255, 90%);
-  --urp-dark-font-2: rgba(255, 255, 255, 55%);
-  --urp-dark-font-3: rgba(255, 255, 255, 35%);
-  --urp-dark-font-4: rgba(255, 255, 255, 22%);
+  --urp-gray-color-1: #f3f3f3;
+  --urp-gray-color-2: #eeeeee;
+  --urp-gray-color-3: #e8e8e8;
+  --urp-gray-color-4: #dddddd;
+  --urp-gray-color-5: #c6c6c6;
+  --urp-gray-color-6: #a6a6a6;
+  --urp-gray-color-7: #8b8b8b;
+  --urp-gray-color-8: #777777;
+  --urp-gray-color-9: #5e5e5e;
+  --urp-gray-color-10: #4b4b4b;
+  --urp-gray-color-11: #393939;
+  --urp-gray-color-12: #2c2c2c;
+  --urp-gray-color-13: #242424;
+  --urp-gray-color-14: #181818;
 
-  --urp-white: white;
-  --urp-gray-1: #f3f3f3;
-  --urp-gray-2: #eeeeee;
-  --urp-gray-3: #e7e7e7;
-  --urp-gray-4: #dcdcdc;
-  --urp-gray-5: #c5c5c5;
-  --urp-gray-6: #a6a6a6;
-  --urp-gray-7: #8b8b8b;
-  --urp-gray-8: #777777;
+  --urp-font-white-1: #ffffff;
+  --urp-font-white-2: rgba(255, 255, 255, .55);
+  --urp-font-white-3: rgba(255, 255, 255, .35);
+  --urp-font-white-4: rgba(255, 255, 255, .22);
+
+  --urp-font-gray-1: rgba(0, 0, 0, .9);
+  --urp-font-gray-1: rgba(0, 0, 0, .6);
+  --urp-font-gray-1: rgba(0, 0, 0, .4);
+  --urp-font-gray-1: rgba(0, 0, 0, .26);
+
+  --urp-default-color: var(--urp-gray-color-3);
+  --urp-primary-color: var(--urp-primary-color-7);
+  --urp-warning-color: var(--urp-warning-color-5);
+  --urp-error-color: var(--urp-error-color-6);
+  --urp-success-color: var(--urp-success-color-5);
+
+  --urp-default-color-hover: var(--urp-gray-color-2);
+  --urp-default-color-disbaled: var(--urp-gray-color-1);
+  --urp-default-color-active: var(--urp-gray-color-5);
+
+  --urp-primary-color-hover: var(--urp-primary-color-6);
+  --urp-primary-color-focus: var(--urp-primary-color-2);
+  --urp-primary-color-active: var(--urp-primary-color-8);
+  --urp-primary-color-disabled: var(--urp-primary-color-3);
+  --urp-primary-color-light: var(--urp-primary-color-1);
+  --urp-primary-color-light-hover: var(--urp-primary-color-2);
+
+  --urp-warning-color-hover: var(--urp-warning-color-4);
+  --urp-warning-color-focus: var(--urp-warning-color-2);
+  --urp-warning-color-active: var(--urp-warning-color-6);
+  --urp-warning-color-disabled: var(--urp-warning-color-3);
+  --urp-warning-color-light: var(--urp-warning-color-1);
+  --urp-warning-color-light-hover: var(--urp-warning-color-2);
+
+  --urp-error-color-hover: var(--urp-error-color-5);
+  --urp-error-color-focus: var(--urp-error-color-2);
+  --urp-error-color-active: var(--urp-error-color-7);
+  --urp-error-color-disabled: var(--urp-error-color-3);
+  --urp-error-color-light: var(--urp-error-color-1);
+  --urp-error-color-light-hover: var(--urp-error-color-2);
+
+  --urp-success-color-hover: var(--urp-success-color-4);
+  --urp-success-color-focus: var(--urp-success-color-2);
+  --urp-success-color-active: var(--urp-success-color-6);
+  --urp-success-color-disabled: var(--urp-success-color-3);
+  --urp-success-color-light: var(--urp-success-color-1);
+  --urp-success-color-light-hover: var(--urp-success-color-2);
 }
