@@ -18,6 +18,10 @@
   width: 100%;
 }
 
+.urp-button-disabled {
+  cursor: not-allowed;
+}
+
 .urp-button-variant-outline.urp-button-theme-default {
   border: 1px solid var(--urp-default-color);
   &:hover {
@@ -39,7 +43,7 @@
 ) {
   border: 1px @border-style @border-color;
   color: @conten-color;
-   background-color: @background-color;
+  background-color: @background-color;
   &:hover {
     border: 1px @border-style @border-color-hover;
     color: @content-color-hover;
@@ -52,6 +56,7 @@
   }
 }
 
+/* 基础样式 */
 .urp-button-variant-base.urp-button-theme-primary {
   .define-urp-button-variant(
     solid,
@@ -112,11 +117,12 @@
   );
 }
 
-.urp-button-variant-dashed.urp-button-theme-primary{
+/* 虚线边框 */
+.urp-button-variant-dashed.urp-button-theme-primary {
   .define-urp-button-variant(dashed);
 }
 
-.urp-button-variant-dashed.urp-button-theme-warning{
+.urp-button-variant-dashed.urp-button-theme-warning {
    .define-urp-button-variant(
     dashed,
     var(--urp-warning-color),
@@ -131,7 +137,7 @@
   );
 }
 
-.urp-button-variant-dashed.urp-button-theme-success{
+.urp-button-variant-dashed.urp-button-theme-success {
    .define-urp-button-variant(
     dashed,
     var(--urp-success-color),
@@ -146,7 +152,7 @@
   );
 }
 
-.urp-button-variant-dashed.urp-button-theme-error{
+.urp-button-variant-dashed.urp-button-theme-error {
    .define-urp-button-variant(
     dashed,
     var(--urp-error-color),
@@ -161,6 +167,7 @@
   );
 }
 
+/* 实线边框 */
 .urp-button-variant-outline.urp-button-theme-primary {
   .define-urp-button-variant();
 }
@@ -210,7 +217,8 @@
   );
 }
 
-.urp-button-variant-text.urp-button-theme-primary{
+/* 文字按钮 */
+.urp-button-variant-text.urp-button-theme-primary {
   .define-urp-button-variant(
     none,
     none,
@@ -255,7 +263,7 @@
   );
 }
 
-.urp-button-variant-text.urp-button-theme-error{
+.urp-button-variant-text.urp-button-theme-error {
   .define-urp-button-variant(
     none,
     none,
@@ -267,6 +275,251 @@
     transparent,
     var(--urp-default-color-hover),
     var(--urp-default-color-active)
+  );
+}
+
+/* 基础——禁用 */
+.urp-button-variant-base.urp-button-theme-primary.urp-button-disabled {
+  .define-urp-button-variant(
+    solid,
+    none,
+    none,
+    none,
+    var(--urp-font-white-1),
+    var(--urp-font-white-1),
+    var(--urp-font-white-1),
+    var(--urp-primary-color-disabled),
+    var(--urp-primary-color-disabled),
+    var(--urp-primary-color-disabled)
+  );
+}
+
+.urp-button-variant-base.urp-button-theme-warning.urp-button-disabled {
+  .define-urp-button-variant(
+    solid,
+    none,
+    none,
+    none,
+    var(--urp-font-white-1),
+    var(--urp-font-white-1),
+    var(--urp-font-white-1),
+    var(--urp-warning-color-disabled),
+    var(--urp-warning-color-disabled),
+    var(--urp-warning-color-disabled)
+  );
+}
+
+.urp-button-variant-base.urp-button-theme-success.urp-button-disabled {
+  .define-urp-button-variant(
+    solid,
+    none,
+    none,
+    none,
+    var(--urp-font-white-1),
+    var(--urp-font-white-1),
+    var(--urp-font-white-1),
+    var(--urp-success-color-disabled),
+    var(--urp-success-color-disabled),
+    var(--urp-success-color-disabled)
+  );
+}
+
+.urp-button-variant-base.urp-button-theme-error.urp-button-disabled {
+  .define-urp-button-variant(
+    solid,
+    none,
+    none,
+    none,
+    var(--urp-font-white-1),
+    var(--urp-font-white-1),
+    var(--urp-font-white-1),
+    var(--urp-error-color-disabled),
+    var(--urp-error-color-disabled),
+    var(--urp-error-color-disabled)
+  );
+}
+
+/* 虚线边框禁用 */
+.urp-button-variant-dashed.urp-button-theme-primary.urp-button-disabled {
+  .define-urp-button-variant(
+    dashed,
+    var(--urp-primary-color-disabled),
+    var(--urp-primary-color-disabled),
+    var(--urp-primary-color-disabled),
+    var(--urp-primary-color-disabled),
+    var(--urp-primary-color-disabled),
+    var(--urp-primary-color-disabled),
+    transparent,
+    transparent,
+   transparent,
+  );
+}
+
+.urp-button-variant-dashed.urp-button-theme-warning.urp-button-disabled {
+  .define-urp-button-variant(
+    dashed,
+    var(--urp-warning-color-disabled),
+    var(--urp-warning-color-disabled),
+    var(--urp-warning-color-disabled),
+    var(--urp-warning-color-disabled),
+    var(--urp-warning-color-disabled),
+    var(--urp-warning-color-disabled),
+    transparent,
+    transparent,
+    transparent,
+  );
+}
+
+.urp-button-variant-dashed.urp-button-theme-success.urp-button-disabled {
+  .define-urp-button-variant(
+    dashed,
+    var(--urp-success-color-disabled),
+    var(--urp-success-color-disabled),
+    var(--urp-success-color-disabled),
+    var(--urp-success-color-disabled),
+    var(--urp-success-color-disabled),
+    var(--urp-success-color-disabled),
+    transparent,
+    transparent,
+    transparent,
+  );
+}
+
+.urp-button-variant-dashed.urp-button-theme-error.urp-button-disabled {
+  .define-urp-button-variant(
+    dashed,
+    var(--urp-error-color-disabled),
+    var(--urp-error-color-disabled),
+    var(--urp-error-color-disabled),
+    var(--urp-error-color-disabled),
+    var(--urp-error-color-disabled),
+    var(--urp-error-color-disabled),
+    transparent,
+    transparent,
+    transparent,
+  );
+}
+
+/* 实线边框禁用 */
+.urp-button-variant-outline.urp-button-theme-primary.urp-button-disabled {
+  .define-urp-button-variant(
+    solid,
+    var(--urp-primary-color-disabled),
+    var(--urp-primary-color-disabled),
+    var(--urp-primary-color-disabled),
+    var(--urp-primary-color-disabled),
+    var(--urp-primary-color-disabled),
+    var(--urp-primary-color-disabled),
+    transparent,
+    transparent,
+   transparent,
+  );
+}
+
+.urp-button-variant-outline.urp-button-theme-warning.urp-button-disabled {
+  .define-urp-button-variant(
+    solid,
+    var(--urp-warning-color-disabled),
+    var(--urp-warning-color-disabled),
+    var(--urp-warning-color-disabled),
+    var(--urp-warning-color-disabled),
+    var(--urp-warning-color-disabled),
+    var(--urp-warning-color-disabled),
+    transparent,
+    transparent,
+    transparent,
+  );
+}
+
+.urp-button-variant-outline.urp-button-theme-success.urp-button-disabled {
+  .define-urp-button-variant(
+    solid,
+    var(--urp-success-color-disabled),
+    var(--urp-success-color-disabled),
+    var(--urp-success-color-disabled),
+    var(--urp-success-color-disabled),
+    var(--urp-success-color-disabled),
+    var(--urp-success-color-disabled),
+    transparent,
+    transparent,
+    transparent,
+  );
+}
+
+.urp-button-variant-outline.urp-button-theme-error.urp-button-disabled {
+  .define-urp-button-variant(
+    solid,
+    var(--urp-error-color-disabled),
+    var(--urp-error-color-disabled),
+    var(--urp-error-color-disabled),
+    var(--urp-error-color-disabled),
+    var(--urp-error-color-disabled),
+    var(--urp-error-color-disabled),
+    transparent,
+    transparent,
+    transparent,
+  );
+}
+
+
+
+.urp-button-variant-text.urp-button-theme-primary.urp-button-disabled {
+  .define-urp-button-variant(
+    none,
+    none,
+    none,
+    none,
+    var(--urp-primary-color-disabled),
+    var(--urp-primary-color-disabled),
+    var(--urp-primary-color-disabled),
+    transparent,
+    transparent,
+    transparent,
+  );
+}
+
+.urp-button-variant-text.urp-button-theme-warning.urp-button-disabled {
+  .define-urp-button-variant(
+    none,
+    none,
+    none,
+    none,
+    var(--urp-warning-color-disabled),
+    var(--urp-warning-color-disabled),
+    var(--urp-warning-color-disabled),
+    transparent,
+    transparent,
+    transparent,
+  );
+}
+
+.urp-button-variant-text.urp-button-theme-success.urp-button-disabled {
+  .define-urp-button-variant(
+    none,
+    none,
+    none,
+    none,
+    var(--urp-success-color-disabled),
+    var(--urp-success-color-disabled),
+    var(--urp-success-color-disabled),
+    transparent,
+    transparent,
+    transparent,
+  );
+}
+
+.urp-button-variant-text.urp-button-theme-error.urp-button-disabled {
+  .define-urp-button-variant(
+    none,
+    none,
+    none,
+    none,
+    var(--urp-error-color-disabled),
+    var(--urp-error-color-disabled),
+    var(--urp-error-color-disabled),
+    transparent,
+    transparent,
+    transparent,
   );
 }
 

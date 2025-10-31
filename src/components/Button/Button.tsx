@@ -11,7 +11,8 @@ export default function UrpButton(props: ButtonType) {
       theme: mergedProps.theme,
       shape: mergedProps.shape,
       size: mergedProps.size,
-      block: mergedProps.block
+      block: mergedProps.block,
+      disabled: mergedProps.disabled
     },
     'urp-button',
     'urp-button'
