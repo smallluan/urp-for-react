@@ -11,8 +11,267 @@
   transition: all .1s ease-in-out;
 }
 
+.urp-button-block {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.urp-button-variant-outline.urp-button-theme-default {
+  border: 1px solid var(--urp-default-color);
+  &:hover {
+    background-color: var(--urp-defaul-color);
+  }
+}
+
+.define-urp-button-variant(
+  @border-style: solid,
+  @border-color: var(--urp-primary-color),
+  @border-color-hover: var(--urp-primary-color-hover),
+  @border-color-active: var(--urp-primary-color-active),
+  @conten-color: var(--urp-primary-color),
+  @content-color-hover: var(--urp-primary-color-hover),
+  @content-color-active: var(--urp-primary-color-active),
+  @background-color: transparent,
+  @background-color-hover: transparent,
+  @background-color-active: var(--urp-primary-color-light)
+) {
+  border: 1px @border-style @border-color;
+  color: @conten-color;
+   background-color: @background-color;
+  &:hover {
+    border: 1px @border-style @border-color-hover;
+    color: @content-color-hover;
+    background-color: @background-color-hover;
+  }
+  &:active {
+    border: 1px @border-style @border-color-active;
+    color: @content-color-active;
+    background-color: @background-color-active;
+  }
+}
+
+.urp-button-variant-base.urp-button-theme-primary {
+  .define-urp-button-variant(
+    solid,
+    none,
+    none,
+    none,
+    var(--urp-font-white-1),
+    var(--urp-font-white-1),
+    var(--urp-font-white-1),
+    var(--urp-primary-color),
+    var(--urp-primary-color-hover),
+    var(--urp-primary-color-active)
+  );
+}
+
+.urp-button-variant-base.urp-button-theme-warning {
+  .define-urp-button-variant(
+    solid,
+    none,
+    none,
+    none,
+    var(--urp-font-white-1),
+    var(--urp-font-white-1),
+    var(--urp-font-white-1),
+    var(--urp-warning-color),
+    var(--urp-warning-color-hover),
+    var(--urp-warning-color-active)
+  );
+}
+
+.urp-button-variant-base.urp-button-theme-success {
+  .define-urp-button-variant(
+    solid,
+    none,
+    none,
+    none,
+    var(--urp-font-white-1),
+    var(--urp-font-white-1),
+    var(--urp-font-white-1),
+    var(--urp-success-color),
+    var(--urp-success-color-hover),
+    var(--urp-success-color-active)
+  );
+}
+
+.urp-button-variant-base.urp-button-theme-error {
+  .define-urp-button-variant(
+    solid,
+    none,
+    none,
+    none,
+    var(--urp-font-white-1),
+    var(--urp-font-white-1),
+    var(--urp-font-white-1),
+    var(--urp-error-color),
+    var(--urp-error-color-hover),
+    var(--urp-error-color-active)
+  );
+}
+
+.urp-button-variant-dashed.urp-button-theme-primary{
+  .define-urp-button-variant(dashed);
+}
+
+.urp-button-variant-dashed.urp-button-theme-warning{
+   .define-urp-button-variant(
+    dashed,
+    var(--urp-warning-color),
+    var(--urp-warning-color-hover),
+    var(--urp-warning-color-active),
+    var(--urp-warning-color),
+    var(--urp-warning-color-hover),
+    var(--urp-warning-color-active),
+    transparent,
+    transparent,
+    var(--urp-warning-color-light)
+  );
+}
+
+.urp-button-variant-dashed.urp-button-theme-success{
+   .define-urp-button-variant(
+    dashed,
+    var(--urp-success-color),
+    var(--urp-success-color-hover),
+    var(--urp-success-color-active),
+    var(--urp-success-color),
+    var(--urp-success-color-hover),
+    var(--urp-success-color-active),
+    transparent,
+    transparent,
+    var(--urp-success-color-light)
+  );
+}
+
+.urp-button-variant-dashed.urp-button-theme-error{
+   .define-urp-button-variant(
+    dashed,
+    var(--urp-error-color),
+    var(--urp-error-color-hover),
+    var(--urp-error-color-active),
+    var(--urp-error-color),
+    var(--urp-error-color-hover),
+    var(--urp-error-color-active),
+    transparent,
+    transparent,
+    var(--urp-error-color-light)
+  );
+}
+
+.urp-button-variant-outline.urp-button-theme-primary {
+  .define-urp-button-variant();
+}
+
+.urp-button-variant-outline.urp-button-theme-warning {
+  .define-urp-button-variant(
+    solid,
+    var(--urp-warning-color),
+    var(--urp-warning-color-hover),
+    var(--urp-warning-color-active),
+    var(--urp-warning-color),
+    var(--urp-warning-color-hover),
+    var(--urp-warning-color-active),
+    transparent,
+    transparent,
+    var(--urp-warning-color-light)
+  );
+}
+
+.urp-button-variant-outline.urp-button-theme-success {
+  .define-urp-button-variant(
+    solid,
+    var(--urp-success-color),
+    var(--urp-success-color-hover),
+    var(--urp-success-color-active),
+    var(--urp-success-color),
+    var(--urp-success-color-hover),
+    var(--urp-success-color-active),
+    transparent,
+    transparent,
+    var(--urp-success-color-light)
+  );
+}
+
+.urp-button-variant-outline.urp-button-theme-error {
+  .define-urp-button-variant(
+    solid,
+    var(--urp-error-color),
+    var(--urp-error-color-hover),
+    var(--urp-error-color-active),
+    var(--urp-error-color),
+    var(--urp-error-color-hover),
+    var(--urp-error-color-active),
+    transparent,
+    transparent,
+    var(--urp-error-color-light)
+  );
+}
+
+.urp-button-variant-text.urp-button-theme-primary{
+  .define-urp-button-variant(
+    none,
+    none,
+    none,
+    none,
+    var(--urp-primary-color),
+    var(--urp-primary-color),
+    var(--urp-primary-color),
+    transparent,
+    var(--urp-default-color-hover),
+    var(--urp-default-color-active)
+  );
+}
+
+.urp-button-variant-text.urp-button-theme-warning {
+  .define-urp-button-variant(
+    none,
+    none,
+    none,
+    none,
+    var(--urp-warning-color),
+    var(--urp-warning-color),
+    var(--urp-warning-color),
+    transparent,
+    var(--urp-default-color-hover),
+    var(--urp-default-color-active)
+  );
+}
+
+.urp-button-variant-text.urp-button-theme-success {
+  .define-urp-button-variant(
+    none,
+    none,
+    none,
+    none,
+    var(--urp-success-color),
+    var(--urp-success-color),
+    var(--urp-success-color),
+    transparent,
+    var(--urp-default-color-hover),
+    var(--urp-default-color-active)
+  );
+}
+
+.urp-button-variant-text.urp-button-theme-error{
+  .define-urp-button-variant(
+    none,
+    none,
+    none,
+    none,
+    var(--urp-error-color),
+    var(--urp-error-color),
+    var(--urp-error-color),
+    transparent,
+    var(--urp-default-color-hover),
+    var(--urp-default-color-active)
+  );
+}
+
 /* theme 主题类 */
-.urp-button-theme-default {
+.urp-button-variant-base.urp-button-theme-default {
   background-color: var(--urp-default-color);
   color: var(--urp-black);
   &:hover {
@@ -23,49 +282,6 @@
   }
 }
 
-.urp-button-theme-primary {
-  background-color: var(--urp-primary-color);
-  color: var(--urp-font-white-1);
-  &:hover {
-    background-color: var(--urp-primary-color-hover);
-  }
-  &:active {
-    background-color: var(--urp-primary-color-active);
-  }
-}
-
-.urp-button-theme-warning {
-  background-color: var(--urp-warning-color);
-  color: var(--urp-font-white-1);
-  &:hover {
-    background-color: var(--urp-warning-color-hover);
-  }
-  &:active {
-    background-color: var(--urp-warning-color-active);
-  }
-}
-
-.urp-button-theme-success {
-  background-color: var(--urp-success-color);
-  color: var(--urp-font-white-1);
-  &:hover {
-    background-color: var(--urp-success-color-hover);
-  }
-  &:active {
-    background-color: var(--urp-success-color-active);
-  }
-}
-
-.urp-button-theme-error {
-  background-color: var(--urp-error-color);
-  color: var(--urp-font-white-1);
-  &:hover {
-    background-color: var(--urp-error-color-hover);
-  }
-  &:active {
-    background-color: var(--urp-error-color-active);
-  }
-}
 
 /* shape 形状类 */
 .urp-button-shape-react {

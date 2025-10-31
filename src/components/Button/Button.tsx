@@ -10,7 +10,8 @@ export default function UrpButton(props: ButtonType) {
       variant: mergedProps.variant,
       theme: mergedProps.theme,
       shape: mergedProps.shape,
-      size: mergedProps.size
+      size: mergedProps.size,
+      block: mergedProps.block
     },
     'urp-button',
     'urp-button'
