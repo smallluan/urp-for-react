@@ -2,10 +2,14 @@ import { UrpButton } from "./components/Button/index.ts"
 
 export default function App() {
 
+  const btnClick = (e) => {
+    console.log(e)
+  }
+
   return (
     <div>
       <h3>图标</h3>
-      <UrpButton icon="AppstoreAddOutlined" theme="default">确定</UrpButton>
+      <UrpButton onClick={btnClick} icon="AppstoreAddOutlined" theme="default">确定</UrpButton>
       <hr/>
       <UrpButton icon="AppstoreAddOutlined" theme="primary">确定</UrpButton>
       <hr/>

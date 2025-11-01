@@ -1,7 +1,8 @@
 @import '../utils/styles/index.less';
 
 .urp-button {
-  display: inline;
+  position: relative;
+  display: inline-block;
   cursor: pointer;
   user-select: none;
   -webkit-user-select: none;
@@ -9,6 +10,8 @@
   -ms-user-select: none;
   touch-action: manipulation;
   transition: all .1s ease-in-out;
+  overflow: hidden;
+  z-index: 0;
 }
 
 .urp-button-block {
@@ -52,7 +55,17 @@
   &:active {
     border: 1px @border-style @border-color-active;
     color: @content-color-active;
+  }
+  .urp-button-active-bg {
+    position: absolute;
+    top: calc(var(--relativeY) * 1px);
+    left: calc(var(--relativeX) * 1px);
+    animation: active-bg .25s ease-in;
     background-color: @background-color-active;
+    border-radius: 100vh;
+    z-index: 1;
+    aspect-ratio: 1 / 1;
+    transform: translate(-50%, -50%);
   }
 }
 
@@ -560,3 +573,25 @@
   padding: 6px 14px;
   font-size: 16px;
 }
+
+.urp-button-active-bg {
+  position: absolute;
+  top: calc(var(--relativeY) * 1px);
+  left: calc(var(--relativeX) * 1px);
+  animation: aa .3s ease-in;
+  background-color: var(--urp-primary-color-active);
+  border-radius: 100vh;
+  z-index: 1;
+  aspect-ratio: 1 / 1;
+  transform: translate(-50%, -50%);
+}
+
+@keyframes active-bg {
+  from {
+    width: 0;
+  }
+  to {
+    width: 200%;
+  }
+}
+

@@ -8,5 +8,6 @@ export interface ButtonType {
   loading?: boolean,
   block?: boolean,
   icon?: string,
-  size?: 'normal' | 'small' | 'large'
+  size?: 'normal' | 'small' | 'large',
+  onClick?: (...args) => void,
 }

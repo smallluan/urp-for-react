@@ -10,7 +10,8 @@ const defaultProperties: Required<ButtonType> = {
   loading: false,
   block: false,
   icon: '',
-  size: 'normal'
+  size: 'normal',
+  onClick: () => { return },
 }
 
 export default defaultProperties
