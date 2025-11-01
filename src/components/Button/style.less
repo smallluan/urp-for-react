@@ -25,13 +25,6 @@
   cursor: not-allowed;
 }
 
-.urp-button-variant-outline.urp-button-theme-default {
-  border: 1px solid var(--urp-default-color);
-  &:hover {
-    background-color: var(--urp-defaul-color);
-  }
-}
-
 .define-urp-button-variant(
   @border-style: solid,
   @border-color: var(--urp-primary-color),
@@ -60,16 +53,40 @@
     position: absolute;
     top: calc(var(--relativeY) * 1px);
     left: calc(var(--relativeX) * 1px);
-    animation: active-bg .25s ease-in;
+    animation: active-bg .25s ease-in forwards;
     background-color: @background-color-active;
     border-radius: 100vh;
     z-index: 1;
     aspect-ratio: 1 / 1;
     transform: translate(-50%, -50%);
   }
+
+  @keyframes active-bg {
+    from {
+      width: 0;
+    }
+    to {
+      width: 200%;
+    }
+  }
 }
 
 /* 基础样式 */
+.urp-button-variant-base.urp-button-theme-default {
+  .define-urp-button-variant(
+    solid,
+    none,
+    none,
+    none,
+    var(--urp-font-gray-1),
+    var(--urp-font-gray-1),
+    var(--urp-font-gray-1),
+    var(--urp-default-color),
+    var(--urp-default-color-hover),
+    var(--urp-default-color-active)
+  );
+}
+
 .urp-button-variant-base.urp-button-theme-primary {
   .define-urp-button-variant(
     solid,
@@ -131,6 +148,21 @@
 }
 
 /* 虚线边框 */
+.urp-button-variant-dashed.urp-button-theme-default {
+  .define-urp-button-variant(
+    dashed,
+    var(--urp-font-gray-2),
+    var(--urp-font-gray-3),
+    var(--urp-font-gray-1),
+    var(--urp-font-gray-2),
+    var(--urp-font-gray-3),
+    var(--urp-font-gray-1),
+    transparent,
+    transparent,
+    var(--urp-default-color-light)
+  );
+}
+
 .urp-button-variant-dashed.urp-button-theme-primary {
   .define-urp-button-variant(dashed);
 }
@@ -181,6 +213,22 @@
 }
 
 /* 实线边框 */
+.urp-button-variant-outline.urp-button-theme-default {
+  .define-urp-button-variant(
+    solid,
+    var(--urp-font-gray-2),
+    var(--urp-font-gray-3),
+    var(--urp-font-gray-1),
+    var(--urp-font-gray-2),
+    var(--urp-font-gray-3),
+    var(--urp-font-gray-1),
+    transparent,
+    transparent,
+    var(--urp-default-color-light)
+  );
+}
+
+
 .urp-button-variant-outline.urp-button-theme-primary {
   .define-urp-button-variant();
 }
@@ -231,6 +279,21 @@
 }
 
 /* 文字按钮 */
+.urp-button-variant-text.urp-button-theme-default {
+  .define-urp-button-variant(
+    none,
+    none,
+    none,
+    none,
+    var(--urp-font-gray-2),
+    var(--urp-font-gray-3),
+    var(--urp-font-gray-1),
+    transparent,
+    var(--urp-default-color-hover),
+    var(--urp-default-color-active)
+  );
+}
+
 .urp-button-variant-text.urp-button-theme-primary {
   .define-urp-button-variant(
     none,
@@ -292,6 +355,21 @@
 }
 
 /* 基础——禁用 */
+.urp-button-variant-base.urp-button-theme-default.urp-button-disabled {
+  .define-urp-button-variant(
+    none,
+    none,
+    none,
+    none,
+    var(--urp-font-gray-3),
+    var(--urp-font-gray-3),
+    var(--urp-font-gray-3),
+    var(--urp-default-color-disabled),
+    var(--urp-default-color-disabled),
+    var(--urp-default-color-disabled)
+  );
+}
+
 .urp-button-variant-base.urp-button-theme-primary.urp-button-disabled {
   .define-urp-button-variant(
     solid,
@@ -353,6 +431,21 @@
 }
 
 /* 虚线边框禁用 */
+.urp-button-variant-dashed.urp-button-theme-default.urp-button-disabled {
+  .define-urp-button-variant(
+    dashed,
+    var(--urp-font-gray-3),
+    var(--urp-font-gray-3),
+    var(--urp-font-gray-3),
+    var(--urp-font-gray-3),
+    var(--urp-font-gray-3),
+    var(--urp-font-gray-3),
+    transparent,
+    transparent,
+    transparent,
+  );
+}
+
 .urp-button-variant-dashed.urp-button-theme-primary.urp-button-disabled {
   .define-urp-button-variant(
     dashed,
@@ -364,7 +457,7 @@
     var(--urp-primary-color-disabled),
     transparent,
     transparent,
-   transparent,
+    transparent,
   );
 }
 
@@ -414,6 +507,21 @@
 }
 
 /* 实线边框禁用 */
+.urp-button-variant-outline.urp-button-theme-default.urp-button-disabled {
+  .define-urp-button-variant(
+    solid,
+    var(--urp-font-gray-3),
+    var(--urp-font-gray-3),
+    var(--urp-font-gray-3),
+    var(--urp-font-gray-3),
+    var(--urp-font-gray-3),
+    var(--urp-font-gray-3),
+    transparent,
+    transparent,
+    transparent,
+  );
+}
+
 .urp-button-variant-outline.urp-button-theme-primary.urp-button-disabled {
   .define-urp-button-variant(
     solid,
@@ -425,7 +533,7 @@
     var(--urp-primary-color-disabled),
     transparent,
     transparent,
-   transparent,
+    transparent,
   );
 }
 
@@ -474,7 +582,21 @@
   );
 }
 
-
+/* 文字禁用 */
+.urp-button-variant-text.urp-button-theme-default.urp-button-disabled {
+  .define-urp-button-variant(
+    none,
+    none,
+    none,
+    none,
+    var(--urp-font-gray-3),
+    var(--urp-font-gray-3),
+    var(--urp-font-gray-3),
+    transparent,
+    transparent,
+    transparent,
+  );
+}
 
 .urp-button-variant-text.urp-button-theme-primary.urp-button-disabled {
   .define-urp-button-variant(
@@ -536,19 +658,6 @@
   );
 }
 
-/* theme 主题类 */
-.urp-button-variant-base.urp-button-theme-default {
-  background-color: var(--urp-default-color);
-  color: var(--urp-black);
-  &:hover {
-    background-color: var(--urp-default-color-hover);
-  }
-  &:active {
-    background-color: var(--urp-default-color-active);
-  }
-}
-
-
 /* shape 形状类 */
 .urp-button-shape-react {
   border-radius: 4px;
@@ -585,13 +694,3 @@
   aspect-ratio: 1 / 1;
   transform: translate(-50%, -50%);
 }
-
-@keyframes active-bg {
-  from {
-    width: 0;
-  }
-  to {
-    width: 200%;
-  }
-}
-
