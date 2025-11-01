@@ -4,6 +4,20 @@ export default function App() {
 
   return (
     <div>
+      <h3>图标</h3>
+      <UrpButton icon="AppstoreAddOutlined" theme="default">确定</UrpButton>
+      <hr/>
+      <UrpButton icon="AppstoreAddOutlined" theme="primary">确定</UrpButton>
+      <hr/>
+      <UrpButton icon="AppstoreAddOutlined" variant="outline" theme="primary">确定</UrpButton>
+      <hr/>
+      <UrpButton icon="AppstoreAddOutlined" variant="dashed" theme="primary">确定</UrpButton>
+      <hr/>
+      <UrpButton icon="AppstoreAddOutlined" variant="text" theme="primary">确定</UrpButton>
+      <hr/> 
+      <UrpButton icon="AppstoreAddOutlined" disabled variant="text" theme="primary">确定</UrpButton>
+      <hr/>
+      <UrpButton icon="AppstoreAddOutlined" block>确定</UrpButton>
       <h3>禁用</h3>
       <UrpButton disabled variant="text" theme="default">确定</UrpButton>
       <hr/>

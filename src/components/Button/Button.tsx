@@ -1,6 +1,7 @@
 import { ButtonType } from "./type"
 import defaultProperties from "./propertiers.ts"
 import genClassNameFromProps from "../utils/tools/className.ts"
+import { UrpIcon } from '../Icon/index.ts'
 import './style.less'
 
 export default function UrpButton(props: ButtonType) {
@@ -21,6 +22,10 @@ export default function UrpButton(props: ButtonType) {
   mergedProps.content = mergedProps.content ?? mergedProps.children
   return (
     <div className={buttonClass}>
+      {
+        mergedProps.icon &&
+        <UrpIcon style={{'marginRight': '4px'}} type={mergedProps.icon} />
+      }
       <span>{ mergedProps.content }</span>
     </div>
   )
