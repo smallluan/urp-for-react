@@ -1,0 +1,46 @@
+import { createBrowserRouter, RouterProvider  } from 'react-router-dom'
+
+import Home from '../pages/home/index.tsx'
+import OverView from '../pages/overview/index.tsx'
+
+import DividerPage from '../pages/components/divider/index.tsx'
+import SwitchPage from '../pages/components/switch/index.tsx'
+import ButtonPage from '../pages/components/button/index.tsx'
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Home/>,
+    children: [
+      {
+        path: 'overview',
+        element: <OverView/>
+      },
+      {
+        path: 'components',
+        children: [
+          {
+            index: true,
+            element: <ButtonPage/>
+          },
+          {
+            path: 'switch',
+            element: <SwitchPage/>
+          },
+          {
+            path: 'divider',
+            element: <DividerPage/>
+          }
+        ]
+      }
+    ]
+  },
+  {
+    path: '*',
+    element: <Home/>
+  }
+])
+
+export default function AppRouter() {
+  return <RouterProvider router={router} />
+}
