@@ -1,9 +1,16 @@
+import { useState } from "react"
 import { UrpButton } from "./components/Button/index.ts"
 
 export default function App() {
 
+  const [loading, setLoading] = useState(false)
+
   const btnClick = (e) => {
     console.log(e)
+    setLoading(true)
+    setTimeout(() => {
+      setLoading(false)
+    }, 2000)
   }
 
   return (
@@ -11,7 +18,7 @@ export default function App() {
       <h3>图标</h3>
       <UrpButton onClick={btnClick} icon="AppstoreAddOutlined" theme="default">确定</UrpButton>
       <hr/>
-      <UrpButton icon="AppstoreAddOutlined" theme="primary">确定</UrpButton>
+      <UrpButton loading={loading} icon="AppstoreAddOutlined" theme="primary">确定</UrpButton>
       <hr/>
       <UrpButton icon="AppstoreAddOutlined" variant="outline" theme="primary">确定</UrpButton>
       <hr/>

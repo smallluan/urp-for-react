@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback, useEffect } from 'react'
+import React, { useState, useRef, useCallback, useEffect, useMemo } from 'react'
 import { ButtonType } from "./type.ts"
 import defaultProperties from "./properties.ts"
 import genClassNameFromProps from "../utils/tools/className.ts"
@@ -9,6 +9,7 @@ import './style.less'
 export default function UrpButton(props: ButtonType) {
   // 合并属性（默认属性与传入属性）
   const mergedProps = { ...defaultProperties, ...props }
+  const { variant, theme, shape, size, block, disabled, loading, icon, onClick } = mergedProps
   // 状态管理：使用useRef存储不需要触发渲染的变量
   const prevMouseDown = useRef<number>(0)
   const timerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
@@ -30,7 +31,7 @@ export default function UrpButton(props: ButtonType) {
 
   // 点击事件处理（使用useCallback记忆函数）
   const handleClick = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
-    if (mergedProps.disabled || mergedProps.loading) return
+    if (disabled || loading) return
 
     const currentTime = Date.now()
     // 处理激活背景的显示时长
@@ -44,14 +45,14 @@ export default function UrpButton(props: ButtonType) {
     }
 
     // 触发外部点击回调
-    if (typeof mergedProps.onClick === 'function') {
-      mergedProps.onClick(e)
+    if (typeof onClick === 'function') {
+      onClick(e)
     }
-  }, [mergedProps.disabled, mergedProps.loading, mergedProps.onClick])
+  }, [disabled, loading, onClick])
 
   // 鼠标按下事件（显示激活背景）
   const handleMouseDown = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
-    if (mergedProps.disabled || mergedProps.loading || showActiveBgEl) return
+    if (disabled || loading || showActiveBgEl) return
 
     prevMouseDown.current = Date.now()
     const buttonEl = e.currentTarget
@@ -61,11 +62,11 @@ export default function UrpButton(props: ButtonType) {
 
     setShowActiveBgEl(true)
     setActiveBgStyle(genStyleFromPrpos({ relativeX, relativeY }) as React.CSSProperties)
-  }, [mergedProps.disabled, mergedProps.loading, showActiveBgEl])
+  }, [disabled, loading, showActiveBgEl])
 
   // 鼠标抬起事件（隐藏激活背景）
   const handleMouseUp = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
-    if (mergedProps.disabled || mergedProps.loading) return
+    if (disabled || loading) return
 
     const currentTime = Date.now()
     if (currentTime - prevMouseDown.current > 250) {
@@ -76,21 +77,23 @@ export default function UrpButton(props: ButtonType) {
         timerRef.current = undefined
       }, 250 - (currentTime - prevMouseDown.current))
     }
-  }, [mergedProps.disabled, mergedProps.loading])
+  }, [disabled, loading])
 
   // 生成按钮类名
-  const buttonClass = genClassNameFromProps(
-    {
-      variant: mergedProps.variant,
-      theme: mergedProps.theme,
-      shape: mergedProps.shape,
-      size: mergedProps.size,
-      block: mergedProps.block,
-      disabled: mergedProps.disabled
-    },
-    'urp-button',
-    'urp-button'
-  )
+  const buttonClass = useMemo(() => {
+    return genClassNameFromProps(
+      {
+        variant: variant,
+        theme: theme,
+        shape: shape,
+        size: size,
+        block: block,
+        disabled: disabled || loading
+      },
+      'urp-button',
+      'urp-button'
+    )
+  }, [variant, theme, shape, size, block, disabled, loading])
 
   return (
     <button
@@ -99,14 +102,18 @@ export default function UrpButton(props: ButtonType) {
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
       className={buttonClass}
-      disabled={mergedProps.disabled || mergedProps.loading}
-      aria-disabled={mergedProps.disabled || mergedProps.loading} // ARIA属性，增强可访问性
+      disabled={disabled || loading}
+      aria-disabled={disabled || loading} // ARIA属性，增强可访问性
     >
       {/* 按钮内容容器 */}
       <div style={{ position: 'relative', zIndex: 2 }}>
-        {mergedProps.icon && (
-          <UrpIcon style={{ marginRight: '4px' }} type={mergedProps.icon} />
+        {icon && !loading && (
+          <UrpIcon style={{ marginRight: '4px' }} type={icon} />
         )}
+        {
+          loading && 
+          <UrpIcon style={{ marginRight: '4px' }} type="LoadingOutlined" />
+        }
         <span>{buttonContent}</span>
       </div>
       
