@@ -6,6 +6,7 @@ import OverView from '../pages/overview/index.tsx'
 import DividerPage from '../pages/components/divider/index.tsx'
 import SwitchPage from '../pages/components/switch/index.tsx'
 import ButtonPage from '../pages/components/button/index.tsx'
+import LinkPage from '../pages/components/link/index.tsx'
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,7 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
+            path: 'button',
             element: <ButtonPage/>
           },
           {
@@ -30,6 +32,10 @@ const router = createBrowserRouter([
           {
             path: 'divider',
             element: <DividerPage/>
+          },
+          {
+            path: 'link',
+            element: <LinkPage/>
           }
         ]
       }
