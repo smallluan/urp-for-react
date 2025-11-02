@@ -104,6 +104,7 @@ export default function UrpButton(props: ButtonType) {
       className={buttonClass}
       disabled={disabled || loading}
       aria-disabled={disabled || loading} // ARIA属性，增强可访问性
+      data-testid="urp-button"
     >
       {/* 按钮内容容器 */}
       <div style={{ position: 'relative', zIndex: 2 }}>
