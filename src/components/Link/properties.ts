@@ -1,7 +1,7 @@
 import { LinkType } from "./type"
 
 const defaultProperties: Required<LinkType> = {
-  content: '跳转链接',
+  content: null,
   children: null,
   theme: 'primary',
   underline: 'display',
