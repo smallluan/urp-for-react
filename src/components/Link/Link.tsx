@@ -29,7 +29,7 @@ export default function UrpLink(props: LinkType) {
   }, [theme, size, disabled, underline])
 
   return(
-    <div className={linkClass}>
+    <div data-testid='urp-link' className={linkClass}>
       <div>
         {
           prefixIcon &&
