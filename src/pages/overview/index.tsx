@@ -19,6 +19,10 @@ export default function OverView() {
       href: 'http://127.0.0.1:3000/components/link',
       content: 'Link 链接'
     },
+    {
+      href: 'http://127.0.0.1:3000/components/input',
+      content: 'Input 输入框'
+    },
   ]
 
   return (
