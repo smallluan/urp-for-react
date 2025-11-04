@@ -29,7 +29,7 @@ export default function UrpLink(props: LinkType) {
   }, [theme, size, disabled, underline])
 
   return(
-    <div data-testid='urp-link' className={linkClass}>
+    <div aria-disabled={disabled} data-testid='urp-link' className={linkClass}>
       <div>
         {
           prefixIcon &&
@@ -43,7 +43,7 @@ export default function UrpLink(props: LinkType) {
       </div>
       {
         underline !== 'none' &&
-        <span className="underline"></span>
+        <span aria-hidden="true" className="underline"></span>
       }
     </div>
   )

@@ -63,4 +63,13 @@ describe('Link 组件', () => {
     container = urpLinks[1].firstChild
     expect(container?.childNodes[1]?.firstChild?.nodeName).toBe('svg')
   })
+
+  it('测试链接禁用', () => {
+    render(
+      <UrpLink href="https://tdesign.tencent.com/" disabled />
+    )
+    const urpLink = screen.getByTestId('urp-link')
+
+    expect(urpLink).toHaveClass('urp-link-disabled')
+  })
 })

@@ -4,6 +4,21 @@ export default function LinkPage() {
   return(
     <div>
       <h2>Link 组件</h2>
+      <h3>禁用</h3>
+      <UrpLink disabled content="跳转链接" prefixIcon="LinkOutlined" href="https://tdesign.tencent.com/"/>
+      <hr/>
+      <UrpLink disabled theme="warning" content="跳转链接" prefixIcon="LinkOutlined" href="https://tdesign.tencent.com/"/>
+      <hr/>
+      <UrpLink disabled theme="success" content="跳转链接" prefixIcon="LinkOutlined" href="https://tdesign.tencent.com/"/>
+      <hr/>
+      <UrpLink disabled theme="error" content="跳转链接" prefixIcon="LinkOutlined" href="https://tdesign.tencent.com/"/>
+      <h3>下划线</h3>
+      <UrpLink content="跳转链接" underline="none" prefixIcon="LinkOutlined" theme="primary" href="https://tdesign.tencent.com/"/>
+      <hr/>
+      <UrpLink content="跳转链接" underline="display" prefixIcon="LinkOutlined" theme="primary" href="https://tdesign.tencent.com/"/>
+      <hr/>
+      <UrpLink content="跳转链接" underline="hover" prefixIcon="LinkOutlined" theme="primary" href="https://tdesign.tencent.com/"/>
+      <hr/>
       <h3>尺寸</h3>
       <UrpLink content="跳转链接" size="normal" prefixIcon="LinkOutlined" theme="primary" href="https://tdesign.tencent.com/"/>
       <hr/>

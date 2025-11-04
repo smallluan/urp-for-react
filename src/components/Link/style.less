@@ -11,6 +11,10 @@
   }
 }
 
+.urp-link-disabled {
+  pointer-events: none;
+}
+
 .define-urp-link(
   @color: var(--urp-primary-color);
   @color-hover: var(--urp-primary-color-hover);
@@ -91,6 +95,46 @@
     var(--urp-error-color),
     var(--urp-error-color-hover),
     var(--urp-error-color-active),
+  )
+}
+
+.urp-link-theme-default.urp-link-disabled {
+  .define-urp-link(
+    var(--urp-font-gray-2),
+    var(--urp-font-gray-3),
+    var(--urp-font-gray-1)
+  )
+}
+
+.urp-link-theme-primary.urp-link-disabled {
+  .define-urp-link(
+    var(--urp-primary-color-disabled),
+    var(--urp-primary-color-disabled),
+    var(--urp-primary-color-disabled),
+  )
+}
+
+.urp-link-theme-warning.urp-link-disabled  {
+  .define-urp-link(
+    var(--urp-warning-color-disabled),
+    var(--urp-warning-color-disabled),
+    var(--urp-warning-color-disabled),
+  )
+}
+
+.urp-link-theme-success.urp-link-disabled  {
+  .define-urp-link(
+    var(--urp-success-color-disabled),
+    var(--urp-success-color-disabled),
+    var(--urp-success-color-disabled),
+  )
+}
+
+.urp-link-theme-error.urp-link-disabled  {
+  .define-urp-link(
+    var(--urp-error-color-disabled),
+    var(--urp-error-color-disabled),
+    var(--urp-error-color-disabled),
   )
 }
 
