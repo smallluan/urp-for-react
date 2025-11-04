@@ -9,3 +9,5 @@
 |`readonly`|N|`boolean`|`false`|只读（注意区分一下和 disabled 的区别）|
 |`value`|N|`string`|-|输入框的值|
 |`clearable`|N|`boolean`|`false`|是否有一键清除图标|
+|`size`|N|`normal \| small \| large`|`normal`|尺寸|
+|`shape`|N|`round \| rect`|`rect`|输入框形状|

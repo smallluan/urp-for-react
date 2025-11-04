@@ -9,6 +9,8 @@ const defaultProperties: Required<InputType> = {
   readonly: false,
   value: '',
   clearable: false,
+  size: 'normal',
+  shape: 'rect',
 }
 
 export default defaultProperties

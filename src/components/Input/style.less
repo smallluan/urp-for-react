@@ -1,0 +1,37 @@
+@import '../utils/styles/index.less';
+
+.urp-input-container {
+  display: flex;
+  width: fit-content;
+  border: 1px solid var(--urp-default-color);
+  &-shape-rect {
+    border-radius: 4px;
+  }
+  &-shape-round {
+    border-radius: 100vh;
+  }
+  &-size-normal {
+    padding: 4px 6px;
+  }
+  &-size-small {
+    padding: 2px 4px;
+  }
+  &-size-large {
+    padding: 6px 8px;
+  }
+}
+
+.urp-input {
+  color: var(--urp-font-gray-1);
+  &-size-normal {
+    font-size: 14px;
+  }
+
+  &-size-small {
+    font-size: 12px;
+  }
+
+  &-size-large {
+    font-size: 16px;
+  }
+}

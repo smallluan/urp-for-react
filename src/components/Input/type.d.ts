@@ -6,7 +6,9 @@ interface InputType {
   placeholder?: string,
   readonly?: boolean,
   value?: string,
-  clearable?: boolean
+  clearable?: boolean,
+  size?: 'normal' | 'small' | 'large',
+  shape?: 'rect' | 'round'
 }
 
 export default InputType
