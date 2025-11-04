@@ -5,7 +5,7 @@ const defaultProperties: Required<ButtonType> = {
   content: '确定',
   variant: 'base',
   theme: 'primary',
-  shape: 'react',
+  shape: 'rect',
   disabled: false,
   loading: false,
   block: false,

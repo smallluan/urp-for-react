@@ -3,7 +3,7 @@ export interface ButtonType {
   content?: React.ReactNode,
   variant?: 'base' | 'outline' | 'dashed' | 'text',
   theme?: 'default' | 'primary' | 'warning' | 'success' | 'error',
-  shape?: 'react' | 'round',
+  shape?: 'rect' | 'round',
   disabled?: boolean,
   loading?: boolean,
   block?: boolean,

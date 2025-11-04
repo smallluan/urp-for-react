@@ -25,7 +25,7 @@
 |`state`|N|`boolean`|`false`|开关状态|
 |`loading`|N|`boolean`|`false`|开关是否正在加载，当加载时 `state` 变量为 `false`|
 |`disabled`|N|`boolean`|`false`|开关是否可用|
-|`shape`|N|`around \| react`|`around`|按钮形状，圆角按钮和矩形按钮|
+|`shape`|N|`around \| rect`|`around`|按钮形状，圆角按钮和矩形按钮|
 |`desc`|N|`Array<string>`|`[]`|文字描述|
 |`descIcon`|N|`Array<string>`|`[]`|图标描述。文字描述和图标描述同时存在时，图标描述覆盖文字描述|
 |`descPos`|N|`inner`\|`outter`|`inner`|描述信息所在的位置|

@@ -4,7 +4,7 @@
 |`content`|N|`ReactNode`|''|文字内容|
 |`variant`|N|`base \| outline \| dashed \| text`|`base`|按钮形式: `基础/线框/虚线框/纯文字`|
 |`theme`|N|`default \| primary \| warning \| success \| error`|`primary`|按钮主题|
-|`shape`|N|`react \| round`|`react`|按钮形状|
+|`shape`|N|`rect \| round`|`rect`|按钮形状|
 |`disabled`|N|`boolean`|`false`|是否禁用|
 |`loading`|N|`boolean`|`false`|是否加载中|
 |`block`|N|`boolean`|`false`|是否为块级元素|

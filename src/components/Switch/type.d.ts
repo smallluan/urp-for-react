@@ -2,7 +2,7 @@ export interface SwitchType {
   state?: boolean,
   loading?: boolean,
   disabled?: boolean,
-  shape?: 'around' | 'react',
+  shape?: 'around' | 'rect',
   desc?: [string, string] | [],
   descIcon?: [string, string] | [],
   descPos?: 'inner' | 'outer',
