@@ -3,6 +3,14 @@ import { UrpInput } from '../../../components/Input/index.ts'
 export default function InputPage() {
   return(
     <>
+      <h2>带描述</h2>
+      <UrpInput description='这里是描述信息' maxlength={10} showCount clearable/>
+      <h2>字数上限</h2>
+      <UrpInput maxlength={10} showCount clearable/>
+      <h2>显示字数</h2>
+      <UrpInput showCount clearable/>
+      <h2>可清理</h2>
+      <UrpInput clearable/>
       <h2>类型</h2>
       <UrpInput placeholder='text' type='text' />
       <UrpInput placeholder='number' type='number' />
