@@ -11,6 +11,7 @@ const defaultProperties: Required<InputType> = {
   clearable: false,
   size: 'normal',
   shape: 'rect',
+  type: 'text'
 }
 
 export default defaultProperties

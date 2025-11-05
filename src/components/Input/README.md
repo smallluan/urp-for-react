@@ -11,3 +11,4 @@
 |`clearable`|N|`boolean`|`false`|是否有一键清除图标|
 |`size`|N|`normal \| small \| large`|`normal`|尺寸|
 |`shape`|N|`round \| rect`|`rect`|输入框形状|
+|`type`|N|`text \|number \|url \| tel \| password`|`text`|输入框类型|

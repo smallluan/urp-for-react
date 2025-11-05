@@ -9,6 +9,7 @@ interface InputType {
   clearable?: boolean,
   size?: 'normal' | 'small' | 'large',
   shape?: 'rect' | 'round'
+  type?: 'text' | 'number' | 'url' | 'tel' | 'password'
 }
 
 export default InputType
