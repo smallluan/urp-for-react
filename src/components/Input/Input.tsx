@@ -8,7 +8,8 @@ import './style.less'
 export default function UrpInput(props: InputType) {
   const mergedProps = formatProps({ ...defaultProperties, ...props })
   const { size, shape, disabled, readonly, maxlength, 
-    type, placeholder, clearable, showCount, description 
+    type, placeholder, clearable, showCount, description,
+    children 
   } = mergedProps
   const [value, setValue] = useState(mergedProps.value)
   const [isFocused, setIsFocused] = useState(false)
@@ -46,6 +47,10 @@ export default function UrpInput(props: InputType) {
   return(
     <div className={containerClass}>
       <div className="urp-input-up">
+        {
+          children &&
+          <span className="urp-input-children">{children}</span>
+        }
         <input
           disabled={disabled}
           maxLength={maxlength}
@@ -59,16 +64,25 @@ export default function UrpInput(props: InputType) {
           onMouseEnter={() => setIsMouseEnter(true)}
           onMouseLeave={() => setIsMouseEnter(false)}
         />
-        {
-          (clearable && (isFocused || isMouseEnter || isClearIconHover) && value.length > 0) &&
-          <span 
-            onMouseEnter={() => setIsClearIconHover(true)}
-            onMouseLeave={() => setIsClearIconHover(false)}
-            onClick={() => setValue('')}
-          >
-            <UrpIcon className="urp-close-icon" type='CloseCircleOutlined' />
-          </span>
-        }
+          <div className="urp-input-icons">
+            {
+              type === 'password' && 
+              <span>
+                <UrpIcon className="urp-close-icon" type='EyeOutlined' />
+              </span>
+            }
+            {
+              (clearable && (isFocused || isMouseEnter || isClearIconHover) && 
+              value.length > 0) &&
+              <span 
+                onMouseEnter={() => setIsClearIconHover(true)}
+                onMouseLeave={() => setIsClearIconHover(false)}
+                onClick={() => setValue('')}
+              >
+                <UrpIcon className="urp-close-icon" type='CloseCircleOutlined' />
+              </span>
+            }
+          </div>
       </div>
       <div className="urp-input-down">
         <div>{ description }</div>

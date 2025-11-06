@@ -1,8 +1,27 @@
 import { UrpInput } from '../../../components/Input/index.ts'
+import { UrpIcon } from '../../../components/Icon/index.ts'
 
 export default function InputPage() {
   return(
     <>
+      <h2>带前缀</h2>
+      <UrpInput 
+        description='这里是描述信息' 
+        maxlength={10} 
+        showCount
+        clearable
+      >
+        <UrpIcon type="AppstoreAddOutlined" />
+      </UrpInput> 
+      <hr />
+      <UrpInput 
+        description='这里是描述信息' 
+        maxlength={10} 
+        showCount
+        clearable
+      >
+        <span>提示文字</span>
+      </UrpInput> 
       <h2>带描述</h2>
       <UrpInput description='这里是描述信息' maxlength={10} showCount clearable/>
       <h2>字数上限</h2>

@@ -13,7 +13,8 @@ const defaultProperties: Required<InputType> = {
   shape: 'rect',
   type: 'text',
   showCount: false,
-  description: ''
+  description: '',
+  children: null
 }
 
 export default defaultProperties

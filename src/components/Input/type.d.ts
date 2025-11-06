@@ -11,7 +11,8 @@ interface InputType {
   shape?: 'rect' | 'round'
   type?: 'text' | 'number' | 'url' | 'tel' | 'password',
   showCount?: boolean,
-  description?: string
+  description?: string,
+  children?: React.ReactNode
 }
 
 export default InputType
