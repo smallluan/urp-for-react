@@ -6,6 +6,7 @@ export const defaultIconProps: Partial<IconProps> = {
     color: 'inherit',
     fontSize: 16,
   },
+  onClick: () => { return }
 }
 
 export const formatIconProps = (props: IconProps): IconProps => {

@@ -1,4 +1,4 @@
-import type { CSSProperties } from 'react'
+import type { CSSProperties, MouseEvent } from 'react'
 import type * as AllIcons from '@ant-design/icons'
 
 export type AllIconsType = keyof typeof AllIcons;
@@ -8,4 +8,5 @@ export interface IconProps {
   size?: number | string;
   style?: CSSProperties & { fontSize?: number };
   className?: string;
+  onClick?: (event?: MouseEvent) => void;
 }
