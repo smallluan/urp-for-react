@@ -4,7 +4,29 @@ import { UrpIcon } from '../../../components/Icon/index.ts'
 export default function InputPage() {
   return(
     <>
-       <h2>多图标</h2>
+      <h2>只读和禁用</h2>
+      <UrpInput 
+        description='这里是描述信息' 
+        maxlength={10} 
+        showCount
+        clearable
+        readonly
+        value='你好，世界'
+      >
+        <UrpIcon type="AppstoreAddOutlined" />
+      </UrpInput> 
+      <hr />
+      <UrpInput 
+        description='这里是描述信息' 
+        maxlength={10} 
+        showCount
+        clearable
+        disabled
+        value='你好，世界'
+      >
+        <UrpIcon type="AppstoreAddOutlined" />
+      </UrpInput> 
+      <h2>多图标</h2>
       <UrpInput 
         description='这里是描述信息' 
         maxlength={10} 

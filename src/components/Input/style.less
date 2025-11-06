@@ -17,6 +17,22 @@
   }
 }
 
+.urp-input-disabled {
+  cursor: not-allowed;
+  color: var(--urp-font-gray-3) !important;
+  background-color: var(--urp-bg-gray-6) !important;
+  &:hover {
+    border: 1px solid var(--urp-font-gray-3) !important;
+  }
+}
+
+.urp-input-readonly {
+  cursor: not-allowed;
+  &:hover {
+    border: 1px solid var(--urp-font-gray-3) !important;
+  }
+}
+
 .urp-input-up {
   position: relative;
   display: flex;
@@ -78,10 +94,6 @@
 }
 
 .urp-close-icon {
-  // position: absolute;
-  // right: 0;
-  // bottom: 50%;
-  // transform: translate(-50%, 50%);
   color: var(--urp-font-gray-3) !important;
   cursor: pointer;
 }

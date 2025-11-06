@@ -20,27 +20,16 @@ export default function UrpInput(props: InputType) {
   // 外层容器 class
   const containerClass = useMemo(() => {
     return genClassNameFromProps(
-      {
-        shape: shape,
-        size: size,
-        disabled: disabled,
-        readonly: readonly
-      },
-      'urp-input-container',
-      'urp-input-container'
+      { shape, size},
+      'urp-input-container', 'urp-input-container'
     )
-  }, [shape, size, disabled, readonly])
+  }, [shape, size])
   // 输入框本体 class
   const inputClass = useMemo(() => {
     return genClassNameFromProps(
-      {
-        shape: shape,
-        size: size
-      },
-      'urp-input',
-      'urp-input'
-    )
-  }, [size, shape])
+      { shape, size, disabled, readonly},
+      'urp-input','urp-input')
+  }, [size, shape, disabled, readonly])
   // 输入框类型（针对 password 类型）
   const inputType = useMemo(() => {
     if (type === 'password' && !hidePassword) {
@@ -48,29 +37,10 @@ export default function UrpInput(props: InputType) {
     }
     return type
   }, [type, hidePassword])
-
+  
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // if (!isComposingRef.current) {
-    //   setValue(e.target.value)
-    // }
     setValue(e.target.value)
   }
-
-  // const handleCompositionStart = (e) => {
-  //   handleInput(e)
-  //   console.log('组合输入开始')
-  //   isComposingRef.current = true 
-  // }
-
-  // const handleCompositionEnd = (e: React.CompositionEvent<HTMLInputElement>) => {
-    
-  //   isComposingRef.current = false
-  //   // 组合结束后，使用最终的值更新状态
-  //   const finalValue = e.currentTarget.value
-  //   setValue(finalValue)
-  //   console.log('组合输入结束')
-  // }
-
 
   const handleClear = () => {
     setValue('')
@@ -86,7 +56,7 @@ export default function UrpInput(props: InputType) {
         }
         <input
           ref={inputRef}
-          disabled={disabled}
+          disabled={disabled || readonly}
           maxLength={maxlength}
           value={value}
           className={inputClass}
@@ -95,8 +65,6 @@ export default function UrpInput(props: InputType) {
           onChange={handleInput}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
-          // onCompositionStart={handleCompositionStart}
-          // onCompositionEnd={handleCompositionEnd}
         />
         <div className="urp-input-icons">
           {
