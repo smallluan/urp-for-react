@@ -14,7 +14,8 @@ const defaultProperties: Required<InputType> = {
   type: 'text',
   showCount: false,
   description: '',
-  children: null
+  children: null,
+  icons: ''
 }
 
 export default defaultProperties

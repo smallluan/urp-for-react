@@ -9,13 +9,12 @@ export default function UrpInput(props: InputType) {
   const mergedProps = formatProps({ ...defaultProperties, ...props })
   const { size, shape, disabled, readonly, maxlength, 
     type, placeholder, clearable, showCount, description,
-    children 
+    children, icons
   } = mergedProps
   const [value, setValue] = useState(mergedProps.value)
   const [hidePassword, setHidePassword] = useState(true)
   const [isFocused, setIsFocused] = useState(false)
   const [isClearIconHover, setIsClearIconHover] = useState(false)
-  // const isComposingRef = useRef(false)
   const inputRef = useRef<HTMLInputElement>(null)
   // 外层容器 class
   const containerClass = useMemo(() => {
@@ -102,6 +101,8 @@ export default function UrpInput(props: InputType) {
               }
             </span>
           }
+          {/* 自定义组件 */}
+          { genCustomIcons(icons) }
         </div>
       </div>
       <div className="urp-input-down">
@@ -118,5 +119,42 @@ export default function UrpInput(props: InputType) {
         }
       </div>
     </div>
+  )
+}
+
+const genCustomIcons = (icons: InputType['icons']) => {
+  if (typeof icons === 'string') {
+    return (
+      <UrpIcon
+        className="urp-close-icon"
+        type={icons}
+      />
+    )
+  }
+  if (Array.isArray(icons)) {
+    return(
+      icons.map((icon, index) => {
+        if (typeof icon === 'string') {
+          return (
+            <UrpIcon
+              key={index}
+              className="urp-close-icon"
+              type={icon}
+            />
+          )
+        } else {
+          return (
+            <span className="urp-close-icon" key={index}>
+              {icon}
+            </span>
+          )
+        }
+      })
+    )
+  }
+  return (
+    <span className="urp-close-icon">
+      {icons}
+    </span>
   )
 }

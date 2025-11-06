@@ -4,6 +4,12 @@ import { UrpIcon } from '../../../components/Icon/index.ts'
 export default function InputPage() {
   return(
     <>
+      <h2>接下来改一下这个边框的范围，除了输入框本体还需要包含上面行的所有元素，方便扩展图标和未来基于输入框所做的扩展开发</h2>
+      <h2>额外的图标</h2>
+      <UrpInput 
+        clearable
+        icons={[<UrpIcon key={1} type='UnorderedListOutlined' />]}
+      />
       <h2>只读和禁用</h2>
       <UrpInput 
         description='这里是描述信息' 

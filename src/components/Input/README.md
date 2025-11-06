@@ -15,3 +15,4 @@
 |`showCount`|N|`boolean`|`false`|是否显示当前字数|
 |`description`|N|`string`|-|描述文字|
 |`children`|N|`ReactNode`|-|输入框前缀|
+|`icons`|N|`string \| string[]`|-|额外的图标|

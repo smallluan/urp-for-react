@@ -12,7 +12,8 @@ interface InputType {
   type?: 'text' | 'number' | 'url' | 'tel' | 'password',
   showCount?: boolean,
   description?: string,
-  children?: React.ReactNode
+  children?: React.ReactNode,
+  icons?: string | string[] | React.ReactNode
 }
 
 export default InputType
