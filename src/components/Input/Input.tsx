@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import InputType from "./type"
 import defaultProperties, { formatProps } from './properties.ts'
 import genClassNameFromProps from '../utils/tools/className.ts'
@@ -16,6 +16,9 @@ export default function UrpInput(props: InputType) {
   const [isFocused, setIsFocused] = useState(false)
   const [isClearIconHover, setIsClearIconHover] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
+  useEffect(() => {
+    setValue(mergedProps.value)
+  }, [mergedProps.value])
   // 外层容器 class
   const containerClass = useMemo(() => {
     return genClassNameFromProps(
