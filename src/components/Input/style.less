@@ -83,6 +83,10 @@
   flex: 1 1 auto;
   min-width: 0;
   font-size: inherit;
+  /* 清除浏览器默认外观（部分类型生效） */
+  -webkit-appearance: none; /* 针对webkit内核（Chrome/Safari） */
+  -moz-appearance: none; /* 针对Firefox */
+  appearance: none;
 }
 
 .urp-input-icons {
@@ -103,6 +107,28 @@
     color: var(--urp-font-gray-2) !important;
   }
   font-size: inherit;
+}
+
+.urp-number-icons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0px;
+  &>span {
+    line-height: 1;
+    cursor: pointer;
+    color: var(--urp-font-gray-3) !important;
+    &:hover {
+      color: var(--urp-font-gray-2) !important;
+    }
+  }
+  .urp-number-icon-up {
+    margin-bottom: -2px;
+  }
+  .urp-number-icon-down {
+     margin-top: -2px; 
+  }
 }
 
 .urp-count {

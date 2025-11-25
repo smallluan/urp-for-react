@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react"
+import { useEffect, useMemo, useRef, useState, Dispatch, SetStateAction } from "react"
 import InputType from "./type"
 import defaultProperties, { formatProps } from './properties.ts'
 import genClassNameFromProps from '../utils/tools/className.ts'
@@ -118,6 +118,14 @@ export default function UrpInput(props: InputType) {
           }
           {/* 自定义组件 */}
           { genCustomIcons(icons) }
+          {/* 数字类型输入框增减图标 */}
+          {
+            (
+              type === 'number' &&
+              !readonly && !disabled
+            ) &&
+            genNumberIcons(setValue)
+          }
         </div>
       </div>
       <div className="urp-input-down">
@@ -137,6 +145,38 @@ export default function UrpInput(props: InputType) {
   )
 }
 
+/**
+ * 数字类型输入框显示的增减图标生成函数
+ * @param setValue - 设置输入框值的函数
+ * @returns 
+ */
+const genNumberIcons = (setValue: Dispatch<SetStateAction<string>>) => {
+  return (
+    <span className="urp-number-icons">
+      <UrpIcon
+        onClick={() => setValue((prev: string) => {
+          const newValue = Number(prev) + 1
+          return String(newValue)
+        })}
+        className="urp-number-icon-up"
+        type='CaretUpOutlined'
+      />
+      <UrpIcon
+        onClick={() => setValue((prev: string) => {
+          const newValue = Number(prev) - 1
+          return String(newValue)
+        })}
+        className="urp-number-icon-down"
+        type='CaretDownOutlined'
+      />
+    </span>
+  )
+}
+
+/**
+ * 用户自定义图标生成函数
+ * @param icons - 用户传入的 icons
+ */
 const genCustomIcons = (icons: InputType['icons']) => {
   if (typeof icons === 'string') {
     return (
