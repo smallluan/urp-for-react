@@ -6,7 +6,9 @@ import { UrpIcon } from '../Icon/index.ts'
 import './style.less'
 
 export default function UrpInput(props: InputType) {
-  const mergedProps = formatProps({ ...defaultProperties, ...props })
+  const mergedProps = useMemo(() => {
+    return formatProps({ ...defaultProperties, ...props })
+  }, [props])
   const { size, shape, disabled, readonly, maxlength, 
     type, placeholder, clearable, showCount, description,
     children, icons
