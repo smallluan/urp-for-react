@@ -23,10 +23,6 @@ input {
   box-sizing: border-box;
   background-color: transparent;
   cursor: text;
-  /* 清除浏览器默认外观（部分类型生效） */
-  -webkit-appearance: none; /* 针对webkit内核（Chrome/Safari） */
-  -moz-appearance: none; /* 针对Firefox */
-  appearance: none;
 }
 
 /* 处理数字输入框的上下箭头（number类型） */
@@ -44,4 +40,15 @@ input[type="number"] {
 /* 处理搜索框的默认清除按钮（search类型） */
 input[type="search"]::-webkit-search-cancel-button {
   -webkit-appearance: none;
+}
+/* 单选框 */
+input[type="radio"] {
+  position: absolute; /* 脱离文档流，不占空间 */
+  opacity: 0; /* 完全透明 */
+  width: 0;
+  height: 0;
+  /* 兼容旧浏览器 */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }

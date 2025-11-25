@@ -23,6 +23,10 @@ export default function OverView() {
       href: 'http://127.0.0.1:3000/components/input',
       content: 'Input 输入框'
     },
+      {
+      href: 'http://127.0.0.1:3000/components/checkbox',
+      content: 'Checkbox 选择框'
+    },
   ]
 
   return (
