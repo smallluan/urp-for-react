@@ -5,25 +5,20 @@
   flex-direction: column;
   width: 200px;
   color: var(--urp-font-gray-1);
+  --input-size-related-height: 14px; 
   &-size-normal {
     font-size: 14px;
+    --input-size-related-height: 14px
   }
   &-size-small {
     font-size: 12px;
+    --input-size-related-height: 12px
   }
   &-size-large {
     font-size: 16px;
+    --input-size-related-height: 16px
   }
   transition: all .1s ease-in-out;
-}
-
-.urp-input-disabled {
-  cursor: not-allowed;
-  color: var(--urp-font-gray-2) !important;
-}
-
-.urp-input-readonly {
-  cursor: pointer;
 }
 
 .urp-input-up {
@@ -87,6 +82,7 @@
   color: var(--urp-font-gray-1);
   flex: 1 1 auto;
   min-width: 0;
+  font-size: inherit;
 }
 
 .urp-input-icons {
@@ -97,6 +93,7 @@
     margin-left: 8px;
   }
   flex: 0 0 auto;
+  height: var(--input-size-related-height); 
 }
 
 .urp-close-icon {
@@ -105,8 +102,19 @@
   &:hover {
     color: var(--urp-font-gray-2) !important;
   }
+  font-size: inherit;
 }
 
 .urp-count {
   display: flex;
 }
+
+.urp-input-disabled {
+  cursor: not-allowed;
+  color: var(--urp-font-gray-2);
+}
+
+.urp-input-readonly {
+  cursor: pointer;
+}
+
