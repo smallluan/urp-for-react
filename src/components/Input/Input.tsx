@@ -26,6 +26,12 @@ export default function UrpInput(props: InputType) {
       'urp-input-container', 'urp-input-container'
     )
   }, [shape, size])
+  // 输入框上层容器 class
+  const inputUpClass = useMemo(() => {
+    return genClassNameFromProps(
+      { shape, size, disabled, readonly, isFocused},
+      'urp-input-up','urp-input-up')
+  }, [size, shape, disabled, readonly, isFocused])
   // 输入框本体 class
   const inputClass = useMemo(() => {
     return genClassNameFromProps(
@@ -51,7 +57,11 @@ export default function UrpInput(props: InputType) {
 
   return(
     <div className={containerClass}>
-      <div className="urp-input-up">
+      <div
+        className={inputUpClass}
+        onMouseEnter={() => setIsClearIconHover(true)}
+        onMouseLeave={() => setIsClearIconHover(false)}
+      >
         {
           children &&
           <span className="urp-input-children">{children}</span>
@@ -74,11 +84,11 @@ export default function UrpInput(props: InputType) {
             因为它可能频繁的显示隐藏出现bug */
           }
           {
-            (clearable && (isFocused || isClearIconHover) &&
-              value.length > 0) &&
+            ( clearable && (isFocused || isClearIconHover) &&
+              value.length > 0 &&
+              !readonly && !disabled
+            ) &&
             <span
-              onMouseEnter={() => setIsClearIconHover(true)}
-              onMouseLeave={() => setIsClearIconHover(false)}
               onClick={handleClear}
             >
               <UrpIcon className="urp-close-icon" type='CloseCircleOutlined' />

@@ -3,7 +3,7 @@
 .urp-input-container {
   display: flex;
   flex-direction: column;
-  width: fit-content;
+  width: 200px;
   color: var(--urp-font-gray-1);
   &-size-normal {
     font-size: 14px;
@@ -14,47 +14,24 @@
   &-size-large {
     font-size: 16px;
   }
+  transition: all .1s ease-in-out;
 }
 
 .urp-input-disabled {
   cursor: not-allowed;
-  color: var(--urp-font-gray-3) !important;
-  background-color: var(--urp-bg-gray-6) !important;
-  &:hover {
-    border: 1px solid var(--urp-font-gray-3) !important;
-  }
+  color: var(--urp-font-gray-2) !important;
 }
 
 .urp-input-readonly {
-  cursor: not-allowed;
-  &:hover {
-    border: 1px solid var(--urp-font-gray-3) !important;
-  }
+  cursor: pointer;
 }
 
 .urp-input-up {
+  border: 1px solid var(--urp-font-gray-3);
   position: relative;
   display: flex;
   align-items: center;
-}
-
-.urp-input-children {
-  margin-right: 4px;
-}
-
-.urp-input-down {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 4px;
-  font-size: 12px;
-  color: var(--urp-font-gray-2);
-}
-
-.urp-input {
-  border: 1px solid var(--urp-font-gray-3);
-  transition: all .1s ease-in-out;
-  background-color: white;
-  color: var(--urp-font-gray-1);
+  max-width: inherit;
   &-shape-rect {
     border-radius: 4px;
   }
@@ -76,24 +53,58 @@
   &:focus {
     border: 1px solid var(--urp-primary-color);
   }
+  &-disabled {
+    cursor: not-allowed;
+    color: var(--urp-font-gray-3) !important;
+    background-color: var(--urp-bg-gray-7) !important;
+    &:hover {
+      border: 1px solid var(--urp-font-gray-3) !important;
+    }
+  }
+  &-readonly {
+    cursor: pointer;
+    &:hover {
+      border: 1px solid var(--urp-font-gray-3) !important;
+    }
+  }
+}
+
+.urp-input-children {
+  margin-right: 4px;
+  flex: 0 0 auto;
+}
+
+.urp-input-down {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--urp-font-gray-2);
+}
+
+.urp-input {
+  background-color: transparent;
+  color: var(--urp-font-gray-1);
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
 .urp-input-icons {
-  position: absolute;
-  right: 0;
-  bottom: 50%;
-  transform: translate(0, 50%);
   display: flex;
   justify-content: flex-end;
   align-items: center;
   &>span {
-    margin-right: 8px;
+    margin-left: 8px;
   }
+  flex: 0 0 auto;
 }
 
 .urp-close-icon {
   color: var(--urp-font-gray-3) !important;
   cursor: pointer;
+  &:hover {
+    color: var(--urp-font-gray-2) !important;
+  }
 }
 
 .urp-count {
