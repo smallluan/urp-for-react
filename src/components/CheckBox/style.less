@@ -1,3 +1,5 @@
+@import '../utils/styles/colors/color.less';
+
 input[type="radio"] {
   position: absolute; /* 脱离文档流，不占空间 */
   opacity: 0; /* 完全透明 */
@@ -14,8 +16,12 @@ input[type="radio"] {
   align-items: center;
   cursor: pointer;
   user-select: none;
-  .urp-radio-checked,
-  .urp-radio-unchecked {
+  &:hover {
+    .urp-radio {
+      border-color: var(--urp-primary-color);
+    }
+  }
+  .urp-radio {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -25,14 +31,22 @@ input[type="radio"] {
     border-radius: 50%;
     margin-right: 8px;
     box-sizing: border-box;
+    transition: all 0.2s ease-in-out;
+  }
+  .urp-radio-checked {
+    border-color: var(--urp-primary-color);
+  }
+  .urp-radio-unchecked {
+    border-color: var(--urp-font-gray-3);
   }
   .urp-radio-checked {
     &::after {
       content: '';
       width: 8px;
       height: 8px;
-      background-color: red;
+      background-color: var(--urp-primary-color);
       border-radius: 50%;
+      animation: fade-in 0.2s ease-in-out forwards;
     }
   }
   .urp-radio-unchecked {
@@ -41,6 +55,31 @@ input[type="radio"] {
       width: 8px;
       height: 8px;
       background-color: transparent;
+      animation: fade-out 0.2s ease-in-out forwards;
     }
   }
+}
+
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    scale: 0.5;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+    scale: 1;
+  }
+  to {
+    opacity: 0;
+    scale: 0.5; 
+  }
+  
 }

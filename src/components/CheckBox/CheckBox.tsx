@@ -2,25 +2,30 @@ import { createContext, useContext, useState } from 'react'
 import './style.less'
 
 const CheckBoxContext = createContext<{
-  value: string;
+  value: string | null;
   name: string;
   onChange: (value: any) => void;
 } | undefined>(undefined)
 
-const CheckBox = (
+const UrpCheckBoxGroup = (
   {value, label, name, children, onChange}: 
   {
     value: string;
     label: string;
     name: string;
     children: React.ReactNode[];
-    onChange: (value: string) => void;
+    onChange: (value: any) => void;
   }
 ) => {
-  const [currValue, setCurrValue] = useState(value)
+  const [currValue, setCurrValue] = useState<string | null>(value)
   const onItemChange = (itemValue: any) => {
-    setCurrValue(itemValue.value)
-    onChange(itemValue)
+    if (itemValue === currValue) {
+      setCurrValue(null)
+      onChange(null)
+    } else {
+      setCurrValue(itemValue)
+      onChange(itemValue)
+    }
   }
   return(
     <CheckBoxContext.Provider value={{ value: currValue, onChange: onItemChange, name }}>
@@ -43,14 +48,14 @@ const CheckBoxItem = (
   }
 ) => {
   return(
-     <CheckBoxRadioItem 
+     <CheckBoxItem 
       value={value} 
       label={label} 
     />
   )
 }
 
-const CheckBoxRadioItem = (
+const UrpCheckBoxItem = (
   { value, label}:
   {
     value: string;
@@ -69,18 +74,22 @@ const CheckBoxRadioItem = (
 
   return(
     <label className="urp-radio-item">
-      <div className={`urp-radio-${isChecked ? 'checked' : 'unchecked'}`}/>
+      <div className={`urp-radio urp-radio-${isChecked ? 'checked' : 'unchecked'}`}/>
       <input
-        type="radio"
+        type="checkbox"
         name={name}
         value={value}
-        onChange={() => onChange({name, value})}
+        onChange={() => onChange(value)}
+        checked={isChecked}
       />
       <span className="radio-text">{label}</span>
     </label>
   )
 }
 
-CheckBox.Item = CheckBoxItem
+const CheckBox = {
+  Group: UrpCheckBoxGroup,
+  Item: UrpCheckBoxItem
+}
 
 export default CheckBox
