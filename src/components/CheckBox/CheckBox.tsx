@@ -1,18 +1,24 @@
-import { createContext, useContext, useMemo, useState, useRef, useEffect } from 'react'
+import { createContext, useContext, useMemo, useState, useRef, useEffect, useCallback, memo } from 'react'
 import { CheckBoxContextType, CheckBoxGroupType, CheckBoxItemType, Value } from './type'
 import { groupDefaultProperties, itemDefaultProperties } from './properties.ts'
+import { useMergedProps } from '../utils/tools/props.ts'
 import './style.less'
 
 const CheckBoxContext = createContext<CheckBoxContextType|undefined>(undefined)
 
 const UrpCheckBoxGroup = (props: CheckBoxGroupType) => {
-  const mergedProps = useMemo(() => {
-    return { ...groupDefaultProperties, ...props }
-  }, [props])
-  const { value, name, children, cancelable, onChange } = mergedProps
-  const [currValue, setCurrValue] = useState<Value>(value)
+  // 调用工具函数，自动合并 props + 生成精准依赖
+  const { merged: mergedProps } = useMergedProps(
+    groupDefaultProperties,
+    props,
+    ['value', 'cancelable', 'disabled', 'readonly', 'name', 'onChange']
+  )
 
-  const onItemChange = (itemValue: Value) => {
+  const [currValue, setCurrValue] = useState<Value>(mergedProps.value)
+
+  const { cancelable, onChange} = mergedProps
+
+  const onItemChange = useCallback((itemValue: Value) => {
     if (itemValue === currValue) {
       if (cancelable) {
         setCurrValue(null)
@@ -22,19 +28,25 @@ const UrpCheckBoxGroup = (props: CheckBoxGroupType) => {
       setCurrValue(itemValue)
       onChange(itemValue)
     }
-  }
+  }, [currValue, cancelable, onChange])
+
+  const contextValue = useMemo(() => ({
+    value: currValue,
+    onChange: onItemChange,
+    name: mergedProps.name,
+  }), [currValue, onItemChange, mergedProps.name])
 
   return(
-    <CheckBoxContext.Provider value={{ value: currValue, onChange: onItemChange, name }}>
-      <div>{ children }</div>
+    <CheckBoxContext.Provider value={contextValue}>
+      <div>{ props.children }</div>
     </CheckBoxContext.Provider>
   ) 
 }
 
-const UrpCheckBoxItem = (props: CheckBoxItemType) => {
+const UrpCheckBoxItem = memo((props: CheckBoxItemType) => {
   const context =  useContext(CheckBoxContext)
   if (!context) {
-    throw new Error('Radio 组件必须在 RadioGroup 组件内使用')
+    throw new Error('Radio 组件必须在 CheckBox 组件内使用')
   }
 
   const isFirstRender = useRef(true)
@@ -42,16 +54,16 @@ const UrpCheckBoxItem = (props: CheckBoxItemType) => {
     isFirstRender.current = false
   }, [])
 
-  const mergedProps = useMemo(() => {
-    return { ...itemDefaultProperties, ...props }
-  }, [props])
+  const { merged: mergedProps } = useMergedProps(
+    itemDefaultProperties,
+    props,
+    ['value', 'label',]
+  )
 
-  const { value, label, children } = mergedProps
+  const { value, label } = mergedProps
   const { value: contextValue, onChange, name } = context
 
-  const isChecked = useMemo(() => {
-    return contextValue === value
-  }, [contextValue, value])
+  const isChecked = contextValue === value
 
   const radioClass = useMemo(() => {
     let classname = 'urp-radio'
@@ -78,11 +90,13 @@ const UrpCheckBoxItem = (props: CheckBoxItemType) => {
         checked={isChecked}
       />
       {
-        children ? UrpCheckBoxLabel({children}) : label
+        props.children ? UrpCheckBoxLabel({children: props.children}) : label
       }
     </label>
   )
-}
+})
+
+UrpCheckBoxItem.displayName = 'UrpCheckBoxItem'
 
 const UrpCheckBoxLabel = (props: { children: React.ReactNode }) => {
   return(
