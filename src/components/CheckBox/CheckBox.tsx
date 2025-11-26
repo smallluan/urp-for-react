@@ -1,95 +1,99 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useMemo, useState, useRef, useEffect } from 'react'
+import { CheckBoxContextType, CheckBoxGroupType, CheckBoxItemType, Value } from './type'
+import { groupDefaultProperties, itemDefaultProperties } from './properties.ts'
 import './style.less'
 
-const CheckBoxContext = createContext<{
-  value: string | null;
-  name: string;
-  onChange: (value: any) => void;
-} | undefined>(undefined)
+const CheckBoxContext = createContext<CheckBoxContextType|undefined>(undefined)
 
-const UrpCheckBoxGroup = (
-  {value, label, name, children, onChange}: 
-  {
-    value: string;
-    label: string;
-    name: string;
-    children: React.ReactNode[];
-    onChange: (value: any) => void;
-  }
-) => {
-  const [currValue, setCurrValue] = useState<string | null>(value)
-  const onItemChange = (itemValue: any) => {
+const UrpCheckBoxGroup = (props: CheckBoxGroupType) => {
+  const mergedProps = useMemo(() => {
+    return { ...groupDefaultProperties, ...props }
+  }, [props])
+  const { value, name, children, cancelable, onChange } = mergedProps
+  const [currValue, setCurrValue] = useState<Value>(value)
+
+  const onItemChange = (itemValue: Value) => {
     if (itemValue === currValue) {
-      setCurrValue(null)
-      onChange(null)
+      if (cancelable) {
+        setCurrValue(null)
+        onChange(null)
+      }
     } else {
       setCurrValue(itemValue)
       onChange(itemValue)
     }
   }
+
   return(
     <CheckBoxContext.Provider value={{ value: currValue, onChange: onItemChange, name }}>
-      <div>
-        {
-          children.map((child, index: number) => {
-            return child
-          })
-        }
-      </div>
+      <div>{ children }</div>
     </CheckBoxContext.Provider>
   ) 
 }
 
-const CheckBoxItem = (
-  { value, label }:
-  {
-    value: string;
-    label: string;
-  }
-) => {
-  return(
-     <CheckBoxItem 
-      value={value} 
-      label={label} 
-    />
-  )
-}
-
-const UrpCheckBoxItem = (
-  { value, label}:
-  {
-    value: string;
-    label: string;
-  }
-) => {
+const UrpCheckBoxItem = (props: CheckBoxItemType) => {
   const context =  useContext(CheckBoxContext)
-
   if (!context) {
     throw new Error('Radio 组件必须在 RadioGroup 组件内使用')
   }
 
+  const isFirstRender = useRef(true)
+  useEffect(() => {
+    isFirstRender.current = false
+  }, [])
+
+  const mergedProps = useMemo(() => {
+    return { ...itemDefaultProperties, ...props }
+  }, [props])
+
+  const { value, label, children } = mergedProps
   const { value: contextValue, onChange, name } = context
 
-  const isChecked = contextValue === value
+  const isChecked = useMemo(() => {
+    return contextValue === value
+  }, [contextValue, value])
+
+  const radioClass = useMemo(() => {
+    let classname = 'urp-radio'
+    if (isChecked) {
+      classname += ' urp-radio-checked'
+      classname += ' urp-radio-checked-animate'
+    } else {
+      classname += ' urp-radio-unchecked'
+      if (!isFirstRender.current) {
+        classname += ' urp-radio-unchecked-animate'
+      }
+    }
+    return classname
+  }, [isChecked])
 
   return(
     <label className="urp-radio-item">
-      <div className={`urp-radio urp-radio-${isChecked ? 'checked' : 'unchecked'}`}/>
+      <div className={radioClass}/>
       <input
         type="checkbox"
         name={name}
-        value={value}
-        onChange={() => onChange(value)}
+        value={value as string} 
+        onChange={(e) => { onChange(value) }}
         checked={isChecked}
       />
-      <span className="radio-text">{label}</span>
+      {
+        children ? UrpCheckBoxLabel({children}) : label
+      }
     </label>
+  )
+}
+
+const UrpCheckBoxLabel = (props: { children: React.ReactNode }) => {
+  return(
+    <span className="urp-checkbox-label">{ props.children }</span>
   )
 }
 
 const CheckBox = {
   Group: UrpCheckBoxGroup,
-  Item: UrpCheckBoxItem
+  Item: UrpCheckBoxItem,
+  Label: UrpCheckBoxLabel,
 }
 
 export default CheckBox

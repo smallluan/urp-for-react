@@ -1,5 +1,5 @@
 /** 选中后返回值类型(挂载的value可选类型) */
-export type Value = string | number | boolean
+export type Value = string | number | null
 
 /** 选项组类型 */
 export interface CheckBoxGroupType {
@@ -14,11 +14,18 @@ export interface CheckBoxGroupType {
 
 /** 选项类型 */
 export interface CheckBoxItemType {
-  value: Value,
-  label: React.ReactNode,
+  value?: Value,
+  label?: React.ReactNode,
   disabled?: boolean,
   readonly?: boolean,
+  children?: React.ReactNode,
   onChange?: (checked: Value) => void,
+}
+
+export interface CheckBoxContextType {
+  value: Value,
+  name: string,
+  onChange: (value: Value) => void,
 }
 
 /** 导出类型 */

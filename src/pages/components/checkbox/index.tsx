@@ -1,16 +1,67 @@
-import { CheckBox } from "../../../components/CheckBox/index.ts"
+import { UrpCheckBox } from "../../../components/CheckBox/index.ts"
 
 export default function CheckBoxPage() {
   return(
     <div>
-      <CheckBox.Group 
-        value="2" 
-        name="group" 
+      <h2>可取消单选框</h2>
+      <UrpCheckBox.Group 
+        value="-1" 
+        name="group2" 
+        cancelable={true}
         onChange={(value) => console.log(value)}
       >
-        <CheckBox.Item label="选项一" value="1"/>
-        <CheckBox.Item label="选项二" value="2"/>
-      </CheckBox.Group>
+        <UrpCheckBox.Item value="0">
+          <UrpCheckBox.Label>选项一</UrpCheckBox.Label>
+        </UrpCheckBox.Item>
+        <UrpCheckBox.Item value="1">
+          <UrpCheckBox.Label>选项二</UrpCheckBox.Label>
+        </UrpCheckBox.Item>
+        <UrpCheckBox.Item value="2">
+          <UrpCheckBox.Label>选项三</UrpCheckBox.Label>
+        </UrpCheckBox.Item>
+        <UrpCheckBox.Item value="3">
+          <UrpCheckBox.Label>选项四</UrpCheckBox.Label>
+        </UrpCheckBox.Item>
+      </UrpCheckBox.Group>
+      <UrpCheckBox.Group 
+        value="-1" 
+        name="group1" 
+        cancelable={true}
+        onChange={(value) => console.log(value)}
+      >
+        <UrpCheckBox.Item value="1">
+          <UrpCheckBox.Label>选项一</UrpCheckBox.Label>
+        </UrpCheckBox.Item>
+      </UrpCheckBox.Group>
+      <h2>一组单选框</h2>
+      <UrpCheckBox.Group 
+        value="-1" 
+        name="group2" 
+        onChange={(value) => console.log(value)}
+      >
+        <UrpCheckBox.Item value="0">
+          <UrpCheckBox.Label>选项一</UrpCheckBox.Label>
+        </UrpCheckBox.Item>
+        <UrpCheckBox.Item value="1">
+          <UrpCheckBox.Label>选项二</UrpCheckBox.Label>
+        </UrpCheckBox.Item>
+        <UrpCheckBox.Item value="2">
+          <UrpCheckBox.Label>选项三</UrpCheckBox.Label>
+        </UrpCheckBox.Item>
+        <UrpCheckBox.Item value="3">
+          <UrpCheckBox.Label>选项四</UrpCheckBox.Label>
+        </UrpCheckBox.Item>
+      </UrpCheckBox.Group>
+      <h2>单个单选框</h2>
+      <UrpCheckBox.Group 
+        value="-1" 
+        name="group1" 
+        onChange={(value) => console.log(value)}
+      >
+        <UrpCheckBox.Item value="1">
+          <UrpCheckBox.Label>选项一</UrpCheckBox.Label>
+        </UrpCheckBox.Item>
+      </UrpCheckBox.Group>
     </div>
   )
 }
