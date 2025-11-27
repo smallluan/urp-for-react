@@ -3,13 +3,14 @@ export type Value = string | number | null
 
 /** 选项组类型 */
 export interface CheckBoxGroupType {
-  value?: Value,
+  value?: Value | Array<Value>,
   cancelable?: boolean,
   disabled?: boolean,
   readonly?: boolean,
   name?: string,
   children?: React.ReactNode,
-  onChange?: (value: Value) => void,
+  multiple?: boolean,
+  onChange?: (value: Value | Array<Value>) => void,
 }
 
 /** 选项类型 */
@@ -23,8 +24,9 @@ export interface CheckBoxItemType {
 }
 
 export interface CheckBoxContextType {
-  value: Value,
+  value: Value | Array<Value>,
   name: string,
+  multiple: boolean,
   onChange: (value: Value) => void,
 }
 

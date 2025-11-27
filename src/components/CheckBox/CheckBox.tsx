@@ -2,6 +2,7 @@ import { createContext, useContext, useMemo, useState, useRef, useEffect, useCal
 import { CheckBoxContextType, CheckBoxGroupType, CheckBoxItemType, Value } from './type'
 import { groupDefaultProperties, itemDefaultProperties } from './properties.ts'
 import { useMergedProps } from '../utils/tools/props.ts'
+import { UrpIcon } from '../Icon/index.ts'
 import './style.less'
 
 const CheckBoxContext = createContext<CheckBoxContextType|undefined>(undefined)
@@ -11,30 +12,59 @@ const UrpCheckBoxGroup = (props: CheckBoxGroupType) => {
   const { merged: mergedProps } = useMergedProps(
     groupDefaultProperties,
     props,
-    ['value', 'cancelable', 'disabled', 'readonly', 'name', 'onChange']
+    ['value', 'cancelable', 'disabled', 'readonly', 'name', 'onChange', 'multiple']
   )
 
-  const [currValue, setCurrValue] = useState<Value>(mergedProps.value)
+  const { cancelable, name, multiple, value, onChange} = mergedProps
 
-  const { cancelable, onChange} = mergedProps
+  const [currValue, setCurrValue] = useState<Value | Array<Value>>(value)
+
+  // 非组件首次渲染并且仅当值不一样时触发onChange
+  const isFirst = useRef(true)
+  const initCurrValue = useRef(value)
+
+  useEffect(() => {
+    if (isFirst.current || currValue === initCurrValue.current) { 
+      isFirst.current = false 
+      return
+     }
+    onChange(currValue)
+  }, [currValue, onChange])
 
   const onItemChange = useCallback((itemValue: Value) => {
-    if (itemValue === currValue) {
-      if (cancelable) {
-        setCurrValue(null)
-        onChange(null)
-      }
+    if (!multiple) {
+      if (itemValue === currValue) {
+        if (cancelable) setCurrValue(null)
+      } 
+      else setCurrValue(itemValue)
     } else {
-      setCurrValue(itemValue)
-      onChange(itemValue)
+      if (Array.isArray(currValue)) {
+        if (currValue.includes(itemValue)) {
+          if (cancelable) {
+            setCurrValue(prev => {
+              if (Array.isArray(prev)) {
+               return prev.filter(item => item !== itemValue)
+              }
+              return [prev]
+            })
+          }
+        }
+         else {
+          setCurrValue((prev) => {
+            Array.isArray(prev) && (prev = [...new Set([...prev, itemValue])])
+            return prev
+          })
+        }
+      }
     }
-  }, [currValue, cancelable, onChange])
+  }, [currValue, cancelable, multiple])
 
   const contextValue = useMemo(() => ({
     value: currValue,
     onChange: onItemChange,
-    name: mergedProps.name,
-  }), [currValue, onItemChange, mergedProps.name])
+    name: name,
+    multiple: multiple
+  }), [currValue, onItemChange, name, multiple])
 
   return(
     <CheckBoxContext.Provider value={contextValue}>
@@ -61,9 +91,17 @@ const UrpCheckBoxItem = memo((props: CheckBoxItemType) => {
   )
 
   const { value, label } = mergedProps
-  const { value: contextValue, onChange, name } = context
+  const { value: contextValue, onChange, name, multiple } = context
 
-  const isChecked = contextValue === value
+  const isChecked = useMemo(() => {
+    if (!multiple) {
+      return contextValue === value
+    } else {
+      if (Array.isArray(contextValue)) {
+        return contextValue.includes(value)
+      }
+    }
+  }, [multiple, contextValue, value])
 
   const radioClass = useMemo(() => {
     let classname = 'urp-radio'
@@ -79,18 +117,72 @@ const UrpCheckBoxItem = memo((props: CheckBoxItemType) => {
     return classname
   }, [isChecked])
 
+  const checkBoxClass = useMemo(() => {
+    let classname = 'urp-check-multiple-box'
+    if (isChecked) {
+      classname += ' urp-check-multiple-box-checked'
+    } else {
+      classname += ' urp-check-multiple-box-unchecked'
+    }
+    return classname
+  }, [isChecked])
+
+  const checkBoxBgClass = useMemo(() => {
+    let classname = 'urp-check-box-bg'
+    if (isChecked) {
+      classname += ' urp-check-box-bg-checked-animate'
+    } else {
+      if (!isFirstRender.current) {
+        classname += ' urp-check-box-bg-unchecked-animate'
+      }
+    }
+    return classname
+  }, [isChecked])
+
   return(
-    <label className="urp-radio-item">
-      <div className={radioClass}/>
-      <input
-        type="checkbox"
-        name={name}
-        value={value as string} 
-        onChange={(e) => { onChange(value) }}
-        checked={isChecked}
-      />
+    <label className="urp-check-box-item">
       {
-        props.children ? UrpCheckBoxLabel({children: props.children}) : label
+        !multiple &&
+        <>
+        <div className={radioClass}/>
+        <input
+          type="checkbox"
+          name={name}
+          value={value as string} 
+          onChange={(e) => { onChange(value) }}
+          checked={isChecked}
+        />
+        {
+          props.children ? UrpCheckBoxLabel({children: props.children}) : label
+        }
+        </>
+      }
+      {
+        multiple &&
+        <>
+        <div className={checkBoxClass}>
+          <div className={checkBoxBgClass}>
+            <UrpIcon 
+              className='icon' 
+              size='10px'
+              style={{ 
+                color: 'white',  
+              }} 
+              type="CheckOutlined"
+            />
+          </div>
+        </div>
+        <input
+          type="checkbox"
+          name={name}
+          value={value as string} 
+          onChange={(e) => { onChange(value) }}
+          checked={isChecked}
+        />
+        {
+          props.children ? UrpCheckBoxLabel({children: props.children}) : label
+        }
+        </>
       }
     </label>
   )

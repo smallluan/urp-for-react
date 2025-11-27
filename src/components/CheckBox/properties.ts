@@ -7,6 +7,7 @@ export const groupDefaultProperties: Required<CheckBoxGroupType> = {
   readonly: false,
   name: '',
   children: null,
+  multiple: false,
   onChange: (value: Value) => {return value},
 }
 

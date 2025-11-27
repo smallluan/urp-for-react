@@ -11,54 +11,89 @@ input[type="radio"] {
   appearance: none;
 }
 
-.urp-radio-item {
+.urp-check-box-item {
   display: inline-flex;
   align-items: center;
   cursor: pointer;
   user-select: none;
   &:hover {
-    .urp-radio {
+    .urp-radio,
+    .urp-check-multiple-box {
       border-color: var(--urp-primary-color);
     }
   }
-  .urp-radio {
+  .urp-radio,
+  .urp-check-multiple-box {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     width: 17px;
     height: 17px;
     border: 1px solid;
-    border-radius: 50%;
     box-sizing: border-box;
     transition: all 0.2s ease-in-out;
   }
-  .urp-radio-checked,
-  .urp-radio-unchecked {
-    &::after {
-      content: '';
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
+  .urp-radio {
+    border-radius: 50%;
+    &-checked,
+    &-unchecked {
+      &::after {
+        content: '';
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+      }
+    }
+    &-checked {
+      border-color: var(--urp-primary-color);
+    }
+    &-unchecked {
+      border-color: var(--urp-font-gray-4);
+    }
+    &-checked-animate {
+      &::after {
+        background-color: var(--urp-primary-color);
+        animation: fade-in 0.2s ease-in-out forwards,
+                   scale-in 0.2s ease-in-out forwards;
+      }
+    }
+    &-unchecked-animate {
+      &::after {
+        background-color: var(--urp-primary-color);
+        animation: fade-out 0.2s ease-in-out forwards,
+                   scale-in 0.2s ease-in-out forwards;
+      }
     }
   }
-  .urp-radio-checked {
-    border-color: var(--urp-primary-color);
-  }
-  .urp-radio-unchecked {
-    border-color: var(--urp-font-gray-4);
-  }
-  .urp-radio-checked-animate {
-    &::after {
-      background-color: var(--urp-primary-color);
-      animation: fade-in 0.2s ease-in-out forwards;
+  .urp-check-multiple-box {
+    border-radius: 2px;
+    position: relative;
+    &-checked {
+      border-color: var(--urp-primary-color);
+    }
+    &-unchecked {
+      border-color: var(--urp-font-gray-4);
+    }
+    .urp-check-box-bg {
+      position: absolute;
+      left: 0;
+      top: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      &-checked-animate {
+        background-color: var(--urp-primary-color);
+        animation: fade-in 0.2s ease-in-out forwards;
+      }
+      &-unchecked-animate {
+        background-color: var(--urp-primary-color);
+        animation: fade-out 0.2s ease-in-out forwards;
+      }
     }
   }
-  .urp-radio-unchecked-animate {
-    &::after {
-      background-color: var(--urp-primary-color);
-      animation: fade-out 0.2s ease-in-out forwards;
-    }
-  }
+
 }
 
 .urp-checkbox-label {
@@ -70,7 +105,6 @@ input[type="radio"] {
 @keyframes fade-in {
   from {
     opacity: 0;
-    scale: 0.5;
   }
   to {
     opacity: 1;
@@ -81,10 +115,27 @@ input[type="radio"] {
 @keyframes fade-out {
   from {
     opacity: 1;
-    scale: 1;
   }
   to {
     opacity: 0;
+  }
+}
+
+@keyframes scale-in {
+  from {
+    scale: 0.5;
+  }
+  to {
+    scale: 1;
+  }
+}
+
+@keyframes scale-out {
+  from {
+    scale: 1;
+  }
+  to {
     scale: 0.5; 
   }
 }
+
