@@ -78,6 +78,7 @@ const UrpCheckBoxItem = memo((props: CheckBoxItemType) => {
   if (!context) {
     throw new Error('Radio 组件必须在 CheckBox 组件内使用')
   }
+  const { value: contextValue, onChange, name, multiple } = context
 
   const isFirstRender = useRef(true)
   useEffect(() => {
@@ -87,12 +88,11 @@ const UrpCheckBoxItem = memo((props: CheckBoxItemType) => {
   const { merged: mergedProps } = useMergedProps(
     itemDefaultProperties,
     props,
-    ['value', 'label',]
+    ['value', 'label', 'disabled', 'readonly']
   )
 
-  const { value, label } = mergedProps
-  const { value: contextValue, onChange, name, multiple } = context
-
+  const { value, label, disabled, readonly } = mergedProps
+  
   const isChecked = useMemo(() => {
     if (!multiple) {
       return contextValue === value
@@ -102,6 +102,11 @@ const UrpCheckBoxItem = memo((props: CheckBoxItemType) => {
       }
     }
   }, [multiple, contextValue, value])
+
+  const itemClass = useMemo(() => {
+    const classname = 'urp-check-box-item'
+    return (disabled ? classname + '-disabled' : classname)
+  }, [disabled])
 
   const radioClass = useMemo(() => {
     let classname = 'urp-radio'
@@ -140,7 +145,7 @@ const UrpCheckBoxItem = memo((props: CheckBoxItemType) => {
   }, [isChecked])
 
   return(
-    <label className="urp-check-box-item">
+    <label className={itemClass}>
       {
         !multiple &&
         <>
@@ -149,7 +154,10 @@ const UrpCheckBoxItem = memo((props: CheckBoxItemType) => {
           type="checkbox"
           name={name}
           value={value as string} 
-          onChange={(e) => { onChange(value) }}
+          onChange={(e) => {
+            if (disabled || readonly) return
+            onChange(value)
+          }}
           checked={isChecked}
         />
         {
@@ -176,7 +184,10 @@ const UrpCheckBoxItem = memo((props: CheckBoxItemType) => {
           type="checkbox"
           name={name}
           value={value as string} 
-          onChange={(e) => { onChange(value) }}
+          onChange={(e) => { 
+            if (disabled || readonly) return
+            onChange(value)
+          }}
           checked={isChecked}
         />
         {

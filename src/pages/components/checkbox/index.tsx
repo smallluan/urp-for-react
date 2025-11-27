@@ -3,6 +3,7 @@ import { UrpCheckBox } from "../../../components/CheckBox/index.ts"
 export default function CheckBoxPage() {
   return(
     <div>
+      <h2>注意接下来对单选和多选样式（类名）的统一，不能再分开写了</h2>
       <h2>多选</h2>
       <UrpCheckBox.Group 
         value={['1', '3']} 
@@ -11,10 +12,10 @@ export default function CheckBoxPage() {
         multiple
         onChange={(value) => console.log(value)}
       >
-        <UrpCheckBox.Item value="0">
+        <UrpCheckBox.Item disabled value="0">
           <UrpCheckBox.Label>选项一</UrpCheckBox.Label>
         </UrpCheckBox.Item>
-        <UrpCheckBox.Item value="1">
+        <UrpCheckBox.Item disabled value="1">
           <UrpCheckBox.Label>选项二</UrpCheckBox.Label>
         </UrpCheckBox.Item>
         <UrpCheckBox.Item value="2">
@@ -46,15 +47,15 @@ export default function CheckBoxPage() {
 
       <h2>可取消单选框</h2>
       <UrpCheckBox.Group 
-        value="-1" 
+        value="1" 
         name="group2" 
         cancelable={true}
         onChange={(value) => console.log(value)}
       >
-        <UrpCheckBox.Item value="0">
+        <UrpCheckBox.Item disabled value="0">
           <UrpCheckBox.Label>选项一</UrpCheckBox.Label>
         </UrpCheckBox.Item>
-        <UrpCheckBox.Item value="1">
+        <UrpCheckBox.Item disabled value="1">
           <UrpCheckBox.Label>选项二</UrpCheckBox.Label>
         </UrpCheckBox.Item>
         <UrpCheckBox.Item value="2">

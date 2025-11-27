@@ -8,7 +8,7 @@ export const groupDefaultProperties: Required<CheckBoxGroupType> = {
   name: '',
   children: null,
   multiple: false,
-  onChange: (value: Value) => {return value},
+  onChange: (value: Value | Array<Value>) => {return value},
 }
 
 export const itemDefaultProperties: Required<CheckBoxItemType> = {

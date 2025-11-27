@@ -11,17 +11,12 @@ input[type="radio"] {
   appearance: none;
 }
 
-.urp-check-box-item {
+.urp-check-box-item,
+.urp-check-box-item-disabled  {
   display: inline-flex;
   align-items: center;
   cursor: pointer;
   user-select: none;
-  &:hover {
-    .urp-radio,
-    .urp-check-multiple-box {
-      border-color: var(--urp-primary-color);
-    }
-  }
   .urp-radio,
   .urp-check-multiple-box {
     display: inline-flex;
@@ -33,7 +28,7 @@ input[type="radio"] {
     box-sizing: border-box;
     transition: all 0.2s ease-in-out;
   }
-  .urp-radio {
+  .urp-radio {  
     border-radius: 50%;
     &-checked,
     &-unchecked {
@@ -44,11 +39,36 @@ input[type="radio"] {
         border-radius: 50%;
       }
     }
+  }
+  .urp-check-multiple-box {
+    border-radius: 2px;
+    position: relative;
+    .urp-check-box-bg {
+      position: absolute;
+      left: 0;
+      top: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
+.urp-check-box-item {
+  &:hover {
+    .urp-radio,
+    .urp-check-multiple-box {
+      border-color: var(--urp-primary-color);
+    }
+  }
+  .urp-radio {
     &-checked {
       border-color: var(--urp-primary-color);
     }
     &-unchecked {
-      border-color: var(--urp-font-gray-4);
+      border-color: var(--urp-font-gray-3);
     }
     &-checked-animate {
       &::after {
@@ -66,23 +86,13 @@ input[type="radio"] {
     }
   }
   .urp-check-multiple-box {
-    border-radius: 2px;
-    position: relative;
     &-checked {
       border-color: var(--urp-primary-color);
     }
     &-unchecked {
-      border-color: var(--urp-font-gray-4);
+      border-color: var(--urp-font-gray-3);
     }
     .urp-check-box-bg {
-      position: absolute;
-      left: 0;
-      top: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      height: 100%;
       &-checked-animate {
         background-color: var(--urp-primary-color);
         animation: fade-in 0.2s ease-in-out forwards;
@@ -93,7 +103,32 @@ input[type="radio"] {
       }
     }
   }
+}
 
+.urp-check-box-item-disabled {
+  .urp-radio-checked,
+  .urp-check-multiple-box-checked {
+    border-color: var(--urp-primary-color-disabled) !important;
+  }
+  .urp-radio-unchecked
+  .urp-check-multiple-box-unchecked {
+    border-color: red !important;
+  }
+  .urp-radio-checked-animate {
+    &::after {
+      background-color: var(--urp-primary-color-disabled) !important;
+    }
+  }
+  .urp-check-multiple-box {
+    .urp-check-box-bg {
+      &-checked-animate {
+        background-color: var(--urp-primary-color-disabled) !important;
+      }
+      &-unchecked-animate {
+        background-color: transparent;
+      }
+    }
+  }
 }
 
 .urp-checkbox-label {
