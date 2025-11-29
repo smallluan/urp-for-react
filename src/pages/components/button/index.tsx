@@ -16,6 +16,8 @@ export default function ButtonPage() {
     <>
       <h2>Button 组件</h2>
       <h3>图标</h3>
+      <UrpButton icon="AppstoreAddOutlined" theme="default" purIcon />
+      <hr />
       <UrpButton onClick={btnClick} icon="AppstoreAddOutlined" theme="default">确定</UrpButton>
       <hr />
       <UrpButton loading={loading} icon="AppstoreAddOutlined" theme="primary">确定</UrpButton>

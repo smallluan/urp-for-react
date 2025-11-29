@@ -11,6 +11,7 @@ const defaultProperties: Required<ButtonType> = {
   block: false,
   icon: '',
   size: 'normal',
+  purIcon: false,
   onClick: () => { return },
 }
 

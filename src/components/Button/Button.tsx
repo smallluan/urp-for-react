@@ -9,7 +9,7 @@ import './style.less'
 export default function UrpButton(props: ButtonType) {
   // 合并属性（默认属性与传入属性）
   const mergedProps = { ...defaultProperties, ...props }
-  const { variant, theme, shape, size, block, disabled, loading, icon, onClick } = mergedProps
+  const { variant, theme, shape, size, block, disabled, loading, icon, purIcon, onClick } = mergedProps
   // 状态管理：使用useRef存储不需要触发渲染的变量
   const prevMouseDown = useRef<number>(0)
   const timerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
@@ -108,14 +108,26 @@ export default function UrpButton(props: ButtonType) {
     >
       {/* 按钮内容容器 */}
       <div style={{ position: 'relative', zIndex: 2 }}>
-        {icon && !loading && (
-          <UrpIcon style={{ marginRight: '4px' }} type={icon} />
-        )}
         {
-          loading && 
+          (icon && !loading && !purIcon) && 
+          <UrpIcon style={{ marginRight: '4px' }} type={icon} />
+        }
+        {
+          (icon && !loading && purIcon) && 
+          <UrpIcon type={icon} />
+        }
+        {
+          (loading && !purIcon) &&
           <UrpIcon style={{ marginRight: '4px' }} type="LoadingOutlined" />
         }
-        <span>{buttonContent}</span>
+        {
+          (loading && purIcon) &&
+          <UrpIcon type="LoadingOutlined" />
+        }
+        {
+          !purIcon &&
+          <span>{buttonContent}</span>
+        }
       </div>
       
       {/* 激活背景元素 */}

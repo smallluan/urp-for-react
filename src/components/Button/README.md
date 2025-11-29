@@ -10,4 +10,5 @@
 |`block`|N|`boolean`|`false`|是否为块级元素|
 |`icon`|N|`string`||按钮图标|
 |`size`|N|`normal \| small \| large`|`normal`|按钮尺寸|
+|`purIcon`|N|`boolean`|`false`|纯按钮|
 |``|N|`(e) => void`||点击事件|

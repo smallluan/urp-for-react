@@ -9,5 +9,6 @@ export interface ButtonType {
   block?: boolean,
   icon?: string,
   size?: 'normal' | 'small' | 'large',
+  purIcon?: boolean,
   onClick?: (...args) => void,
 }
