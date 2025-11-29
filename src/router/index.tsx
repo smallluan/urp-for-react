@@ -9,6 +9,7 @@ import ButtonPage from '../pages/components/button/index.tsx'
 import LinkPage from '../pages/components/link/index.tsx'
 import InputPage from '../pages/components/input/index.tsx'
 import SelectorPage from '../pages/components/checkbox/index.tsx'
+import TransferPage from '../pages/components/transfer/index.tsx'
 
 const router = createBrowserRouter([
   {
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
           {
             path: 'checkbox',
             element: <SelectorPage/>
+          },
+          {
+            path: 'transfer',
+            element: <TransferPage/>
           }
         ]
       }
