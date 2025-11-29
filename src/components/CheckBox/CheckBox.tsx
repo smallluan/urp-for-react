@@ -14,17 +14,16 @@ const UrpCheckBoxGroup = (props: CheckBoxGroupType) => {
     groupDefaultProperties,
     props,
     ['value', 'cancelable', 'disabled', 'readonly', 
-      'name', 'onChange', 'multiple', 'selectLimit'],
+      'name', 'onChange', 'multiple', 'selectLimit', 'checkedIcon'],
     formatGroupProps
   )
 
-  const { cancelable, name, multiple, value, selectLimit, onChange} = mergedProps
+  const { cancelable, name, multiple, value, selectLimit, checkedIcon, onChange} = mergedProps
   const [currValue, setCurrValue] = useState<Value | Array<Value>>(value)
   const isOnSelectLimit = useMemo(() => {
-    if (selectLimit !== -1 && Array.isArray(currValue) && currValue.length >= selectLimit) {
-      return true
-    }
-    return false
+    return selectLimit !== -1 && 
+           Array.isArray(currValue) && 
+           currValue.length >= selectLimit
   }, [currValue, selectLimit])
 
   // 非组件首次渲染并且仅当值不一样时触发onChange
@@ -73,8 +72,9 @@ const UrpCheckBoxGroup = (props: CheckBoxGroupType) => {
     onChange: onItemChange,
     name: name,
     multiple: multiple,
+    checkedIcon: checkedIcon,
     isOnSelectLimit: isOnSelectLimit,
-  }), [currValue, onItemChange, name, multiple, isOnSelectLimit])
+  }), [currValue, onItemChange, name, multiple, isOnSelectLimit, checkedIcon])
 
   return(
     <CheckBoxContext.Provider value={contextValue}>
@@ -88,7 +88,7 @@ const UrpCheckBoxItem = memo((props: CheckBoxItemType) => {
   if (!context) {
     throw new Error('Radio 组件必须在 CheckBox 组件内使用')
   }
-  const { value: contextValue, onChange, name, multiple, isOnSelectLimit } = context
+  const { value: contextValue, onChange, name, multiple, isOnSelectLimit, checkedIcon } = context
 
   const isFirstRender = useRef(true)
   useEffect(() => {
@@ -158,7 +158,7 @@ const UrpCheckBoxItem = memo((props: CheckBoxItemType) => {
         <div className={bgClass}>
           {
             (multiple) &&
-            <UrpIcon size='10px'style={{color: 'white',}}type="CheckOutlined"/>
+            <UrpIcon size='10px'style={{color: 'white',}}type={checkedIcon}/>
           }
         </div>
       </div>

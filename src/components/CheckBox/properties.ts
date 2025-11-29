@@ -9,6 +9,7 @@ export const groupDefaultProperties: Required<CheckBoxGroupType> = {
   children: null,
   multiple: false,
   selectLimit: -1,
+  checkedIcon: 'CheckOutlined',
   onChange: (value: Value | Array<Value>) => {return value},
 }
 

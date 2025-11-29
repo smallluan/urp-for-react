@@ -3,6 +3,32 @@ import { UrpCheckBox } from "../../../components/CheckBox/index.ts"
 export default function CheckBoxPage() {
   return(
     <div>
+      <h2>自定义选中图标（仅多选）</h2>
+      <UrpCheckBox.Group 
+        value={[]} 
+        name="group2" 
+        cancelable={true}
+        multiple
+        selectLimit={2}
+        checkedIcon="MinusOutlined"
+        onChange={(value) => console.log(value)}
+      >
+        <UrpCheckBox.Item value="0">
+          <UrpCheckBox.Label>选项1</UrpCheckBox.Label>
+        </UrpCheckBox.Item>
+        <UrpCheckBox.Item value="1">
+          <UrpCheckBox.Label>选项2</UrpCheckBox.Label>
+        </UrpCheckBox.Item>
+        <UrpCheckBox.Item value="2">
+          <UrpCheckBox.Label>选项3</UrpCheckBox.Label>
+        </UrpCheckBox.Item>
+        <UrpCheckBox.Item value="3">
+          <UrpCheckBox.Label>选项4</UrpCheckBox.Label>
+        </UrpCheckBox.Item>
+         <UrpCheckBox.Item value="4">
+          <UrpCheckBox.Label>选项5</UrpCheckBox.Label>
+        </UrpCheckBox.Item>
+      </UrpCheckBox.Group>
       <h2>可选数量上限（仅多选）</h2>
       <UrpCheckBox.Group 
         value={[]} 

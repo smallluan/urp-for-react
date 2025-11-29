@@ -11,6 +11,7 @@ export interface CheckBoxGroupType {
   children?: React.ReactNode,
   multiple?: boolean,
   selectLimit?: number,
+  checkedIcon?: string,
   onChange?: (value: Value | Array<Value>) => void,
 }
 
@@ -28,6 +29,7 @@ export interface CheckBoxContextType {
   value: Value | Array<Value>,
   name: string,
   multiple: boolean,
+  checkedIcon: string,
   isOnSelectLimit: boolean,
   onChange: (value: Value) => void,
 }

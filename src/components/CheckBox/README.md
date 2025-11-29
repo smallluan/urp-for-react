@@ -10,6 +10,7 @@
 |`children`|Y|`React.ReactNode`|-|选项|
 |`multiple`|N|`boolean`|`false`|是否可以多选|
 |`selectLimit`|N|`number`|`-1`|多选可选的数量上限|
+|`checkedIcon`|N|`string`|`CheckOutlined`|选中图标（多选）|
 |`onChange`|N|``|-|变更回调函数|
 
 **CheckBox.Item**
