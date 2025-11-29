@@ -26,10 +26,10 @@ describe('Switch 组件', () => {
   })
   // 测试方形 Switch
   it('方形 Switch', () => {
-    render(<UrpSwitch shape="react" />)
+    render(<UrpSwitch shape="rect" />)
     const urpSwitch = screen.getByTestId('urp-switch')
     expect(urpSwitch).toBeInTheDocument()
-    expect(urpSwitch).toHaveClass('urp-switch-shape-react')
+    expect(urpSwitch).toHaveClass('urp-switch-shape-rect')
   })
   // 测试禁用状态
   it('禁用状态点击无效', async () => {

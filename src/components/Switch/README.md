@@ -22,7 +22,8 @@
 ## 二、参数定义（Props）
 |参数名|是否必填|参数类型|默认值|说明|
 |--|--|--|--|--|
-|`state`|N|`boolean`|`false`|开关状态|
+|`state`|N|`boolean`|`-`|开关状态（受控）|
+|`defaultState`|N|`boolean`|`false`|开关状态（非受控）|
 |`loading`|N|`boolean`|`false`|开关是否正在加载，当加载时 `state` 变量为 `false`|
 |`disabled`|N|`boolean`|`false`|开关是否可用|
 |`shape`|N|`around \| rect`|`around`|按钮形状，圆角按钮和矩形按钮|

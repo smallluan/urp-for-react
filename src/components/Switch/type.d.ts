@@ -1,12 +1,13 @@
 export interface SwitchType {
   state?: boolean,
+  defaultState?: boolean,
   loading?: boolean,
   disabled?: boolean,
   shape?: 'around' | 'rect',
-  desc?: [string, string] | [],
-  descIcon?: [string, string] | [],
+  desc?: string[],
+  descIcon?: string[],
   descPos?: 'inner' | 'outer',
   size?: 'normal' | 'small' | 'large'
-  beforeStateChange?: (...args) => boolean,
+  beforeStateChange?: (...args: any[]) => any,
   onStateChange?: (newState: boolean) => any
 }

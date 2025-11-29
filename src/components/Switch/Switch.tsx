@@ -1,99 +1,124 @@
 import { SwitchType } from "./type.ts"
 import './style.less'
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import defaultProperties, { formatProps } from "./properties.ts"
 import genClassNameFromProps from "../utils/tools/className.ts"
 import { UrpIcon } from '../Icon/index.ts'
 
 export default function UrpSwitch(props: SwitchType) {
   const mergedProps = formatProps({ ...defaultProperties, ...props })
-  const { onStateChange } = mergedProps
-  const [state, setState] = useState(mergedProps.state)
-  const [loading, setLoading] = useState(mergedProps.loading)
-
-  // 开关总体 className
-  const switchClassName = genClassNameFromProps(
-    { 
-      state: state ? 'open' : 'close',
-      shape: mergedProps.shape,
-      size: mergedProps.size,
-      disabled: mergedProps.loading || mergedProps.disabled
-    }, 
-    'urp-switch',
-    'urp-switch'
-  )
-  // 滑块 className
-  const sliderClassName = genClassNameFromProps(
-    { 
-      state: state ? 'open' : 'close',
-      shape: mergedProps.shape
-    }, 
-    'urp-switch-slider', 
-    'urp-switch-slider'
-  )
-  // 内部描述信息 className
-  const descClassName = genClassNameFromProps(
-    {
-      state: state ? 'open' : 'close',
-    },
-    'urp-desc-inner',
-    'urp-desc-inner'
-  )
-  // 外部描述信息 className
-  const outerDescClassName = genClassNameFromProps(
-    {
-      state: state ? 'open' : 'close',
-    },
-    'urp-desc-outer',
-    'urp-desc-outer'
-  )
-
-  // HOOK: 外部输入状态变化时，同步到内部状态
-  useEffect(() => {
-    setState(mergedProps.state)
-  }, [mergedProps.state])
-
-  // HOOK: 内部状态变化，把最新的状态传递到外部
-  useEffect(() => {
-    onStateChange?.(state)
-  }, [state, onStateChange])
+  // 是否是一个受控开关
+  const isControlled = mergedProps.state !== undefined
+  // 非受控内部状态
+  const [innerState, setInnerState] = useState(() => {
+    return mergedProps.defaultState ?? false
+  })
+  // 当前开关状态
+  const currState = isControlled ? mergedProps.state : innerState
+  // 内部临时加载状态(执行异步前置校验)
+  const [innerLoading, setInnerLoading] = useState(mergedProps.loading)
+  // 在优先取父 loading 的同时防止子 loading 被覆盖
+  const currLoading = mergedProps.loading !== undefined ? 
+                      mergedProps.loading || innerLoading : 
+                      innerLoading
 
   useEffect(() => {
-    setLoading(mergedProps.loading)
-  }, [mergedProps.loading])
+    if (isControlled) {
+      setInnerState(mergedProps.state as boolean)
+    }
+  }, [mergedProps.state, isControlled])
 
   // 状态变化处理函数
   const stateChange = async () => {
+    // 先判断禁用/加载，直接返回
+    if (mergedProps.disabled || currLoading) return
     let beforeResult = true
 
-    // 增加对异步函数的处理
     if (mergedProps.beforeStateChange) {
-      setLoading(true)
-      beforeResult = await new Promise(resolve => {
-        setTimeout(() => {
-          resolve(mergedProps.beforeStateChange())
-        }, 0)    // 0ms 延迟，确保进入下一个事件循环
+      setInnerLoading(true)
+      // 把异步逻辑放到微任务
+      queueMicrotask(async () => {
+        try {
+          beforeResult = await mergedProps.beforeStateChange()
+          beforeResult = Boolean(beforeResult)
+        } catch (e) {
+          beforeResult = false
+          console.error('beforeStateChange 执行失败：', e)
+        } finally {
+          setInnerLoading(false)
+        }
+
+        if (!beforeResult) return
+        const newState = !currState
+        if (isControlled) {
+          mergedProps.onStateChange?.(newState)
+        } else {
+          setInnerState(newState)
+          mergedProps.onStateChange?.(newState)
+        }
       })
-      if (!loading) {
-        setLoading(false)
-      }
-      beforeResult = Boolean(beforeResult)
+      // 退出当前同步函数，等待微任务执行
+      return
     }
 
-    // 判断是否可以改变状态
-    const canIChangeState = beforeResult && !mergedProps.disabled && !mergedProps.loading
-
-    // 满足条件则更新状态
-    if (canIChangeState) {
-      setState(prev => !prev)
+    // 没有 beforeStateChange 的情况，正常处理
+    const newState = !currState
+    if (isControlled) {
+      mergedProps.onStateChange?.(newState)
+    } else {
+      setInnerState(newState)
+      mergedProps.onStateChange?.(newState)
     }
   }
+
+  // 开关总体 className
+  const switchClassName = useMemo(() => {
+    return genClassNameFromProps(
+      { 
+        state: currState ? 'open' : 'close',
+        shape: mergedProps.shape,
+        size: mergedProps.size,
+        disabled: currLoading || mergedProps.disabled
+      }, 
+      'urp-switch',
+      'urp-switch'
+    )
+  }, [currState, mergedProps.shape, mergedProps.size, currLoading, mergedProps.disabled])
+
+  // 滑块 className
+  const sliderClassName = useMemo(() => {
+    return genClassNameFromProps(
+      { 
+        state: currState ? 'open' : 'close',
+        shape: mergedProps.shape
+      }, 
+      'urp-switch-slider', 
+      'urp-switch-slider'
+    )
+  }, [currState, mergedProps.shape]) 
+
+  // 内部描述信息 className
+  const descClassName = useMemo(() => {
+    return genClassNameFromProps(
+      { state: currState ? 'open' : 'close' },
+      'urp-desc-inner',
+      'urp-desc-inner'
+    )
+  }, [currState]) 
+  // 外部描述信息 className
+  const outerDescClassName = useMemo(() => {
+    return genClassNameFromProps(
+      { state: currState ? 'open' : 'close' },
+      'urp-desc-outer',
+      'urp-desc-outer'
+    )
+  }, [currState]) 
 
   // 描述组件
   const displayDesc = (descPos = 'inner', iconSize = 8) => {
     if (mergedProps.descPos !== descPos) return null
     // 加载状态图标
-    if (loading) {
+    if (currLoading) {
       return (
          <UrpIcon 
           size={iconSize + 2} 
@@ -103,12 +128,12 @@ export default function UrpSwitch(props: SwitchType) {
     }
     // 非加载状态描述
     if (mergedProps.desc.length) {
-      return state ? mergedProps.desc[0] : mergedProps.desc[1]
+      return currState ? mergedProps.desc[0] : mergedProps.desc[1]
     } else if (mergedProps.descIcon.length) {
       return (
         <UrpIcon 
           size={iconSize} 
-          type={state ? mergedProps.descIcon[0] : mergedProps.descIcon[1]}
+          type={currState ? mergedProps.descIcon[0] : mergedProps.descIcon[1]}
         />
       )
     }
