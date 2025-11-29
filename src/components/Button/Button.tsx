@@ -110,19 +110,19 @@ export default function UrpButton(props: ButtonType) {
       <div style={{ position: 'relative', zIndex: 2 }}>
         {
           (icon && !loading && !purIcon) && 
-          <UrpIcon style={{ marginRight: '4px' }} type={icon} />
+          <UrpIcon className='urp-button-icon' style={{ marginRight: '4px' }} type={icon} />
         }
         {
           (icon && !loading && purIcon) && 
-          <UrpIcon type={icon} />
+          <UrpIcon className='urp-button-icon'  type={icon} />
         }
         {
           (loading && !purIcon) &&
-          <UrpIcon style={{ marginRight: '4px' }} type="LoadingOutlined" />
+          <UrpIcon className='urp-button-icon'  style={{ marginRight: '4px' }} type="LoadingOutlined" />
         }
         {
           (loading && purIcon) &&
-          <UrpIcon type="LoadingOutlined" />
+          <UrpIcon className='urp-button-icon'  type="LoadingOutlined" />
         }
         {
           !purIcon &&
