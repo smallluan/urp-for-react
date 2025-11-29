@@ -1,20 +1,37 @@
 @import '../utils/styles/index.less';
 
 .urp-link {
-  display: flex;
+  display: inline-flex; 
   flex-direction: column;
   cursor: pointer;
-  transition: all .1s ease-in-out;
-  width: fit-content;
+  transition: color 0.1s ease-in-out;
+  position: relative; 
+  padding-bottom: 2px; 
+  box-sizing: border-box;
+
   a {
     padding: 0 4px;
   }
+
+  .underline {
+    position: absolute; 
+    left: 0;
+    bottom: 0;
+    width: 0;
+    border: none;
+    border-bottom: 1px solid transparent;
+    transition: width 0.1s ease-in-out, border-color 0.1s ease-in-out;
+    will-change: width;
+    box-sizing: border-box;
+  }
 }
 
+// 禁用状态
 .urp-link-disabled {
   pointer-events: none;
 }
 
+// 下划线样式混入
 .define-urp-link(
   @color: var(--urp-primary-color);
   @color-hover: var(--urp-primary-color-hover);
@@ -22,18 +39,18 @@
 ) {
   color: @color;
   .underline {
-    background-color: @color;
+    border-bottom-color: @color; 
   }
   &:hover {
     color: @color-hover;
     .underline {
-      background-color: @color-hover;
+      border-bottom-color: @color-hover;
     }
   }
   &:active {
     color: @color-active;
     .underline {
-      background-color: @color-active;
+      border-bottom-color: @color-active;
     }
   }
 }
@@ -41,20 +58,12 @@
 .urp-link.urp-link-underline-display {
   .underline {
     width: 100%;
-    height: 1px;
   }
 }
 
 .urp-link.urp-link-underline-hover {
-  .underline {
-    transform: translateX(0%);
-    width: 0;
-    height: 1px;
-  }
-  &:hover {
-    .underline {
-      animation: underline-expend .1s ease-in-out forwards;
-    }
+  &:hover .underline {
+    width: 100%;
   }
 }
 
@@ -98,11 +107,12 @@
   )
 }
 
+// 禁用状态主题（统一颜色+透明度）
 .urp-link-theme-default.urp-link-disabled {
   .define-urp-link(
     var(--urp-font-gray-2),
-    var(--urp-font-gray-3),
-    var(--urp-font-gray-1)
+    var(--urp-font-gray-2),
+    var(--urp-font-gray-2)
   )
 }
 
@@ -140,21 +150,15 @@
 
 .urp-link-size-normal {
   font-size: 14px;
+  line-height: 20px;
 }
 
 .urp-link-size-small {
   font-size: 12px;
+  line-height: 17px;
 }
 
 .urp-link-size-large {
   font-size: 16px;
-}
-
-@keyframes underline-expend {
-  from {
-    width: 0;
-  }
-  to {
-    width: 100%;
-  }
+  line-height: 23px;
 }

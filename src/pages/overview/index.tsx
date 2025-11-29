@@ -34,8 +34,8 @@ export default function OverView() {
       {
         components.map((component, index) => {
           return(
-            <UrpLink 
-              key={index}
+            <div key={index}>
+              <UrpLink 
               prefixIcon="LinkOutlined" 
               underline='hover' 
               target='_self'
@@ -43,6 +43,8 @@ export default function OverView() {
             >
               <span>{component.content}</span>
             </UrpLink>
+            </div>
+            
           )
         })
       }
