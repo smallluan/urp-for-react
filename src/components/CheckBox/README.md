@@ -2,7 +2,8 @@
 **CheckBox.Group**
 |参数名|是否必填|参数类型|默认值|说明|
 |--|--|--|--|--|
-|`value`|N|`string \| number \| boolean \| null`|-|默认选中item的value|
+|`defaultValue`|N|`typeof value`|-|选中值（非受控属性）|
+|`value`|N|`string \| number \| boolean \| null`|-|选中值（受控属性）|
 |`cancelable`|N|`boolean`|`false`|是否可以取消选中|
 |`disabled`|N|`boolean`|`false`|是否禁用|
 |`readonly`|N|`boolean`|`false`|是否只读|

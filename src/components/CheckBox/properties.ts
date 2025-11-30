@@ -1,7 +1,11 @@
 import {CheckBoxGroupType, CheckBoxItemType, Value} from './type'
 
-export const groupDefaultProperties: Required<CheckBoxGroupType> = {
-  value: '',
+type CheckBoxDefaultProps = Omit<CheckBoxGroupType, 'value'>
+type RequiredCheckBoxDefaultProps = Required<CheckBoxDefaultProps>
+type MergedCheckBoxProps = RequiredCheckBoxDefaultProps & Pick<CheckBoxGroupType, 'value'>
+
+export const groupDefaultProperties: RequiredCheckBoxDefaultProps = {
+  defaultValue: '',
   cancelable: false,
   disabled: false,
   readonly: false,
@@ -22,8 +26,13 @@ export const itemDefaultProperties: Required<CheckBoxItemType> = {
   onChange: (value: Value) => {return value},
 }
 
-export const formatGroupProps = (props: Required<CheckBoxGroupType>)
-:Required<CheckBoxGroupType> => {
+/**
+ * props 的约束条件
+ * @param props - 属性值
+ * @returns - 约束后的属性值
+ */
+export const formatGroupProps = (props: MergedCheckBoxProps)
+:MergedCheckBoxProps => {
 
   const isTypeValue = (value: typeof props.value) => {
     return ['string', 'number', null].includes(typeof value)
@@ -33,7 +42,7 @@ export const formatGroupProps = (props: Required<CheckBoxGroupType>)
     // 可选上限设置为 1 (好像也没啥用，selectLimit 最后只校验了多选情况)
     props.selectLimit = 1
     // 默认值不是 Value 以外的类型
-    !isTypeValue(props.value) && (props.value = '')
+    !isTypeValue(props.defaultValue) && (props.defaultValue = '')
   }
   // 如果为多选
   if (props.multiple) {
@@ -43,10 +52,10 @@ export const formatGroupProps = (props: Required<CheckBoxGroupType>)
     }
     // 默认值必须是一个 Value[]
     if (
-      !Array.isArray(props.value) ||
-      props.value.some(item => !isTypeValue(item))
+      !Array.isArray(props.defaultValue) ||
+      props.defaultValue.some(item => !isTypeValue(item))
     ) {
-      props.value = []
+      props.defaultValue = []
     }
   }
   return props

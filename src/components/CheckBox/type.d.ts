@@ -3,6 +3,7 @@ export type Value = string | number | null
 
 /** 选项组类型 */
 export interface CheckBoxGroupType {
+  defaultValue?: Value | Array<Value>
   value?: Value | Array<Value>,
   cancelable?: boolean,
   disabled?: boolean,

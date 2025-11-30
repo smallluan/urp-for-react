@@ -13,13 +13,20 @@ const UrpCheckBoxGroup = (props: CheckBoxGroupType) => {
   const { merged: mergedProps } = useMergedProps(
     groupDefaultProperties,
     props,
-    ['value', 'cancelable', 'disabled', 'readonly', 
+    ['cancelable', 'disabled', 'readonly', 'defaultValue',
       'name', 'onChange', 'multiple', 'selectLimit', 'checkedIcon'],
     formatGroupProps
   )
+  // 是否是受控属性
+  const isControlled = props.value !== undefined
+  // 内部属性
+  const [innerValue, setInnerValue] = useState(mergedProps.defaultValue)
+  // 当前状态（综合受控与非受控）
+  const currValue = (isControlled ? props.value : innerValue) as Value | Array<Value>
 
-  const { cancelable, name, multiple, value, selectLimit, checkedIcon, onChange} = mergedProps
-  const [currValue, setCurrValue] = useState<Value | Array<Value>>(value)
+  const { cancelable, name, multiple, selectLimit, checkedIcon, onChange} = mergedProps
+
+  // 判断是否超出最大限制（多选）
   const isOnSelectLimit = useMemo(() => {
     return selectLimit !== -1 && 
            Array.isArray(currValue) && 
@@ -28,44 +35,72 @@ const UrpCheckBoxGroup = (props: CheckBoxGroupType) => {
 
   // 非组件首次渲染并且仅当值不一样时触发onChange
   const isFirst = useRef(true)
-  const initCurrValue = useRef(value)
+  const initCurrValue = useRef(currValue)
 
   useEffect(() => {
     if (isFirst.current || currValue === initCurrValue.current) { 
       isFirst.current = false 
       return
-     }
-    onChange(currValue)
-  }, [currValue, onChange])
+    }
+    if (!isControlled) {
+      onChange?.(currValue)
+    }
+  }, [currValue, onChange, isControlled])
 
   const onItemChange = useCallback((itemValue: Value) => {
-    if (!multiple) {
-      if (itemValue === currValue) {
-        if (cancelable) setCurrValue(null)
-      } 
-      else setCurrValue(itemValue)
-    } else {
-      if (Array.isArray(currValue)) {
-        if (currValue.includes(itemValue)) {
-          if (cancelable) {
-            setCurrValue(prev => {
+    if (!isControlled) {
+      if (!multiple) {
+        if (itemValue === currValue) {
+          if (cancelable) setInnerValue(null)
+        } 
+        else setInnerValue(itemValue)
+      } else {
+        if (Array.isArray(currValue)) {
+          if (currValue.includes(itemValue)) {
+            if (cancelable) {
+              setInnerValue(prev => {
+                if (Array.isArray(prev)) {
+                return prev.filter(item => item !== itemValue)
+                }
+                return [prev]
+              })
+            }
+          }
+          else {
+            if (selectLimit !== -1 && currValue.length >= Math.max(selectLimit, 1)) return
+            setInnerValue((prev) => {
               if (Array.isArray(prev)) {
-               return prev.filter(item => item !== itemValue)
+                return [...new Set([...prev, itemValue])]
               }
-              return [prev]
+              return prev
             })
           }
         }
-         else {
-          if (selectLimit !== -1 && currValue.length >= Math.max(selectLimit, 1)) return
-          setCurrValue((prev) => {
-            Array.isArray(prev) && (prev = [...new Set([...prev, itemValue])])
-            return prev
-          })
+      }
+    } else {
+      if (!multiple) {
+        if (itemValue === currValue) {
+          if (cancelable) {
+            onChange(null)
+          }
+        } 
+        else setInnerValue(itemValue)
+      } else {
+        if (Array.isArray(currValue)) {
+          if (currValue.includes(itemValue)) {
+            if (cancelable) {
+              onChange(currValue.filter(item => item !== itemValue))
+            }
+          }
+          else {
+            if (selectLimit !== -1 && currValue.length >= Math.max(selectLimit, 1)) return
+            onChange([...new Set([...currValue, itemValue])])
+          }
         }
       }
     }
-  }, [currValue, cancelable, multiple, selectLimit])
+    
+  }, [currValue, cancelable, multiple, selectLimit, isControlled, onChange])
 
   const contextValue = useMemo(() => ({
     value: currValue,
