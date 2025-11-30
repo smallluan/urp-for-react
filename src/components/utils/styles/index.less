@@ -53,3 +53,31 @@ input[type="checkbox"] {
   -moz-appearance: none;
   appearance: none;
 }
+
+//最重要！！！没有设置width和height，咋弄都不生效
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+ 
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-thumb {
+  border: 0px solid transparent;
+}
+
+//轨道
+::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 0;
+}
+//滑块
+::-webkit-scrollbar-thumb {
+  min-height: 10px;
+  background-clip: content-box;
+  border-radius: 100vh;
+  background: gray;
+}
+ 
+::-webkit-scrollbar-corner {
+  background: transparent;
+}

@@ -1,0 +1,33 @@
+/* 穿梭框主体 */
+.urp-transfer {
+  display: flex;
+  align-items: center;
+
+}
+
+.urp-single-transfer {
+  border: 1px solid gray;
+  width: 180px;
+  border-radius: 8px;
+  overflow: hidden;
+  .urp-single-transfer-head {
+    background-color: white;
+    border-bottom: 1px solid gray;
+    padding: 12px;
+  }
+  .urp-single-transfer-body {
+    padding: 10px;
+    height: 180px;
+    flex: 1;
+    overflow: auto;
+    margin: 2px;
+  }
+}
+
+/* 穿梭框按钮组 */
+.urp-transfer-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin: 0 8px;
+}
