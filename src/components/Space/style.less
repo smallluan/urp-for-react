@@ -1,9 +1,33 @@
 .urp-space {
+  width: 100%;
   display: flex;
   align-items: var(--props-align);
-  gap: var(--props-gap);
+  gap: var(--props-gap-vertial) var(--props-gap-horizontal);
 }
 
 .urp-space-direction-vertial {
   flex-direction: column;
+}
+
+.urp-space-overflow-breakLine {
+  flex-wrap: wrap;
+}
+
+.urp-space-overflow-scroll {
+  flex-wrap: nowrap;
+  overflow: scroll;
+  height: 100%;
+}
+
+.urp-space-overflow-hidden {
+  flex-wrap: nowrap;
+  overflow: hidden;
+  height: 100%;
+}
+
+.urp-space-overflow-scroll > *,
+.urp-space-overflow-hidden > * {
+  flex-shrink: 0;
+  white-space: nowrap;
+  min-width: fit-content;
 }
