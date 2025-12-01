@@ -10,6 +10,7 @@ import LinkPage from '../pages/components/link/index.tsx'
 import InputPage from '../pages/components/input/index.tsx'
 import SelectorPage from '../pages/components/checkbox/index.tsx'
 import TransferPage from '../pages/components/transfer/index.tsx'
+import SpacePage from '../pages/components/space/index.tsx'
 
 const router = createBrowserRouter([
   {
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
           {
             path: 'transfer',
             element: <TransferPage/>
+          },
+          {
+            path: 'space',
+            element: <SpacePage/>
           }
         ]
       }

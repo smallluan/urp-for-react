@@ -45,6 +45,8 @@ function isValidCSSValue(value: string): boolean {
     CSS.supports('z-index', value) ||
     // url
     CSS.supports('background-image', value) ||
+    // 布局相关
+    CSS.supports('align-items', value) ||
     // 补充
     CSS.supports('line-height', value)
   )
