@@ -47,6 +47,7 @@ function isValidCSSValue(value: string): boolean {
     CSS.supports('background-image', value) ||
     // 布局相关
     CSS.supports('align-items', value) ||
+    CSS.supports('justify-content', value) ||
     // 补充
     CSS.supports('line-height', value)
   )
