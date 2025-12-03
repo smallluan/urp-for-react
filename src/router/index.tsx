@@ -12,6 +12,7 @@ import SelectorPage from '../pages/components/checkbox/index.tsx'
 import TransferPage from '../pages/components/transfer/index.tsx'
 import SpacePage from '../pages/components/space/index.tsx'
 import GridPage from '../pages/components/grid/index.tsx'
+import LayoutPage from '../pages/components/layout/index.tsx'
 
 const router = createBrowserRouter([
   {
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
           {
             path: 'grid',
             element: <GridPage/>
+          },
+          {
+            path: 'layout',
+            element: <LayoutPage/>
           }
         ]
       }
