@@ -21,54 +21,57 @@ const router = createBrowserRouter([
     children: [
       {
         path: 'overview',
-        element: <OverView/>
-      },
-      {
-        path: 'components',
+        element: <OverView/>,
         children: [
           {
-            index: true,
-            path: 'button',
-            element: <ButtonPage/>
-          },
-          {
-            path: 'switch',
-            element: <SwitchPage/>
-          },
-          {
-            path: 'divider',
-            element: <DividerPage/>
-          },
-          {
-            path: 'link',
-            element: <LinkPage/>
-          },
-          {
-            path: 'input',
-            element: <InputPage/>
-          },
-          {
-            path: 'checkbox',
-            element: <SelectorPage/>
-          },
-          {
-            path: 'transfer',
-            element: <TransferPage/>
-          },
-          {
-            path: 'space',
-            element: <SpacePage/>
-          },
-          {
-            path: 'grid',
-            element: <GridPage/>
-          },
-          {
-            path: 'layout',
-            element: <LayoutPage/>
+            path: 'components',
+            children: [
+              {
+                index: true,
+                path: 'button',
+                element: <ButtonPage/>
+              },
+              {
+                path: 'switch',
+                element: <SwitchPage/>
+              },
+              {
+                path: 'divider',
+                element: <DividerPage/>
+              },
+              {
+                path: 'link',
+                element: <LinkPage/>
+              },
+              {
+                path: 'input',
+                element: <InputPage/>
+              },
+              {
+                path: 'checkbox',
+                element: <SelectorPage/>
+              },
+              {
+                path: 'transfer',
+                element: <TransferPage/>
+              },
+              {
+                path: 'space',
+                element: <SpacePage/>
+              },
+              {
+                path: 'grid',
+                element: <GridPage/>
+              },
+              {
+                path: 'layout',
+                element: <LayoutPage/>
+              }
+            ]
           }
         ]
-      }
+      },
+      
     ]
   },
   {
