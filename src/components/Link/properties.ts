@@ -10,7 +10,8 @@ const defaultProperties: Required<LinkType> = {
   prefixIcon: '',
   suffixIcon: '',
   href: '',
-  target: '_blank'
+  target: '_blank',
+  to: ''
 }
 
 export default defaultProperties

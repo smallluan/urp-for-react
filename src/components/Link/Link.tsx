@@ -3,48 +3,63 @@ import defaultProperties from "./properties.ts"
 import { UrpIcon } from '../Icon/index.ts'
 import { useMemo } from "react"
 import genClassNameFromProps from "../utils/tools/className.ts"
-
+import { Link } from "react-router-dom"
 import './style.less'
 
 export default function UrpLink(props: LinkType) {
-
   const mergedProps = { ...defaultProperties, ...props }
   const { 
     content, children, href, target, theme, 
-    size, disabled, underline, prefixIcon, suffixIcon 
+    size, disabled, underline, prefixIcon, suffixIcon, to 
   } = mergedProps
   const linkContent = content ?? children
 
-  const linkClass = useMemo(() => {
-    return genClassNameFromProps(
-      {
-        theme: theme,
-        size: size,
-        disabled: disabled,
-        underline: underline
-      },
+  const linkClass = useMemo(() => 
+    genClassNameFromProps(
+      { theme, size, disabled, underline },
       'urp-link',
       'urp-link'
     )
-  }, [theme, size, disabled, underline])
+  , [theme, size, disabled, underline])
 
-  return(
-    <div aria-disabled={disabled} data-testid='urp-link' className={linkClass}>
-      <div>
-        {
-          prefixIcon &&
-          <UrpIcon type={prefixIcon} />
-        }
-        <a href={href} target={target}>{linkContent}</a>
-         {
-          suffixIcon &&
-          <UrpIcon type={suffixIcon} />
-        }
-      </div>
-      {
-        underline !== 'none' &&
+  const renderLink = () => {
+    if (disabled) {
+      return (
+        <div style={{ pointerEvents: 'none' }}>
+          {prefixIcon && <UrpIcon type={prefixIcon} />}
+          <span>{linkContent}</span>
+          {suffixIcon && <UrpIcon type={suffixIcon} />}
+        </div>
+      )
+    }
+    if (to) {
+      return (
+        <Link to={to} target={target}>
+          {prefixIcon && <UrpIcon type={prefixIcon} />}
+          <span>{linkContent}</span>
+          {suffixIcon && <UrpIcon type={suffixIcon} />}
+        </Link>
+      )
+    }
+    return (
+      <a href={href} target={target}>
+        {prefixIcon && <UrpIcon type={prefixIcon} />}
+        <span>{linkContent}</span>
+        {suffixIcon && <UrpIcon type={suffixIcon} />}
+      </a>
+    )
+  }
+
+  return (
+    <div 
+      aria-disabled={disabled}
+      data-testid='urp-link'
+      className={linkClass}
+    >
+      {renderLink()}
+      {underline !== 'none' && !disabled && (
         <span aria-hidden="true" className="underline"></span>
-      }
+      )}
     </div>
   )
 }

@@ -11,3 +11,4 @@
 |`suffixIcon`|N|`string`|-|后置图标|
 |`href`|N|`string`|-|跳转链接|
 |`target`|N|`string`|`_blank`|跳转方式|
+|`to`|N|`string`|-|路由跳转|

@@ -8,5 +8,6 @@ export interface LinkType {
   prefixIcon?: string,
   suffixIcon?: string,
   href?: string,
-  target?: '_self' | '_blank' | '_blank' | '_top' | string
+  target?: '_self' | '_blank' | '_blank' | '_top' | string,
+  to?: string
 }
