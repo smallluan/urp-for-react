@@ -1,10 +1,12 @@
 import React, { useCallback } from 'react'
 import genStyleFromPrpos from "../utils/tools/style.ts"
 import genClassNameFromProps from "../utils/tools/className.ts"
+import { GridRow, GridCol } from './type'
+// import { rowDefaultProps, colDefaultProps } from './properties.ts'
 
 import './style.less'
 
-const UrpGridRow = (props) => {
+const UrpGridRow = (props: GridRow) => {
 
   const rowClass = genClassNameFromProps(
     {
@@ -59,7 +61,7 @@ const UrpGridRow = (props) => {
   )
 }
 
-const UrpGridCol = (props) => {
+const UrpGridCol = (props: GridCol) => {
 
   const colClass = genClassNameFromProps(
     { 
