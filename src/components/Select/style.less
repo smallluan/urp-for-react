@@ -1,0 +1,27 @@
+@import "../utils/styles/colors/color.less";
+
+.urp-select {
+  width: 300px;
+  border: 1px solid gray;
+  cursor: text;
+  transition: all .2s ease-in-out;
+  &:hover {
+    border: 1px solid var(--urp-primary-color);
+  }
+  &:focus {
+    box-shadow: 0 0 2px 2px var(--urp-primary-color-disabled);
+  }
+}
+
+.urp-select-icon-arrow {
+  transition: all .2s ease-in-out;
+}
+
+.urp-select-icon-arrow-down {
+  transform: rotate(0);
+}
+
+.urp-select-icon-arrow-up {
+  transform: rotate(-180deg);
+}
+

@@ -13,6 +13,7 @@ import TransferPage from '../pages/components/transfer/index.tsx'
 import SpacePage from '../pages/components/space/index.tsx'
 import GridPage from '../pages/components/grid/index.tsx'
 import LayoutPage from '../pages/components/layout/index.tsx'
+import SelectPage from '../pages/components/select/index.tsx'
 
 const router = createBrowserRouter([
   {
@@ -66,6 +67,10 @@ const router = createBrowserRouter([
               {
                 path: 'layout',
                 element: <LayoutPage/>
+              },
+              {
+                path: 'select',
+                element: <SelectPage/>
               }
             ]
           }
