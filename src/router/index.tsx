@@ -14,6 +14,7 @@ import SpacePage from '../pages/components/space/index.tsx'
 import GridPage from '../pages/components/grid/index.tsx'
 import LayoutPage from '../pages/components/layout/index.tsx'
 import SelectPage from '../pages/components/select/index.tsx'
+import PopupPage from '../pages/components/popup/index.tsx'
 
 const router = createBrowserRouter([
   {
@@ -71,6 +72,10 @@ const router = createBrowserRouter([
               {
                 path: 'select',
                 element: <SelectPage/>
+              },
+              {
+                path: 'popup',
+                element: <PopupPage/>
               }
             ]
           }
