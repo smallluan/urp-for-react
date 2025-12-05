@@ -39,10 +39,10 @@ const UrpSelect = (props: Select) => {
      onFocus={() => setMouseFocus(true)}
      onBlur={() => setMouseFocus(false)}
      >
-      {
+      {/* {
         mouseFocus &&
         <div>啦啦啦</div>
-      }
+      } */}
       <UrpIcon 
         className={arrowIconClass} 
         type="DownOutlined"

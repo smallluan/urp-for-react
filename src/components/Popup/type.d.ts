@@ -8,4 +8,5 @@ export interface Popup {
   trigger?: 'hover' | 'click'
   content?: string,
   children?: React.ReactNode
+  onChange?: (visible: boolean) => void
 }
