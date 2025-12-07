@@ -51,8 +51,8 @@ const UrpSpace = (props: SpaceProps) => {
 
   return(
     <div 
-      className={spaceClassName}
-      style={spaceStyle}
+      className={spaceClassName + ' ' + props.className}
+      style={{...spaceStyle, ...props.style}}
     >
       { props.children }
     </div>

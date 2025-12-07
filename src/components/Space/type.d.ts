@@ -5,5 +5,7 @@ export interface SpaceProps {
   align?: 'start' | 'end' | 'center',
   direction?: 'vertial' | 'horizontal',
   overflow?: 'breakLine' | 'scroll' | 'hidden',
-  gap?: SpaceGap | SpaceGap[]
+  gap?: SpaceGap | SpaceGap[],
+  className?: string,
+  style?: React.CSSProperties,
 }

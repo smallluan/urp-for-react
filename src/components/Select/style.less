@@ -1,20 +1,36 @@
 @import "../utils/styles/colors/color.less";
 
 .urp-select {
-  width: 300px;
+  display: flex;
+  width: 120px;
+  height: 26px;
   border: 1px solid gray;
   cursor: text;
   transition: all .2s ease-in-out;
-  &:hover {
-    border: 1px solid var(--urp-primary-color);
-  }
-  &:focus {
-    box-shadow: 0 0 2px 2px var(--urp-primary-color-disabled);
-  }
+  border-radius: 4px;
+  box-sizing: border-box;
+  padding: 2px;
+  justify-content: space-between;
+  font-size: 12px;
+}
+
+.urp-select-hover {
+  border: 1px solid var(--urp-primary-color);
+}
+
+.urp-select-focus {
+  box-shadow: 0 0 2px 2px var(--urp-primary-color-disabled);
+}
+
+/* 图标区域 */
+.urp-select-icons {
+  width: fit-content;
 }
 
 .urp-select-icon-arrow {
   transition: all .2s ease-in-out;
+  color: var(--urp-font-gray-2) !important;
+  font-size: 12px !important;
 }
 
 .urp-select-icon-arrow-down {
@@ -25,3 +41,23 @@
   transform: rotate(-180deg);
 }
 
+.urp-select-pop-content {
+  width: 120px; 
+}
+
+.check-box {
+  width: 100%;
+  padding: 4px;
+  border-radius: 4px;
+  transition: all .2s ease-in-out;
+  &:hover {
+    background-color: var(--urp-primary-color-light);
+    .check-box-label {
+      color: var(--urp-primary-color) !important;
+    }
+  }
+}
+
+.check-box-label {
+  font-size: 12px;
+}
