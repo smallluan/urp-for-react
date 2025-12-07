@@ -7,6 +7,10 @@ export interface Popup {
   hide?: 'mouseLeave' | 'clickOutter' | boolean,
   trigger?: 'hover' | 'click'
   content?: string,
+  visible?: boolean,
   children?: React.ReactNode
-  onChange?: (visible: boolean) => void
+  onChange?: (visible: boolean) => void,
+  onMouseEnter?: () => void,
+  onBlur?: () => void,
+  onFocus?: () => void
 }

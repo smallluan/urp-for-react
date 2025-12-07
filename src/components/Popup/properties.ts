@@ -6,5 +6,5 @@ export const defaultProps: Popup = {
   position: 'bottom',
   arrow: false,
   trigger: 'hover',
-  content: ''
+  content: '',
 }

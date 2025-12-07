@@ -3,6 +3,7 @@ import "./style.less"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { defaultProps } from "./properties.ts"
 import genClassNameFromProps from "../utils/tools/className.ts"
+import React from "react"
 
 const UrpPopup = (props: Popup) => {
 
@@ -10,9 +11,10 @@ const UrpPopup = (props: Popup) => {
 
   const [mouseEnter, setMouseEnter] = useState(false)
   const [clicked, setClicked] = useState(false)
-  const timer: any = useRef(null)
-  const popupRef = useRef<HTMLDivElement>(null)
+  const popupRef = useRef(null)
   const hasBindClickRef = useRef(false)
+
+  const contentChildren = React.Children.toArray(props.children).find(item => item.type === UrpPopup.Content)
 
   useEffect(() => {
     if (mergedProps.trigger === 'click') {
@@ -26,8 +28,11 @@ const UrpPopup = (props: Popup) => {
     if (hasBindClickRef.current) return
     hasBindClickRef.current = true
 
-    const handleWindowClick = (e: MouseEvent) => {
-      if (popupRef.current && !popupRef.current.contains(e.target as Node)) {
+    const handleWindowClick = (e) => {
+      if (
+        popupRef.current && 
+        !popupRef.current.contains(e.target)
+      ) {
         setClicked(false)
       }
     }
@@ -41,17 +46,13 @@ const UrpPopup = (props: Popup) => {
 
   const handleMouseEnter = useCallback(() => {
     if (mergedProps.trigger === 'hover') {
-      clearTimeout(timer.current)
-      timer.current = null
       setMouseEnter(true)
     }
   }, [mergedProps.trigger])
 
   const handleMouseLeave = useCallback(() => {
     if (mergedProps.trigger === 'hover') {
-      clearTimeout(timer.current)
       setMouseEnter(false)
-      timer.current = null
     }
   }, [mergedProps.trigger])
 
@@ -59,49 +60,76 @@ const UrpPopup = (props: Popup) => {
     setClicked(prev => !prev)
   }, [])
 
-  const contentClass = useMemo(() => {
-    return genClassNameFromProps(
-      {
-        display: mergedProps.trigger === 'hover' ? 
-          mouseEnter : 
-          clicked,
-        position: mergedProps.position,
-      },
-      'urp-popup-content',
-      'urp-popup-content'
-    )
-  }, [mouseEnter, clicked, mergedProps.position, mergedProps.trigger])
-
   return(
     <div
       ref={popupRef}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className="urp-popup">
-      <div
-        onMouseEnter={handleMouseEnter}
-        className={contentClass}
-      >
-        {mergedProps.arrow && <div className="urp-popup-arrow"/>}
-        <div 
+      className="urp-popup"
+    >
+      {
+        contentChildren ?
+        contentChildren:
+        mergedProps.content ?
+        <Content
           style={{...mergedProps.style}}
           className={`urp-popup-content-inner ${mergedProps.className}`}
+          visible={mergedProps.visible}
+          position={mergedProps.position}
+          mouseEnter={mouseEnter}
+          clicked={clicked}
+          trigger={mergedProps.trigger}
+          arrow={mergedProps.arrow}
+          handleMouseEnter={handleMouseEnter}
         >
           {mergedProps.content}
-        </div>
-      </div>
+        </Content> :
+        <div></div>
+      }
       <div
         onClick={handleTriggerClick}
       >
-        {mergedProps.children}
+        {React.Children.toArray(props.children).filter(child => child.type !== Content)}
       </div>
     </div>
   )
 }
 
-const Content = () => {
-  return(
-    <div>content</div>
+const Content = (props) => {
+  const showPopup = useMemo(() => {
+    if (props.visible !== undefined) return props.visible
+    if (props.trigger === 'hover') return props.mouseEnter
+    if (props.trigger === 'click') return props.clicked
+    return false
+  }, [props.visible, props.trigger, props.mouseEnter, props.clicked])
+
+  const contentClass = useMemo(() => {
+    return genClassNameFromProps(
+      {
+        display: showPopup,
+        position: props.position,
+      },
+      'urp-popup-content',
+      'urp-popup-content'
+    )
+  }, [showPopup, props.position])
+
+  return (
+    <div
+      onMouseEnter={props.handleMouseEnter}
+      className={contentClass}
+    >
+      {props.arrow && <div className="urp-popup-arrow" />}
+      <div
+        style={{ ...props.style }}
+        onMouseEnter={props.onMouseEnter}
+        onFocus={props.onFocus}
+        onBlur={props.onBlur}
+        className={`urp-popup-content-inner ${props.className}`}
+      >
+        {props.children}
+      </div>
+    </div>
   )
 }
 
