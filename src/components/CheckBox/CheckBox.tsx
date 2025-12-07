@@ -84,7 +84,9 @@ const UrpCheckBoxGroup = (props: CheckBoxGroupType) => {
             onChange(null)
           }
         } 
-        else setInnerValue(itemValue)
+        else {
+          onChange(itemValue)
+        }
       } else {
         if (Array.isArray(currValue)) {
           if (currValue.includes(itemValue)) {
@@ -113,7 +115,12 @@ const UrpCheckBoxGroup = (props: CheckBoxGroupType) => {
 
   return(
     <CheckBoxContext.Provider value={contextValue}>
-      <div>{ props.children }</div>
+      <div
+        className={props.className}
+        style={props.style}
+      >
+        { props.children }
+      </div>
     </CheckBoxContext.Provider>
   ) 
 }
@@ -152,11 +159,11 @@ const UrpCheckBoxItem = memo((props: CheckBoxItemType) => {
     const classname = genClassNameFromProps(
       { 
         disabled: disabled || 
-                  (
-                    isOnSelectLimit && 
-                    Array.isArray(contextValue) && 
-                    !contextValue.includes(value)
-                  )
+          (
+            isOnSelectLimit && 
+            Array.isArray(contextValue) && 
+            !contextValue.includes(value)
+          )
       },
       'urp-check-box-item',
       'urp-check-box-item'
@@ -188,7 +195,7 @@ const UrpCheckBoxItem = memo((props: CheckBoxItemType) => {
   }, [isChecked])
 
   return(
-    <label className={checkBoxClass}>
+    <label className={checkBoxClass + ' ' + props.className}>
       <div className={boxClass}>
         <div className={bgClass}>
           {
@@ -218,9 +225,21 @@ const UrpCheckBoxItem = memo((props: CheckBoxItemType) => {
 
 UrpCheckBoxItem.displayName = 'UrpCheckBoxItem'
 
-const UrpCheckBoxLabel = (props: { children: React.ReactNode }) => {
+const UrpCheckBoxLabel = (
+  props: 
+  { 
+    children?: React.ReactNode,
+    className?: string,
+    style?: React.CSSProperties
+  }
+) => {
   return(
-    <span className="urp-checkbox-label">{ props.children }</span>
+    <div 
+      className={`urp-checkbox-label ${props.className}`}
+      style={{...props.style}}
+    >
+      { props.children }
+    </div>
   )
 }
 
