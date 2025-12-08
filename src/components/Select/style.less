@@ -4,12 +4,12 @@
   display: flex;
   width: 120px;
   height: 26px;
-  border: 1px solid gray;
+  border: 1px solid var( --urp-gray-color-4);
   cursor: text;
   transition: all .2s ease-in-out;
   border-radius: 4px;
   box-sizing: border-box;
-  padding: 2px;
+  padding: 4px;
   justify-content: space-between;
   font-size: 12px;
 }
@@ -19,6 +19,20 @@
 }
 
 .urp-select-focus {
+  border: 1px solid var(--urp-primary-color);
+  box-shadow: 0 0 2px 2px var(--urp-primary-color-disabled);
+}
+
+.urp-select-borderless {
+  border: 1px solid transparent;
+}
+
+.urp-select-borderless.urp-select-hover {
+  border: 1px solid var( --urp-gray-color-4);
+}
+
+.urp-select-borderless.urp-select-focus {
+  border: 1px solid var(--urp-primary-color);
   box-shadow: 0 0 2px 2px var(--urp-primary-color-disabled);
 }
 

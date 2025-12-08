@@ -7,3 +7,5 @@
 |**options**|N|`Array`|`[]`|选项|
 |**value**|N|`string \| string[]`|-|选中值（受控属性）|
 |**defaultValue**|N|`string \| string[]`|-|选中值（非受控属性）|
+|**borderless**|||||
+|**position**||||popup属性。弹层方向|

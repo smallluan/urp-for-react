@@ -5,5 +5,7 @@ export interface Select {
   defaultValue?: string | string[],
   options?: Options | Options[],
   multiple?: boolean,
+  borderless?: boolean,
+  position?: 'bottom' | 'top' | 'left' | 'right',
   onChange?: () => void
 }

@@ -5,8 +5,8 @@ import { UrpIcon } from "../Icon/index.ts"
 import { UrpPopup } from "../Popup/index.ts"
 import { UrpCheckBox } from "../CheckBox/index.ts"
 import { UrpSpace } from "../Space/index.ts"
-import { UrpButton } from "../Button/index.ts"
-import { UrpGrid } from "../Grid/index.ts"
+// import { UrpButton } from "../Button/index.ts"
+// import { UrpGrid } from "../Grid/index.ts"
 
 import "./style.less"
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react"
@@ -43,12 +43,13 @@ const UrpSelect = (props: Select) => {
     return genClassNameFromProps(
       {
         hover: mouseEnter,
-        focus: mouseFocus
+        focus: mouseFocus,
+        borderless: props.borderless
       },
       'urp-select',
       'urp-select'
     )
-  }, [mouseFocus, mouseEnter])
+  }, [mouseFocus, mouseEnter, props.borderless])
 
 
 
@@ -72,6 +73,7 @@ const UrpSelect = (props: Select) => {
       >
         <UrpPopup
           trigger="click"
+          position={props.position}
         >
           <div
             className={selectClass}
@@ -88,7 +90,7 @@ const UrpSelect = (props: Select) => {
             <Icons/>
           </div>
           <UrpPopup.Content
-            position="bottom"
+            position={props.position}
             visible={mouseFocus}
             className="urp-select-pop-content"
             arrow
@@ -96,7 +98,7 @@ const UrpSelect = (props: Select) => {
             <div style={{ width: '100%' }}>
               <UrpSpace direction="vertial" gap={8}>
                 <Options/>
-                <Footer/> 
+                {/* <Footer/>  */}
               </UrpSpace>
             </div>
           </UrpPopup.Content>
@@ -173,17 +175,17 @@ const Icons = () => {
 /**
  * 底部组件
  */
-const Footer = () => {
-  return (
-    <UrpGrid.Row justify="end">
-      <UrpGrid.Col span={24}>
-        <UrpSpace direction="horizontal" gap={8}>
-          <UrpButton content="取消" theme="default" size="small" />
-          <UrpButton content="确定" size="small" />
-        </UrpSpace>
-      </UrpGrid.Col>
-    </UrpGrid.Row>
-  )
-}
+// const Footer = () => {
+//   return (
+//     <UrpGrid.Row justify="end">
+//       <UrpGrid.Col span={24}>
+//         <UrpSpace direction="horizontal" gap={8}>
+//           <UrpButton content="取消" theme="default" size="small" />
+//           <UrpButton content="确定" size="small" />
+//         </UrpSpace>
+//       </UrpGrid.Col>
+//     </UrpGrid.Row>
+//   )
+// }
 
 export default UrpSelect
