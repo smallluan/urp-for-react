@@ -1,0 +1,1 @@
+export { default as UrpTypo } from "./Typo.tsx"
