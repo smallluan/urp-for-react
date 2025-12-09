@@ -3,7 +3,7 @@ export interface SwitchType {
   defaultState?: boolean,
   loading?: boolean,
   disabled?: boolean,
-  shape?: 'around' | 'rect',
+  shape?: 'round' | 'rect',
   desc?: string[],
   descIcon?: string[],
   descPos?: 'inner' | 'outer',

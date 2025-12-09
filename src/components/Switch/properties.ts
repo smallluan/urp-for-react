@@ -17,7 +17,7 @@ const defaultProperties: RequiredSwitchDefaultProps = {
   defaultState: false,
   loading: false,
   disabled: false,
-  shape: 'around',
+  shape: 'round',
   desc: [],
   descIcon: [],
   descPos: 'inner',
