@@ -15,7 +15,7 @@ describe('Switch 组件', () => {
     expect(urpSwitch).toBeInTheDocument()
     expect(urpSwitch).toHaveClass('urp-switch')
     expect(urpSwitch).toHaveClass('urp-switch-state-close')
-    expect(urpSwitch).toHaveClass('urp-switch-shape-around')
+    expect(urpSwitch).toHaveClass('urp-switch-shape-round')
     expect(urpSwitch).toHaveClass('urp-switch-size-normal')
     expect(urpSwitch).not.toHaveClass('urp-switch-state-open')
     expect(urpSwitch).not.toHaveClass('urp-switch-disabled')
