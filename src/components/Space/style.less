@@ -31,3 +31,41 @@
   white-space: nowrap;
   min-width: fit-content;
 }
+
+// 隐藏所有滚动条（x + y，内容可滚动，仅隐藏滚动条样式）
+.urp-space-scrollBar-none {
+  // Webkit内核（Chrome/Safari/Edge）：隐藏所有滚动条
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  // Firefox：隐藏滚动条
+  scrollbar-width: none;
+  // IE/Edge旧版：隐藏滚动条
+  -ms-overflow-style: none;
+}
+
+// 仅显示水平滚动条，隐藏垂直滚动条
+.urp-space-scrollBar-x {
+  // Webkit内核：水平滚动条显示，垂直设为0隐藏
+  &::-webkit-scrollbar {
+    height: auto; // 保留水平滚动条默认高度
+    width: 0;     // 垂直滚动条宽度设0，隐藏
+  }
+  // Firefox：仅显示细水平滚动条（垂直自动隐藏）
+  scrollbar-width: thin;
+  // IE/Edge：仅显示水平滚动条
+  -ms-overflow-style: scrollbar;
+}
+
+// 仅显示垂直滚动条，隐藏水平滚动条
+.urp-space-scrollBar-y {
+  // Webkit内核：垂直滚动条显示，水平设为0隐藏
+  &::-webkit-scrollbar {
+    width: auto;  // 保留垂直滚动条默认宽度
+    height: 0;    // 水平滚动条高度设0，隐藏
+  }
+  // Firefox：仅显示细垂直滚动条（水平自动隐藏）
+  scrollbar-width: thin;
+  // IE/Edge：仅显示垂直滚动条
+  -ms-overflow-style: scrollbar;
+}

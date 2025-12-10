@@ -15,7 +15,7 @@ const UrpSpace = (props: SpaceProps) => {
   const { merged: mergedProps } = useMergedProps(
     defaultProps,
     props,
-    ['direction', 'overflow', 'gap', 'align'],
+    ['direction', 'overflow', 'gap', 'align', 'scrollBar'],
     formatProps
   )
 
@@ -23,7 +23,8 @@ const UrpSpace = (props: SpaceProps) => {
     return genClassNameFromProps(
       {
         direction: mergedProps.direction,
-        overflow: mergedProps.overflow
+        overflow: mergedProps.overflow,
+        scrollBar: mergedProps.scrollBar
       },
       'urp-space',
       'urp-space'

@@ -6,3 +6,4 @@
 |`direction`|N|`vertical \| horizontal`|`horizontal`|元素排列方向|
 |`overflow`|N|`breakLine \| scroll \| hidden\|breakLine`|breakLine|溢出（仅 breakLine）|
 |`gap`|N|`string \| number \| string[] `|`8px`|间距大小|
+|`scrollBar`|`display \| none \| x \| y`|`disaplay`||overflow = scroll 是否显示滚动条 |

@@ -5,7 +5,8 @@ export const defaultProps: SpaceProps = {
   align: 'center',
   direction: 'horizontal',
   overflow: 'breakLine',
-  gap: '8px'
+  gap: '8px',
+  scrollBar: 'display',
 }
 
 export const formatProps = (props: Required<SpaceProps>) => {
