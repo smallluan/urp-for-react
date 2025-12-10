@@ -27,6 +27,7 @@ export interface CheckBoxItemType {
   disabled?: boolean,
   readonly?: boolean,
   children?: React.ReactNode,
+  labelOnly?: boolean, // 是否只显示 label 不显示前面的框框
   onChange?: (checked: Value) => void,
 }
 

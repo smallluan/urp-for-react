@@ -25,6 +25,7 @@
 |`label`|N|`React.ReactNode`|`选项一`|内容|
 |`children`|N|`React.ReactNode`|`null`|内容|
 |`onChange`|N|``|-|变更回调函数|
+|`labelOnly`||||是否只显示 label 不显示前面的框框|
 |`className`|||||
 |`style`|||||
 

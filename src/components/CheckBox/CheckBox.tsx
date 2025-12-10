@@ -196,14 +196,17 @@ const UrpCheckBoxItem = memo((props: CheckBoxItemType) => {
 
   return(
     <label className={checkBoxClass + ' ' + props.className}>
-      <div className={boxClass}>
-        <div className={bgClass}>
-          {
-            (multiple) &&
-            <UrpIcon size='10px'style={{color: 'white',}}type={checkedIcon}/>
-          }
+      {
+        !props.labelOnly &&
+        <div className={boxClass}>
+          <div className={bgClass}>
+            {
+              (multiple) &&
+              <UrpIcon size='10px'style={{color: 'white',}}type={checkedIcon}/>
+            }
+          </div>
         </div>
-      </div>
+      }
       <input
         type="checkbox"
         name={name}

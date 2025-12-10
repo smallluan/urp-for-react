@@ -23,6 +23,7 @@ export const itemDefaultProperties: Required<CheckBoxItemType> = {
   disabled: false,
   readonly: false,
   children: null,
+  labelOnly: false,
   onChange: (value: Value) => {return value},
 }
 
