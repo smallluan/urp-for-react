@@ -9,3 +9,7 @@
 |**defaultValue**|N|`string \| string[]`|-|选中值（非受控属性）|
 |**borderless**|||||
 |**position**||||popup属性。弹层方向|
+|**clearable**||||是否可清空|
+|**hideSelected**||||是否隐藏已经转选中的项（仅单选）|
+|**hideRadioCircle**||||是否隐藏单选时前面的圆圈|
+|**inputable**||||是否可输入|
