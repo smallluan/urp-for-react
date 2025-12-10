@@ -9,4 +9,6 @@ export const selectDefaultProps: Select = {
   clearable: false,
   hideRadioCircle: true,
   inputable: false,
+  selectLimit: -1,
+  maxVisibleNum: -1,
 }

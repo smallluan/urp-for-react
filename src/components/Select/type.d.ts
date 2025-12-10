@@ -11,6 +11,9 @@ export interface Select {
   hideRadioCircle?: boolean,
   hideSelected?: boolean,
   inputable?: boolean,
+  cancleable?: boolean,
+  selectLimit?: number,
+  maxVisibleNum?: number,
   onChange?: (newValue: Select['value']) => void
 }
 
@@ -24,6 +27,8 @@ export interface Context {
   clearable: Select['clearable'],
   hideRadioCircle: Select['hideRadioCircle'],
   hideSelected: Select['hideSelected'],
+  cancleable: Select['cancleable'],
+  selectLimit: Select['selectLimit'],
   onChange: Select['onChange'],
   setMouseFocus: (newValue: boolean) => void,
   onClearValue: () => void

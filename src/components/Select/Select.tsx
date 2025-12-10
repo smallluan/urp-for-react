@@ -39,7 +39,7 @@ const UrpSelect = (props: Select) => {
     // 点击到组件以外的元素取消聚焦状态
     const handleWindowClick = (e) => {
       if (
-        selectRef.current && 
+        selectRef.current &&
         !selectRef.current.contains(e.target)
       ) {
         setMouseFocus(false)
@@ -74,15 +74,15 @@ const UrpSelect = (props: Select) => {
 
   // memo —— 单选值容器的显示条件
   const showSingleSelected = useMemo(() => {
-    return(
-      !_props.multiple && 
+    return (
+      !_props.multiple &&
       !(_props.inputable && mouseFocus)
     )
   }, [_props.multiple, _props.inputable, mouseFocus])
 
   // memo —— 多选值容器的显示条件
   const showMutipleSelected = useMemo(() => {
-    return(
+    return (
       _props.multiple &&
       !(_props.inputable && mouseFocus)
     )
@@ -112,12 +112,48 @@ const UrpSelect = (props: Select) => {
     clearable: _props.clearable,
     hideRadioCircle: _props.hideRadioCircle,
     hideSelected: _props.hideSelected,
+    cancleable: _props.cancleable,
+    selectLimit: _props.selectLimit,
     onChange: _props.onChange,
     onClearValue: handleClearValue,
     setMouseFocus: setMouseFocus,
   }), [_props.options, _props.defaultValue, _props.value, _props.onChange, _props.clearable, mouseFocus, handleClearValue])
 
-  return(
+
+  const genMutiDisplayElems = useCallback(() => {
+    const elems = _props.value.map(value => {
+      const targetOpt = _props.options.find(opt => opt.value === value)
+      if (targetOpt) {
+        return (
+          <UrpSpace
+            style={{ width: 'fit-content' }}
+            className="urp-select-selected-muti"
+            key={value}
+          >
+            <span>{targetOpt?.label}</span>
+            <UrpIcon
+              className="urp-select-icon"
+              type="CloseOutlined"
+              onClick={() => {
+                _props.onChange(_props.value.filter(v => v !== value))
+              }}
+            />
+          </UrpSpace>
+        )
+      }
+    })
+    if (_props.maxVisibleNum > 0 && elems.length > _props.maxVisibleNum) {
+      return(
+        <>
+          {elems.slice(0, _props.maxVisibleNum)}
+          <div className="urp-select-selected-muti">+{elems.length - _props.maxVisibleNum}</div>
+        </>
+      )
+    } 
+    return elems
+  })
+
+  return (
     <SelectContext.Provider value={contextValue}>
       <div
         ref={selectRef}
@@ -137,17 +173,17 @@ const UrpSelect = (props: Select) => {
             {
               showSingleSelected &&
               <div className="urp-select-selected">
-              {
-                _props.options.find(item => item.value === _props.value)?.label || ''
-              }
-            </div>
+                {
+                  _props.options.find(item => item.value === _props.value)?.label || ''
+                }
+              </div>
             }
             {/* 多选选中项容器 */}
             {
               showMutipleSelected &&
-              <div>
-
-              </div>
+              <UrpSpace scrollBar="none" overflow="scroll" gap={4}>
+                {genMutiDisplayElems()}
+              </UrpSpace>
             }
             {
               showInput &&
@@ -159,19 +195,17 @@ const UrpSelect = (props: Select) => {
                   const targetOption = _props.options.find(opt => (
                     opt.label === inputRef.current.value
                   ))
-                  console.log(targetOption)
                   if (targetOption === undefined) {
                     _props.onChange('')
                   } else {
                     _props.onChange(targetOption.value)
                   }
-                  
                 }}
                 className="urp-select-input"
                 type="text"
               />
             }
-            <Icons/>
+            <Icons />
           </div>
           <UrpPopup.Content
             position={_props.position}
@@ -181,7 +215,7 @@ const UrpSelect = (props: Select) => {
           >
             <div style={{ width: '100%' }}>
               <UrpSpace direction="vertial" gap={8}>
-                <Options/>
+                <Options />
                 {/* <Footer/>  */}
               </UrpSpace>
             </div>
@@ -218,22 +252,24 @@ const Options = () => {
       }}
       defaultValue={context.defaultValue}
       multiple={context.multiple}
+      cancelable={context.cancleable}
+      selectLimit={context.selectLimit}
       value={context.value}
-      style={{width: '100%'}}
+      style={{ width: '100%' }}
     >
       <UrpSpace direction="vertial" gap={4}>
-      {
-        filtedOptions.map((item) => (
-          <UrpCheckBox.Item
-            key={item.value} 
-            labelOnly={!context.multiple && context.hideRadioCircle}
-            className="check-box" 
-            value={item.value}
-          >
-          <div className={classNames("check-box-label", {"check-box-label-checked": item.value === context.value})}>{item.label}</div>
-          </UrpCheckBox.Item>
-        ))
-      }
+        {
+          filtedOptions.map((item) => (
+            <UrpCheckBox.Item
+              key={item.value}
+              labelOnly={!context.multiple && context.hideRadioCircle}
+              className="check-box"
+              value={item.value}
+            >
+              <div className={classNames("check-box-label", { "check-box-label-checked": item.value === context.value })}>{item.label}</div>
+            </UrpCheckBox.Item>
+          ))
+        }
       </UrpSpace>
     </UrpCheckBox.Group>
   )
@@ -258,27 +294,36 @@ const Icons = () => {
       'urp-select-icon-arrow'
     )
   }, [context.mouseFocus])
-  return(
+
+  const showCloseIcon = useMemo(() => {
+    return (
+      context.clearable &&
+      (context.mouseEnter || context.mouseFocus) &&
+      (
+        context.multiple ?
+          context.value?.length !== 0 :
+          context.value !== ''  // checkbox 好像单选的时候什么都没选中返回的是空字符
+      )
+    )
+  }, [context.clearable, context.mouseEnter, context.mouseFocus, context.multiple, context.value])
+
+  return (
     <UrpSpace
       className="urp-select-icons"
       gap={4}
     >
       {
-        (
-          context.clearable && 
-          (context.mouseEnter || context.mouseFocus) &&
-          context.value !== ''  // checkbox 好像单选的时候什么都没选中返回的是空字符
-        ) ?
-        <UrpIcon
-          onClick={context.onClearValue}
-          className={arrowIconClass}
-          type="CloseCircleOutlined"
-        />
-        :
-        <UrpIcon
-          className={arrowIconClass}
-          type="DownOutlined"
-        />
+        showCloseIcon ?
+          <UrpIcon
+            onClick={context.onClearValue}
+            className="urp-select-icon"
+            type="CloseCircleOutlined"
+          />
+          :
+          <UrpIcon
+            className={arrowIconClass}
+            type="DownOutlined"
+          />
       }
     </UrpSpace>
   )
