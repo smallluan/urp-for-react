@@ -16,3 +16,4 @@
 |**cancleable**||||是否可以取消选择（checkbox）|
 |**selectLimit**|N|`number`|`-1`|多选可选的数量上限（checkbox）|
 |**maxVisibleNum**||||多选最多完整显示多少个元素|
+|**size**||||尺寸|

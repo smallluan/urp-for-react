@@ -11,4 +11,5 @@ export const selectDefaultProps: Select = {
   inputable: false,
   selectLimit: -1,
   maxVisibleNum: -1,
+  size: 'normal'
 }

@@ -1,12 +1,11 @@
 @import "../utils/styles/colors/color.less";
 
 .urp-select {
-  // position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 120px;
-  height: 26px;
+  width: inherit;
+  height: inherit;
   border: 1px solid var( --urp-gray-color-4);
   cursor: text;
   transition: all .2s ease-in-out;
@@ -14,10 +13,28 @@
   box-sizing: border-box;
   padding: 4px;
   justify-content: space-between;
-  font-size: 12px;
-  // overflow: hidden;
+  
 }
 
+/* size 属性相关 */
+.urp-select-popup-size-normal {
+  font-size: 14px;
+  height: 28px;
+  width: 120px;
+}
+
+.urp-select-popup-size-small {
+  font-size: 12px;
+  height: 26px;
+  width: 100px;
+}
+
+.urp-select-popup-size-large {
+  font-size: 16px;
+  height: 30px;
+  width: 140px;
+}
+/* size 属性相关 */
 .urp-select-hover {
   border: 1px solid var(--urp-primary-color);
 }
@@ -48,19 +65,18 @@
   height: 100%;
   width: fit-content;
   padding: 0 0 0 4px;
-  // width: 20px;
   background-color: white;
 }
 
 .urp-select-icon {
   color: var(--urp-font-gray-3) !important;
-  font-size: 12px !important;
+  font-size: inherit !important;
 }
 
 .urp-select-icon-arrow {
   transition: all .2s ease-in-out;
   color: var(--urp-font-gray-3) !important;
-  font-size: 12px !important;
+  font-size: inherit !important;
 }
 
 .urp-select-icon-arrow-down {
@@ -72,12 +88,12 @@
 }
 
 .urp-select-pop-content {
-  width: 120px; 
+  width: inherit; 
 }
 
 .check-box {
   width: 100%;
-  padding: 4px;
+  padding: 4px; 
   border-radius: 4px;
   transition: all .2s ease-in-out;
   &:hover {
@@ -93,18 +109,17 @@
 }
 
 .check-box-label {
-  font-size: 12px;
+  font-size: inherit;
 }
 
 .check-box-label-checked {
-  font-size: 12px;
+  font-size: inherit;
   color: var(--urp-primary-color) !important;
 }
 
 // 选择器内部输入框
 .urp-select-input {
-  // border: 1px solid red;
-  font-size: 12px;
+  font-size: inherit;
   flex: 1;
   min-width: 0;
 }
@@ -115,7 +130,7 @@
 
 // 多选，显示在框内的每一项元素
 .urp-select-selected-muti {
-  font-size: 10px;
+  font-size: calc(inherit - 2px);
   background-color: var(--urp-gray-color-1);
   padding: 2px 4px;
   border-radius: 4px;

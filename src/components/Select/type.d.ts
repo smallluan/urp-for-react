@@ -14,6 +14,7 @@ export interface Select {
   cancleable?: boolean,
   selectLimit?: number,
   maxVisibleNum?: number,
+  size?: 'normal' | 'small' | 'large'
   onChange?: (newValue: Select['value']) => void
 }
 
@@ -22,7 +23,7 @@ export interface Context {
   options: Select['options'],
   defaultValue: Select['defaultValue'],
   value: Select['value'],
-  mouseFocus: boolean,
+  isFocus: boolean,
   mouseEnter: boolean,
   clearable: Select['clearable'],
   hideRadioCircle: Select['hideRadioCircle'],
