@@ -10,8 +10,9 @@
 |**trigger**|N|`hover \| click \|`|`hover`|如何触发|
 |**visible**|N|`boolean`|-|可见性（受控属性）|
 |**onMouseEnter**|N|||鼠标进入事件|
-|**onFocus**||||||
-|**onBlur**|||||
 |**content**|N|`string`|-|内容（标签属性）|
 |**children**|N|`React.ReactNode`|-|被挂载元素&内容|
 |**onChange**|N|`(visible) => `||显示/隐藏状态变化回调|
+
+### content
+|**className**|N|`string`|-|透传类名content|

@@ -34,6 +34,7 @@ const UrpPopup = (props: Popup) => {
         !popupRef.current.contains(e.target)
       ) {
         setClicked(false)
+        props?.onClickOut?.()
       }
     }
 
@@ -65,7 +66,7 @@ const UrpPopup = (props: Popup) => {
       ref={popupRef}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className="urp-popup"
+      className={`urp-popup ${mergedProps.className}`}
     >
       {
         contentChildren ?
@@ -73,7 +74,7 @@ const UrpPopup = (props: Popup) => {
         mergedProps.content ?
         <Content
           style={{...mergedProps.style}}
-          className={`urp-popup-content-inner ${mergedProps.className}`}
+          className={`urp-popup-content-inner`}
           visible={mergedProps.visible}
           position={mergedProps.position}
           mouseEnter={mouseEnter}
@@ -86,11 +87,29 @@ const UrpPopup = (props: Popup) => {
         </Content> :
         <div></div>
       }
-      <div
-        onClick={handleTriggerClick}
-      >
-        {React.Children.toArray(props.children).filter(child => child.type !== Content)}
-      </div>
+      {
+        React.Children.map(props.children, (child) => {
+          // 过滤掉 Content 类型的子元素
+          if (child.type === Content) return null
+
+          // 非元素节点（如文本节点）直接返回，避免克隆报错
+          if (!React.isValidElement(child)) {
+            return child
+          }
+
+          // 克隆子元素，合并 onClick 事件（保留原有事件 + 新增 handleTriggerClick）
+          return React.cloneElement(child, {
+            onClick: (e) => {
+              // 优先执行子元素自身的 onClick（如果有）
+              if (child.props?.onClick) {
+                child.props.onClick(e)
+              }
+              // 执行原外层 div 的点击逻辑
+              handleTriggerClick(e)
+            },
+          })
+        })
+      }
     </div>
   )
 }
@@ -123,8 +142,6 @@ const Content = (props) => {
       <div
         style={{ ...props.style }}
         onMouseEnter={props.onMouseEnter}
-        onFocus={props.onFocus}
-        onBlur={props.onBlur}
         className={`urp-popup-content-inner ${props.className}`}
       >
         {props.children}

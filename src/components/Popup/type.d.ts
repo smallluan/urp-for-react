@@ -1,3 +1,5 @@
+import { Ref } from "react"
+
 export interface Popup {
   className?: string,
   style?: React.CSSProperties,
@@ -11,6 +13,5 @@ export interface Popup {
   children?: React.ReactNode
   onChange?: (visible: boolean) => void,
   onMouseEnter?: () => void,
-  onBlur?: () => void,
-  onFocus?: () => void
+  onClickOut?: () => void,
 }
