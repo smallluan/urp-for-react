@@ -10,7 +10,7 @@ const CheckBoxContext = createContext<CheckBoxContextType|undefined>(undefined)
 
 const UrpCheckBoxGroup = (props: CheckBoxGroupType) => {
   // 调用工具函数，自动合并 props + 生成精准依赖
-  const { merged: mergedProps } = useMergedProps(
+  const { merged: _props } = useMergedProps(
     groupDefaultProperties,
     props,
     ['cancelable', 'disabled', 'readonly', 'defaultValue',
@@ -20,11 +20,11 @@ const UrpCheckBoxGroup = (props: CheckBoxGroupType) => {
   // 是否是受控属性
   const isControlled = props.value !== undefined
   // 内部属性
-  const [innerValue, setInnerValue] = useState(mergedProps.defaultValue)
+  const [innerValue, setInnerValue] = useState(_props.defaultValue)
   // 当前状态（综合受控与非受控）
   const currValue = (isControlled ? props.value : innerValue) as Value | Array<Value>
 
-  const { cancelable, name, multiple, selectLimit, checkedIcon, onChange} = mergedProps
+  const { cancelable, name, multiple, selectLimit, checkedIcon, onChange} = _props
 
   // 判断是否超出最大限制（多选）
   const isOnSelectLimit = useMemo(() => {
@@ -137,13 +137,13 @@ const UrpCheckBoxItem = memo((props: CheckBoxItemType) => {
     isFirstRender.current = false
   }, [])
 
-  const { merged: mergedProps } = useMergedProps(
+  const { merged: _props } = useMergedProps(
     itemDefaultProperties,
     props,
     ['value', 'label', 'disabled', 'readonly']
   )
 
-  const { value, label, disabled, readonly } = mergedProps
+  const { value, label, disabled, readonly } = _props
   
   const isChecked = useMemo(() => {
     if (!multiple) {

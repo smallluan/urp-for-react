@@ -6,40 +6,40 @@ import genClassNameFromProps from "../utils/tools/className.ts"
 import { UrpIcon } from '../Icon/index.ts'
 
 export default function UrpSwitch(props: SwitchType) {
-  const mergedProps = formatProps({ ...defaultProperties, ...props })
+  const _props = formatProps({ ...defaultProperties, ...props })
   // 是否是一个受控开关
-  const isControlled = mergedProps.state !== undefined
+  const isControlled = _props.state !== undefined
   // 非受控内部状态
   const [innerState, setInnerState] = useState(() => {
-    return mergedProps.defaultState ?? false
+    return _props.defaultState ?? false
   })
   // 当前开关状态
-  const currState = isControlled ? mergedProps.state : innerState
+  const currState = isControlled ? _props.state : innerState
   // 内部临时加载状态(执行异步前置校验)
-  const [innerLoading, setInnerLoading] = useState(mergedProps.loading)
+  const [innerLoading, setInnerLoading] = useState(_props.loading)
   // 在优先取父 loading 的同时防止子 loading 被覆盖
-  const currLoading = mergedProps.loading !== undefined ? 
-                      mergedProps.loading || innerLoading : 
+  const currLoading = _props.loading !== undefined ? 
+                      _props.loading || innerLoading : 
                       innerLoading
 
   useEffect(() => {
     if (isControlled) {
-      setInnerState(mergedProps.state as boolean)
+      setInnerState(_props.state as boolean)
     }
-  }, [mergedProps.state, isControlled])
+  }, [_props.state, isControlled])
 
   // 状态变化处理函数
   const stateChange = async () => {
     // 先判断禁用/加载，直接返回
-    if (mergedProps.disabled || currLoading) return
+    if (_props.disabled || currLoading) return
     let beforeResult = true
 
-    if (mergedProps.beforeStateChange) {
+    if (_props.beforeStateChange) {
       setInnerLoading(true)
       // 把异步逻辑放到微任务
       queueMicrotask(async () => {
         try {
-          beforeResult = await mergedProps.beforeStateChange()
+          beforeResult = await _props.beforeStateChange()
           beforeResult = Boolean(beforeResult)
         } catch (e) {
           beforeResult = false
@@ -51,10 +51,10 @@ export default function UrpSwitch(props: SwitchType) {
         if (!beforeResult) return
         const newState = !currState
         if (isControlled) {
-          mergedProps.onStateChange?.(newState)
+          _props.onStateChange?.(newState)
         } else {
           setInnerState(newState)
-          mergedProps.onStateChange?.(newState)
+          _props.onStateChange?.(newState)
         }
       })
       // 退出当前同步函数，等待微任务执行
@@ -64,10 +64,10 @@ export default function UrpSwitch(props: SwitchType) {
     // 没有 beforeStateChange 的情况，正常处理
     const newState = !currState
     if (isControlled) {
-      mergedProps.onStateChange?.(newState)
+      _props.onStateChange?.(newState)
     } else {
       setInnerState(newState)
-      mergedProps.onStateChange?.(newState)
+      _props.onStateChange?.(newState)
     }
   }
 
@@ -76,26 +76,26 @@ export default function UrpSwitch(props: SwitchType) {
     return genClassNameFromProps(
       { 
         state: currState ? 'open' : 'close',
-        shape: mergedProps.shape,
-        size: mergedProps.size,
-        disabled: currLoading || mergedProps.disabled
+        shape: _props.shape,
+        size: _props.size,
+        disabled: currLoading || _props.disabled
       }, 
       'u-switch',
       'u-switch'
     )
-  }, [currState, mergedProps.shape, mergedProps.size, currLoading, mergedProps.disabled])
+  }, [currState, _props.shape, _props.size, currLoading, _props.disabled])
 
   // 滑块 className
   const sliderClassName = useMemo(() => {
     return genClassNameFromProps(
       { 
         state: currState ? 'open' : 'close',
-        shape: mergedProps.shape
+        shape: _props.shape
       }, 
       'u-switch-slider', 
       'u-switch-slider'
     )
-  }, [currState, mergedProps.shape]) 
+  }, [currState, _props.shape]) 
 
   // 内部描述信息 className
   const descClassName = useMemo(() => {
@@ -116,7 +116,7 @@ export default function UrpSwitch(props: SwitchType) {
 
   // 描述组件
   const displayDesc = (descPos = 'inner', iconSize = 8) => {
-    if (mergedProps.descPos !== descPos) return null
+    if (_props.descPos !== descPos) return null
     // 加载状态图标
     if (currLoading) {
       return (
@@ -127,13 +127,13 @@ export default function UrpSwitch(props: SwitchType) {
       )
     }
     // 非加载状态描述
-    if (mergedProps.desc.length) {
-      return currState ? mergedProps.desc[0] : mergedProps.desc[1]
-    } else if (mergedProps.descIcon.length) {
+    if (_props.desc.length) {
+      return currState ? _props.desc[0] : _props.desc[1]
+    } else if (_props.descIcon.length) {
       return (
         <UrpIcon 
           size={iconSize} 
-          type={currState ? mergedProps.descIcon[0] : mergedProps.descIcon[1]}
+          type={currState ? _props.descIcon[0] : _props.descIcon[1]}
         />
       )
     }

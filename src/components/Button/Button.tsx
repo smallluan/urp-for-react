@@ -8,8 +8,8 @@ import './style.less'
 
 export default function UrpButton(props: ButtonType) {
   // 合并属性（默认属性与传入属性）
-  const mergedProps = { ...defaultProperties, ...props }
-  const { variant, theme, shape, size, block, disabled, loading, icon, purIcon, onClick } = mergedProps
+  const _props = { ...defaultProperties, ...props }
+  const { variant, theme, shape, size, block, disabled, loading, icon, purIcon, onClick } = _props
   // 状态管理：使用useRef存储不需要触发渲染的变量
   const prevMouseDown = useRef<number>(0)
   const timerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
@@ -18,7 +18,7 @@ export default function UrpButton(props: ButtonType) {
   const [activeBgStyle, setActiveBgStyle] = useState<React.CSSProperties>({})
 
   // 确定按钮内容（优先使用content属性，其次使用children）
-  const buttonContent = mergedProps.content ?? mergedProps.children
+  const buttonContent = _props.content ?? _props.children
 
   // 清理定时器副作用
   useEffect(() => {

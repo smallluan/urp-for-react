@@ -12,7 +12,7 @@ import './style.less'
 
 const UrpSpace = (props: SpaceProps) => {
 
-  const { merged: mergedProps } = useMergedProps(
+  const { merged: _props } = useMergedProps(
     defaultProps,
     props,
     ['direction', 'overflow', 'gap', 'align', 'scrollBar'],
@@ -22,33 +22,33 @@ const UrpSpace = (props: SpaceProps) => {
   const spaceClassName = useMemo(() => {
     return genClassNameFromProps(
       {
-        direction: mergedProps.direction,
-        overflow: mergedProps.overflow,
-        scrollBar: mergedProps.scrollBar
+        direction: _props.direction,
+        overflow: _props.overflow,
+        scrollBar: _props.scrollBar
       },
       'u-space',
       'u-space'
     )
-  }, [mergedProps.direction, mergedProps.overflow])
+  }, [_props.direction, _props.overflow])
 
   const spaceStyle = useMemo(() => {
     let horizontalGap: SpaceGap
     let vertialGap: SpaceGap
 
-    if (Array.isArray(mergedProps.gap)) {
-      horizontalGap = mergedProps.gap[0]
-      vertialGap = mergedProps.gap[1]
+    if (Array.isArray(_props.gap)) {
+      horizontalGap = _props.gap[0]
+      vertialGap = _props.gap[1]
     } else {
-      horizontalGap = mergedProps.gap
-      vertialGap = mergedProps.gap
+      horizontalGap = _props.gap
+      vertialGap = _props.gap
     }
     
     return genStyleFromPrpos({
       'props-gap-vertial': vertialGap,
       'props-gap-horizontal': horizontalGap,
-      'props-align': mergedProps.align
+      'props-align': _props.align
     })
-  }, [mergedProps.gap, mergedProps.align])
+  }, [_props.gap, _props.align])
 
   return(
     <div 

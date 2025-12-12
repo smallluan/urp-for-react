@@ -6,21 +6,21 @@ import { UrpIcon } from '../Icon/index.ts'
 import './style.less'
 
 export default function UrpInput(props: InputType) {
-  const mergedProps = useMemo(() => {
+  const _props = useMemo(() => {
     return formatProps({ ...defaultProperties, ...props })
   }, [props])
   const { size, shape, disabled, readonly, maxlength, 
     type, placeholder, clearable, showCount, description,
     children, icons
-  } = mergedProps
-  const [value, setValue] = useState(mergedProps.value)
+  } = _props
+  const [value, setValue] = useState(_props.value)
   const [hidePassword, setHidePassword] = useState(true)
   const [isFocused, setIsFocused] = useState(false)
   const [isClearIconHover, setIsClearIconHover] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
   useEffect(() => {
-    setValue(mergedProps.value)
-  }, [mergedProps.value])
+    setValue(_props.value)
+  }, [_props.value])
   // 外层容器 class
   const containerClass = useMemo(() => {
     return genClassNameFromProps(

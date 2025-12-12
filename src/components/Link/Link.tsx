@@ -7,11 +7,11 @@ import { Link } from "react-router-dom"
 import './style.less'
 
 export default function UrpLink(props: LinkType) {
-  const mergedProps = { ...defaultProperties, ...props }
+  const _props = { ...defaultProperties, ...props }
   const { 
     content, children, href, target, theme, 
     size, disabled, underline, prefixIcon, suffixIcon, to 
-  } = mergedProps
+  } = _props
   const linkContent = content ?? children
 
   const linkClass = useMemo(() => 

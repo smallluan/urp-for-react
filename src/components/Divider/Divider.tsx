@@ -32,11 +32,11 @@ const useDividerContext = () => {
 */
 export default function UrpDivider({ children, ...props }: DividerType) {
   // 合并默认属性和传入属性，在子组件层不需要单独合并了
-  const mergedProps = formatProps({ ...defaultProperties, ...props })
+  const _props = formatProps({ ...defaultProperties, ...props })
 
   // context 传值
-  const contextValue = { children, props: mergedProps }
-  const _styles = genStyleFromPrpos(mergedProps)
+  const contextValue = { children, props: _props }
+  const _styles = genStyleFromPrpos(_props)
 
   // 根据标签子元素数量不同进行不同的处理
   let innerElem = <Line/>
@@ -44,7 +44,7 @@ export default function UrpDivider({ children, ...props }: DividerType) {
   if (children != null && !Array.isArray(children)) {
     innerElem = <LineWithChild/>
   } else if (Array.isArray(children)) {
-    if (mergedProps.layout === Layout.HORIZONTAL) {
+    if (_props.layout === Layout.HORIZONTAL) {
       innerElem = <GenHorizontalGroup/>
     } else {
       innerElem = <GenVertialGroup/>
@@ -53,7 +53,7 @@ export default function UrpDivider({ children, ...props }: DividerType) {
 
   // 合成 className
   const _class = classNames('u-divider', {
-    'u-divider-vertical': mergedProps.layout === Layout.VERTICAL
+    'u-divider-vertical': _props.layout === Layout.VERTICAL
   })
 
   return (
