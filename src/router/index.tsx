@@ -16,6 +16,7 @@ import LayoutPage from '../pages/components/layout/index.tsx'
 import SelectPage from '../pages/components/select/index.tsx'
 import PopupPage from '../pages/components/popup/index.tsx'
 import TreePage from '../pages/components/tree/index.tsx'
+import EasyPage from '../pages/easyPage/index.tsx'
 
 const router = createBrowserRouter([
   {
@@ -86,7 +87,10 @@ const router = createBrowserRouter([
           }
         ]
       },
-      
+      {
+        path: 'easyPage',
+        element: <EasyPage/>
+      }
     ]
   },
   {

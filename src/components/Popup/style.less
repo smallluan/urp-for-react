@@ -1,9 +1,9 @@
-.urp-popup {
+.u-popup {
   position: relative;
   width: fit-content;
 }
 
-.urp-popup-content {
+.u-popup-content {
   display: flex;
   justify-content: center;
   box-sizing: border-box;
@@ -17,13 +17,13 @@
   visibility: hidden;
   pointer-events: none;
   border-radius: 8px;
-  border: .5px solid var(--urp-gray-color-2);
+  border: .5px solid var(--u-gray-color-2);
   box-shadow: 0 1px 10px rgba(0, 0, 0, .05), 0 4px 5px rgba(0, 0, 0, .08), 0 2px 4px -1px rgba(0, 0, 0, .12);
   background-color: white;
   z-index: 120;
 }
 
-.urp-popup-content-inner {
+.u-popup-content-inner {
   width: 100px;
   background-color: white;
   display: flex;
@@ -34,62 +34,62 @@
   z-index: 120;
 }
 
-.urp-popup-content-position-bottom {
+.u-popup-content-position-bottom {
   top: 100%;
   left: 50%;
   transform: translate(-50%, 8px);
 }
 
-.urp-popup-content-position-top {
+.u-popup-content-position-top {
   top: 0;
   left: 50%;
   transform: translate(-50%, calc(-100% - 8px));
 }
 
-.urp-popup-content-position-left {
+.u-popup-content-position-left {
   top: 50%;
   left: 0;
   transform: translate(calc(-100% - 8px), -50%);
 }
 
-.urp-popup-content-position-right {
+.u-popup-content-position-right {
   top: 50%;
   left: 100%;
   transform: translate(8px, -50%);
 }
 
-.urp-popup-arrow {
+.u-popup-arrow {
   position: absolute;
   width: 12px;
   height: 12px;
   transform: rotate(45deg);
-  border: .5px solid var(--urp-gray-color-2);
+  border: .5px solid var(--u-gray-color-2);
   background-color: white;
   z-index: 100;
 }
 
-.urp-popup-content-position-bottom {
-  .urp-popup-arrow {
+.u-popup-content-position-bottom {
+  .u-popup-arrow {
     top: -4px;
   }
 }
 
-.urp-popup-content-position-top {
-  .urp-popup-arrow {
+.u-popup-content-position-top {
+  .u-popup-arrow {
     bottom: -4px;
   }
 }
 
-.urp-popup-content-position-left {
-  .urp-popup-arrow {
+.u-popup-content-position-left {
+  .u-popup-arrow {
     right: -4px;
     top: 50%;
     transform: translateY(-50%) rotate(45deg);
   }
 }
 
-.urp-popup-content-position-right {
-  .urp-popup-arrow {
+.u-popup-content-position-right {
+  .u-popup-arrow {
     left: -4px;
     top: 50%;
     transform: translateY(-50%) rotate(45deg);
@@ -97,7 +97,7 @@
 }
 
 
-.urp-popup-content-display {
+.u-popup-content-display {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;

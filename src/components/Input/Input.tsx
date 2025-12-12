@@ -25,20 +25,20 @@ export default function UrpInput(props: InputType) {
   const containerClass = useMemo(() => {
     return genClassNameFromProps(
       { shape, size},
-      'urp-input-container', 'urp-input-container'
+      'u-input-container', 'u-input-container'
     )
   }, [shape, size])
   // 输入框上层容器 class
   const inputUpClass = useMemo(() => {
     return genClassNameFromProps(
       { shape, size, disabled, readonly, isFocused},
-      'urp-input-up','urp-input-up')
+      'u-input-up','u-input-up')
   }, [size, shape, disabled, readonly, isFocused])
   // 输入框本体 class
   const inputClass = useMemo(() => {
     return genClassNameFromProps(
       { shape, size, disabled, readonly},
-      'urp-input','urp-input')
+      'u-input','u-input')
   }, [size, shape, disabled, readonly])
   // 输入框类型（针对 password 类型）
   const inputType = useMemo(() => {
@@ -66,7 +66,7 @@ export default function UrpInput(props: InputType) {
       >
         {
           children &&
-          <span className="urp-input-children">{children}</span>
+          <span className="u-input-children">{children}</span>
         }
         <input
           ref={inputRef}
@@ -80,7 +80,7 @@ export default function UrpInput(props: InputType) {
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
         />
-        <div className="urp-input-icons">
+        <div className="u-input-icons">
           {
             /* 注意一下这里的图标顺序，clearable 的图标最好排在最前面，
             因为它可能频繁的显示隐藏出现bug */
@@ -93,7 +93,7 @@ export default function UrpInput(props: InputType) {
             <span
               onClick={handleClear}
             >
-              <UrpIcon className="urp-close-icon" type='CloseCircleOutlined' />
+              <UrpIcon className="u-close-icon" type='CloseCircleOutlined' />
             </span>
           }
           {
@@ -105,12 +105,12 @@ export default function UrpInput(props: InputType) {
                     onClick={() => {
                       setHidePassword(false)
                     }}
-                    className="urp-close-icon"
+                    className="u-close-icon"
                     type='EyeOutlined'
                   /> :
                   <UrpIcon
                     onClick={() => setHidePassword(true)}
-                    className="urp-close-icon"
+                    className="u-close-icon"
                     type='EyeInvisibleOutlined'
                   />
               }
@@ -128,11 +128,11 @@ export default function UrpInput(props: InputType) {
           }
         </div>
       </div>
-      <div className="urp-input-down">
+      <div className="u-input-down">
         <div>{ description }</div>
         {
           showCount &&
-          <span className="urp-count">
+          <span className="u-count">
             <span>{ value.length }</span>
             {
               maxlength > 0 &&
@@ -152,13 +152,13 @@ export default function UrpInput(props: InputType) {
  */
 const genNumberIcons = (setValue: Dispatch<SetStateAction<string>>) => {
   return (
-    <span className="urp-number-icons">
+    <span className="u-number-icons">
       <UrpIcon
         onClick={() => setValue((prev: string) => {
           const newValue = Number(prev) + 1
           return String(newValue)
         })}
-        className="urp-number-icon-up"
+        className="u-number-icon-up"
         type='CaretUpOutlined'
       />
       <UrpIcon
@@ -166,7 +166,7 @@ const genNumberIcons = (setValue: Dispatch<SetStateAction<string>>) => {
           const newValue = Number(prev) - 1
           return String(newValue)
         })}
-        className="urp-number-icon-down"
+        className="u-number-icon-down"
         type='CaretDownOutlined'
       />
     </span>
@@ -181,7 +181,7 @@ const genCustomIcons = (icons: InputType['icons']) => {
   if (typeof icons === 'string') {
     return (
       <UrpIcon
-        className="urp-close-icon"
+        className="u-close-icon"
         type={icons}
       />
     )
@@ -193,13 +193,13 @@ const genCustomIcons = (icons: InputType['icons']) => {
           return (
             <UrpIcon
               key={index}
-              className="urp-close-icon"
+              className="u-close-icon"
               type={icon}
             />
           )
         } else {
           return (
-            <span className="urp-close-icon" key={index}>
+            <span className="u-close-icon" key={index}>
               {icon}
             </span>
           )
@@ -208,7 +208,7 @@ const genCustomIcons = (icons: InputType['icons']) => {
     )
   }
   return (
-    <span className="urp-close-icon">
+    <span className="u-close-icon">
       {icons}
     </span>
   )

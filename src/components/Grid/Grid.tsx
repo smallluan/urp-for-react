@@ -14,7 +14,7 @@ const UrpGridRow = (props: GridRow) => {
       grid: !props.justify
     },
     '',
-    'urp-grid-row'
+    'u-grid-row'
   )
   const rowStyle = genStyleFromPrpos({
     grids: props.grids,
@@ -68,8 +68,8 @@ const UrpGridCol = (props: GridCol) => {
       reactive: !!props.xs || !!props.sm || !!props.md
                 || !!props.lg || !!props.xl || !!props.xxl
     },
-    'urp-grid-col',
-    'urp-grid-col'
+    'u-grid-col',
+    'u-grid-col'
   )
 
   const getFallbackSizeValue = useCallback((targetSize) => {

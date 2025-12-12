@@ -17,7 +17,7 @@ const UrpIcon: React.FC<IconProps> = (props) => {
 
   return (
     <AntdIconComponent
-      data-testid='urp-icon'
+      data-testid='u-icon'
       {...restProps}
       style={{ ...style, fontSize: size || style?.fontSize }}
       className={`icon-custom ${className || ''}`}

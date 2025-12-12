@@ -23,8 +23,8 @@ const Text = (props) => {
       {
         mark: props.mark
       },
-      'urp-typo-text',
-      'urp-typo-text'
+      'u-typo-text',
+      'u-typo-text'
     )
   }, [props.mark])
   return(
@@ -38,7 +38,7 @@ const Text = (props) => {
 const Description = (props) => {
   const { children } = props
   return(
-    <div className="urp-typo-Description">{children}</div>
+    <div className="u-typo-Description">{children}</div>
   )
 }
 

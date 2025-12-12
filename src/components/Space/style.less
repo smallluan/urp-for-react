@@ -1,39 +1,39 @@
-.urp-space {
+.u-space {
   width: 100%;
   display: flex;
   align-items: var(--props-align);
   gap: var(--props-gap-vertial) var(--props-gap-horizontal);
 }
 
-.urp-space-direction-vertial {
+.u-space-direction-vertial {
   flex-direction: column;
 }
 
-.urp-space-overflow-breakLine {
+.u-space-overflow-breakLine {
   flex-wrap: wrap;
 }
 
-.urp-space-overflow-scroll {
+.u-space-overflow-scroll {
   flex-wrap: nowrap;
   overflow: scroll;
   height: 100%;
 }
 
-.urp-space-overflow-hidden {
+.u-space-overflow-hidden {
   flex-wrap: nowrap;
   overflow: hidden;
   height: 100%;
 }
 
-.urp-space-overflow-scroll > *,
-.urp-space-overflow-hidden > * {
+.u-space-overflow-scroll > *,
+.u-space-overflow-hidden > * {
   flex-shrink: 0;
   white-space: nowrap;
   min-width: fit-content;
 }
 
 // 隐藏所有滚动条（x + y，内容可滚动，仅隐藏滚动条样式）
-.urp-space-scrollBar-none {
+.u-space-scrollBar-none {
   // Webkit内核（Chrome/Safari/Edge）：隐藏所有滚动条
   &::-webkit-scrollbar {
     display: none;
@@ -45,7 +45,7 @@
 }
 
 // 仅显示水平滚动条，隐藏垂直滚动条
-.urp-space-scrollBar-x {
+.u-space-scrollBar-x {
   // Webkit内核：水平滚动条显示，垂直设为0隐藏
   &::-webkit-scrollbar {
     height: auto; // 保留水平滚动条默认高度
@@ -58,7 +58,7 @@
 }
 
 // 仅显示垂直滚动条，隐藏水平滚动条
-.urp-space-scrollBar-y {
+.u-space-scrollBar-y {
   // Webkit内核：垂直滚动条显示，水平设为0隐藏
   &::-webkit-scrollbar {
     width: auto;  // 保留垂直滚动条默认宽度

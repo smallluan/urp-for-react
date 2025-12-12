@@ -11,17 +11,17 @@ describe('Button 组件', () => {
     const user = userEvent.setup()
     render(<UrpButton/>)
 
-    const urpButton = screen.getByTestId('urp-button')
-    let activeBgEl = urpButton.querySelector('urp-button-active-bg')
+    const urpButton = screen.getByTestId('u-button')
+    let activeBgEl = urpButton.querySelector('u-button-active-bg')
     
     expect(urpButton).toBeInTheDocument()
-    expect(urpButton).toHaveClass('urp-button')
-    expect(urpButton).toHaveClass('urp-button-theme-primary')
+    expect(urpButton).toHaveClass('u-button')
+    expect(urpButton).toHaveClass('u-button-theme-primary')
     expect(activeBgEl).toBeNull()
     
     await user.click(urpButton)
     activeBgEl = await waitFor(() => {
-      const el = urpButton.querySelector('.urp-button-active-bg')
+      const el = urpButton.querySelector('.u-button-active-bg')
       if (!el) throw new Error('active bg not found')
       return el as HTMLElement
     })
@@ -41,12 +41,12 @@ describe('Button 组件', () => {
         <UrpButton theme='error' />
       </>
     )
-    const urpButtons = screen.getAllByTestId('urp-button')
+    const urpButtons = screen.getAllByTestId('u-button')
 
-    expect(urpButtons[0]).toHaveClass('urp-button-theme-primary')
-    expect(urpButtons[1]).toHaveClass('urp-button-theme-warning')
-    expect(urpButtons[2]).toHaveClass('urp-button-theme-success')
-    expect(urpButtons[3]).toHaveClass('urp-button-theme-error')
+    expect(urpButtons[0]).toHaveClass('u-button-theme-primary')
+    expect(urpButtons[1]).toHaveClass('u-button-theme-warning')
+    expect(urpButtons[2]).toHaveClass('u-button-theme-success')
+    expect(urpButtons[3]).toHaveClass('u-button-theme-error')
   })
 
   // 测试不同变种
@@ -59,12 +59,12 @@ describe('Button 组件', () => {
         <UrpButton variant='text' />
       </>
     )
-    const urpButtons = screen.getAllByTestId('urp-button')
+    const urpButtons = screen.getAllByTestId('u-button')
 
-    expect(urpButtons[0]).toHaveClass('urp-button-variant-base')
-    expect(urpButtons[1]).toHaveClass('urp-button-variant-outline')
-    expect(urpButtons[2]).toHaveClass('urp-button-variant-dashed')
-    expect(urpButtons[3]).toHaveClass('urp-button-variant-text')
+    expect(urpButtons[0]).toHaveClass('u-button-variant-base')
+    expect(urpButtons[1]).toHaveClass('u-button-variant-outline')
+    expect(urpButtons[2]).toHaveClass('u-button-variant-dashed')
+    expect(urpButtons[3]).toHaveClass('u-button-variant-text')
   })
 
   // 测试禁用
@@ -83,7 +83,7 @@ describe('Button 组件', () => {
     }
     
     render(<ButtonWithCount />)
-    const urpButton = screen.getByTestId('urp-button')
+    const urpButton = screen.getByTestId('u-button')
     
     expect(urpButton).not.toBeDisabled()
     // 第一次点击：计数+1，按钮禁用
@@ -112,7 +112,7 @@ describe('Button 组件', () => {
     }
 
     render(<ButtonWithCount />)
-    const urpButton = screen.getByTestId('urp-button')
+    const urpButton = screen.getByTestId('u-button')
     
     expect(urpButton).not.toBeDisabled()
     // 第一次点击：计数+1，按钮禁用

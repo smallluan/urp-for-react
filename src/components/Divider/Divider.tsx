@@ -52,15 +52,15 @@ export default function UrpDivider({ children, ...props }: DividerType) {
   }
 
   // 合成 className
-  const _class = classNames('urp-divider', {
-    'urp-divider-vertical': mergedProps.layout === Layout.VERTICAL
+  const _class = classNames('u-divider', {
+    'u-divider-vertical': mergedProps.layout === Layout.VERTICAL
   })
 
   return (
     // Divider 组件绝大多数是静态场景，使用 context 造成的影响很小
     <DividerContext.Provider value={contextValue}>
       <div 
-        data-testid="urp-divider" 
+        data-testid="u-divider" 
         style={_styles} 
         className={_class}
       >
@@ -83,7 +83,7 @@ function Line(_props?: Partial<LineType>) {
   props.flex = _props?.flex || lineDefaultProps.flex
 
   // 生成静态类名和动态样式
-  const className = genClassNameFromProps(props, 'urp-line', 'urp-line')
+  const className = genClassNameFromProps(props, 'u-line', 'u-line')
   const _styles = genStyleFromPrpos(props)
 
   // 返回线条的 jsx
@@ -151,7 +151,7 @@ function GenVertialGroup() {
   const children = useDividerContext().children as React.ReactNode[]
   return (<>{
     children.map((child, index) =>  (
-      <div className="urp-divider" key={index}>
+      <div className="u-divider" key={index}>
         <ChildrenItem>{ child }</ChildrenItem>
         {
           index !== children.length - 1 &&

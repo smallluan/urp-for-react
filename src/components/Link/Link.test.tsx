@@ -6,14 +6,14 @@ import '@testing-library/jest-dom'
 describe('Link 组件', () => {
   it('默认渲染 Link 组件', () => {
     render(<UrpLink/>)
-    const urpLink = screen.getByTestId('urp-link')
+    const urpLink = screen.getByTestId('u-link')
 
     expect(urpLink).toBeInTheDocument()
-    expect(urpLink).toHaveClass('urp-link')
-    expect(urpLink).toHaveClass('urp-link-theme-primary')
-    expect(urpLink).toHaveClass('urp-link-underline-display')
-    expect(urpLink).toHaveClass('urp-link-size-normal')
-    expect(urpLink).not.toHaveClass('urp-link-disabled')
+    expect(urpLink).toHaveClass('u-link')
+    expect(urpLink).toHaveClass('u-link-theme-primary')
+    expect(urpLink).toHaveClass('u-link-underline-display')
+    expect(urpLink).toHaveClass('u-link-size-normal')
+    expect(urpLink).not.toHaveClass('u-link-disabled')
   })
 
   it('测试主题样式渲染', () => {
@@ -25,12 +25,12 @@ describe('Link 组件', () => {
         <UrpLink theme='error' />
       </>
     )
-    const urpLinks = screen.getAllByTestId('urp-link')
+    const urpLinks = screen.getAllByTestId('u-link')
 
-    expect(urpLinks[0]).toHaveClass('urp-link-theme-default')
-    expect(urpLinks[1]).toHaveClass('urp-link-theme-warning')
-    expect(urpLinks[2]).toHaveClass('urp-link-theme-success')
-    expect(urpLinks[3]).toHaveClass('urp-link-theme-error')
+    expect(urpLinks[0]).toHaveClass('u-link-theme-default')
+    expect(urpLinks[1]).toHaveClass('u-link-theme-warning')
+    expect(urpLinks[2]).toHaveClass('u-link-theme-success')
+    expect(urpLinks[3]).toHaveClass('u-link-theme-error')
   })
 
   it('测试尺寸', () => {
@@ -40,10 +40,10 @@ describe('Link 组件', () => {
         <UrpLink size='large'/>
       </>
     )
-    const urpLinks = screen.getAllByTestId('urp-link')
+    const urpLinks = screen.getAllByTestId('u-link')
     
-    expect(urpLinks[0]).toHaveClass('urp-link-size-small')
-    expect(urpLinks[1]).toHaveClass('urp-link-size-large')
+    expect(urpLinks[0]).toHaveClass('u-link-size-small')
+    expect(urpLinks[1]).toHaveClass('u-link-size-large')
   })
 
   it('测试图标渲染', () => {
@@ -53,7 +53,7 @@ describe('Link 组件', () => {
         <UrpLink suffixIcon='LinkOutlined' />
       </>
     )
-    const urpLinks = screen.getAllByTestId('urp-link')
+    const urpLinks = screen.getAllByTestId('u-link')
 
     expect(urpLinks[0].querySelectorAll('svg[data-icon="link"]')).toHaveLength(1)
     let container = urpLinks[0].firstChild
@@ -68,8 +68,8 @@ describe('Link 组件', () => {
     render(
       <UrpLink href="https://tdesign.tencent.com/" disabled />
     )
-    const urpLink = screen.getByTestId('urp-link')
+    const urpLink = screen.getByTestId('u-link')
 
-    expect(urpLink).toHaveClass('urp-link-disabled')
+    expect(urpLink).toHaveClass('u-link-disabled')
   })
 })

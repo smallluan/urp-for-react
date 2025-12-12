@@ -12,7 +12,7 @@ describe('Icon Component', () => {
     render(<UrpIcon type="SearchOutlined" />)
     
     // 验证图标渲染
-    const iconElement = screen.getByTestId('urp-icon')
+    const iconElement = screen.getByTestId('u-icon')
     expect(iconElement).toBeInTheDocument()
     
     // 验证默认尺寸（默认size=16，对应style中的fontSize）
@@ -32,7 +32,7 @@ describe('Icon Component', () => {
       />
     )
 
-    const iconElement = screen.getByTestId('urp-icon')
+    const iconElement = screen.getByTestId('u-icon')
     // 验证size转换为fontSize
     expect(iconElement).toHaveStyle('font-size: 24px')
     // 验证自定义颜色和边距
@@ -44,7 +44,7 @@ describe('Icon Component', () => {
   it('自定义类名', () => {
     render(<UrpIcon type="UserOutlined" className="test-icon-class" />)
     
-    const iconElement = screen.getByTestId('urp-icon')
+    const iconElement = screen.getByTestId('u-icon')
     expect(iconElement).toHaveClass('icon-custom')
     expect(iconElement).toHaveClass('test-icon-class')
   })

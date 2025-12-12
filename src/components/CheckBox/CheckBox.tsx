@@ -165,8 +165,8 @@ const UrpCheckBoxItem = memo((props: CheckBoxItemType) => {
             !contextValue.includes(value)
           )
       },
-      'urp-check-box-item',
-      'urp-check-box-item'
+      'u-check-box-item',
+      'u-check-box-item'
     )
     return classname
   }, [disabled, isOnSelectLimit, contextValue, value])
@@ -179,8 +179,8 @@ const UrpCheckBoxItem = memo((props: CheckBoxItemType) => {
         isChecked,
         unChecked: !isChecked
       },
-      'urp-check-box-box',
-      'urp-check-box-box'
+      'u-check-box-box',
+      'u-check-box-box'
     )
     return classname
   }, [multiple, isChecked])
@@ -188,8 +188,8 @@ const UrpCheckBoxItem = memo((props: CheckBoxItemType) => {
   const bgClass = useMemo(() => {
     const classname = genClassNameFromProps(
       { isChecked, unChecked: !isChecked },
-      'urp-check-box-box-bg',
-      'urp-check-box-box-bg'
+      'u-check-box-box-bg',
+      'u-check-box-box-bg'
     )
     return classname
   }, [isChecked])
@@ -238,7 +238,7 @@ const UrpCheckBoxLabel = (
 ) => {
   return(
     <div 
-      className={`urp-checkbox-label ${props.className}`}
+      className={`u-checkbox-label ${props.className}`}
       style={{...props.style}}
     >
       { props.children }

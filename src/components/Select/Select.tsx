@@ -49,8 +49,8 @@ const UrpSelect = (props: Select) => {
         focus: isFocus,
         borderless: _props.borderless
       },
-      'urp-select',
-      'urp-select'
+      'u-select',
+      'u-select'
     )
   }, [isFocus, mouseEnter, _props.borderless])
 
@@ -58,8 +58,8 @@ const UrpSelect = (props: Select) => {
   const popupClass = useMemo(() => {
     return genClassNameFromProps(
       { size: _props.size },
-      'urp-select-popup',
-      'urp-select-popup'
+      'u-select-popup',
+      'u-select-popup'
     )
   }, [_props.size])
 
@@ -124,12 +124,12 @@ const UrpSelect = (props: Select) => {
         return (
           <UrpSpace
             style={{ width: 'fit-content' }}
-            className="urp-select-selected-muti"
+            className="u-select-selected-muti"
             key={value}
           >
             <span>{targetOpt?.label}</span>
             <UrpIcon
-              className="urp-select-icon"
+              className="u-select-icon"
               type="CloseOutlined"
               onClick={() => {
                 _props.onChange(_props.value.filter(v => v !== value))
@@ -143,7 +143,7 @@ const UrpSelect = (props: Select) => {
       return(
         <>
           {elems.slice(0, _props.maxVisibleNum)}
-          <div className="urp-select-selected-muti">+{elems.length - _props.maxVisibleNum}</div>
+          <div className="u-select-selected-muti">+{elems.length - _props.maxVisibleNum}</div>
         </>
       )
     } 
@@ -168,7 +168,7 @@ const UrpSelect = (props: Select) => {
           {/* 单选选中项容器 */}
           {
             showSingleSelected &&
-            <div className="urp-select-selected">
+            <div className="u-select-selected">
               {
                 _props.options.find(item => item.value === _props.value)?.label || ''
               }
@@ -197,7 +197,7 @@ const UrpSelect = (props: Select) => {
                   _props.onChange(targetOption.value)
                 }
               }}
-              className="urp-select-input"
+              className="u-select-input"
               type="text"
             />
           }
@@ -206,7 +206,7 @@ const UrpSelect = (props: Select) => {
         <UrpPopup.Content
           position={_props.position}
           visible={isFocus}
-          className="urp-select-pop-content"
+          className="u-select-pop-content"
           arrow
         >
           <div style={{ width: '100%' }}>
@@ -286,8 +286,8 @@ const Icons = () => {
         down: !context.isFocus,
         up: context.isFocus,
       },
-      'urp-select-icon-arrow',
-      'urp-select-icon-arrow'
+      'u-select-icon-arrow',
+      'u-select-icon-arrow'
     )
   }, [context.isFocus])
 
@@ -305,14 +305,14 @@ const Icons = () => {
 
   return (
     <UrpSpace
-      className="urp-select-icons"
+      className="u-select-icons"
       gap={4}
     >
       {
         showCloseIcon ?
           <UrpIcon
             onClick={context.onClearValue}
-            className="urp-select-icon"
+            className="u-select-icon"
             type="CloseCircleOutlined"
           />
           :

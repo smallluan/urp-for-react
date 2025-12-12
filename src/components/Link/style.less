@@ -1,6 +1,6 @@
 @import '../utils/styles/index.less';
 
-.urp-link {
+.u-link {
   display: inline-flex; 
   flex-direction: column;
   cursor: pointer;
@@ -27,15 +27,15 @@
 }
 
 // 禁用状态
-.urp-link-disabled {
+.u-link-disabled {
   pointer-events: none;
 }
 
 // 下划线样式混入
-.define-urp-link(
-  @color: var(--urp-primary-color);
-  @color-hover: var(--urp-primary-color-hover);
-  @color-active: var(--urp-primary-color-active);
+.define-u-link(
+  @color: var(--u-primary-color);
+  @color-hover: var(--u-primary-color-hover);
+  @color-active: var(--u-primary-color-active);
 ) {
   color: @color;
   .underline {
@@ -55,110 +55,110 @@
   }
 }
 
-.urp-link.urp-link-underline-display {
+.u-link.u-link-underline-display {
   .underline {
     width: 100%;
   }
 }
 
-.urp-link.urp-link-underline-hover {
+.u-link.u-link-underline-hover {
   &:hover .underline {
     width: 100%;
   }
 }
 
-.urp-link-theme-default {
-  .define-urp-link(
-    var(--urp-font-gray-2),
-    var(--urp-font-gray-3),
-    var(--urp-font-gray-1)
+.u-link-theme-default {
+  .define-u-link(
+    var(--u-font-gray-2),
+    var(--u-font-gray-3),
+    var(--u-font-gray-1)
   )
 }
 
-.urp-link-theme-primary {
-  .define-urp-link(
-    var(--urp-primary-color),
-    var(--urp-primary-color-hover),
-    var(--urp-primary-color-active),
+.u-link-theme-primary {
+  .define-u-link(
+    var(--u-primary-color),
+    var(--u-primary-color-hover),
+    var(--u-primary-color-active),
   )
 }
 
-.urp-link-theme-warning {
-  .define-urp-link(
-    var(--urp-warning-color),
-    var(--urp-warning-color-hover),
-    var(--urp-warning-color-active),
+.u-link-theme-warning {
+  .define-u-link(
+    var(--u-warning-color),
+    var(--u-warning-color-hover),
+    var(--u-warning-color-active),
   )
 }
 
-.urp-link-theme-success {
-  .define-urp-link(
-    var(--urp-success-color),
-    var(--urp-success-color-hover),
-    var(--urp-success-color-active),
+.u-link-theme-success {
+  .define-u-link(
+    var(--u-success-color),
+    var(--u-success-color-hover),
+    var(--u-success-color-active),
   )
 }
 
-.urp-link-theme-error {
-  .define-urp-link(
-    var(--urp-error-color),
-    var(--urp-error-color-hover),
-    var(--urp-error-color-active),
+.u-link-theme-error {
+  .define-u-link(
+    var(--u-error-color),
+    var(--u-error-color-hover),
+    var(--u-error-color-active),
   )
 }
 
 // 禁用状态主题（统一颜色+透明度）
-.urp-link-theme-default.urp-link-disabled {
-  .define-urp-link(
-    var(--urp-font-gray-2),
-    var(--urp-font-gray-2),
-    var(--urp-font-gray-2)
+.u-link-theme-default.u-link-disabled {
+  .define-u-link(
+    var(--u-font-gray-2),
+    var(--u-font-gray-2),
+    var(--u-font-gray-2)
   )
 }
 
-.urp-link-theme-primary.urp-link-disabled {
-  .define-urp-link(
-    var(--urp-primary-color-disabled),
-    var(--urp-primary-color-disabled),
-    var(--urp-primary-color-disabled),
+.u-link-theme-primary.u-link-disabled {
+  .define-u-link(
+    var(--u-primary-color-disabled),
+    var(--u-primary-color-disabled),
+    var(--u-primary-color-disabled),
   )
 }
 
-.urp-link-theme-warning.urp-link-disabled  {
-  .define-urp-link(
-    var(--urp-warning-color-disabled),
-    var(--urp-warning-color-disabled),
-    var(--urp-warning-color-disabled),
+.u-link-theme-warning.u-link-disabled  {
+  .define-u-link(
+    var(--u-warning-color-disabled),
+    var(--u-warning-color-disabled),
+    var(--u-warning-color-disabled),
   )
 }
 
-.urp-link-theme-success.urp-link-disabled  {
-  .define-urp-link(
-    var(--urp-success-color-disabled),
-    var(--urp-success-color-disabled),
-    var(--urp-success-color-disabled),
+.u-link-theme-success.u-link-disabled  {
+  .define-u-link(
+    var(--u-success-color-disabled),
+    var(--u-success-color-disabled),
+    var(--u-success-color-disabled),
   )
 }
 
-.urp-link-theme-error.urp-link-disabled  {
-  .define-urp-link(
-    var(--urp-error-color-disabled),
-    var(--urp-error-color-disabled),
-    var(--urp-error-color-disabled),
+.u-link-theme-error.u-link-disabled  {
+  .define-u-link(
+    var(--u-error-color-disabled),
+    var(--u-error-color-disabled),
+    var(--u-error-color-disabled),
   )
 }
 
-.urp-link-size-normal {
+.u-link-size-normal {
   font-size: 14px;
   line-height: 20px;
 }
 
-.urp-link-size-small {
+.u-link-size-small {
   font-size: 12px;
   line-height: 17px;
 }
 
-.urp-link-size-large {
+.u-link-size-large {
   font-size: 16px;
   line-height: 23px;
 }

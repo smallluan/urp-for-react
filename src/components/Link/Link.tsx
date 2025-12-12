@@ -17,8 +17,8 @@ export default function UrpLink(props: LinkType) {
   const linkClass = useMemo(() => 
     genClassNameFromProps(
       { theme, size, disabled, underline },
-      'urp-link',
-      'urp-link'
+      'u-link',
+      'u-link'
     )
   , [theme, size, disabled, underline])
 
@@ -53,7 +53,7 @@ export default function UrpLink(props: LinkType) {
   return (
     <div 
       aria-disabled={disabled}
-      data-testid='urp-link'
+      data-testid='u-link'
       className={linkClass}
     >
       {renderLink()}

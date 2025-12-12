@@ -26,8 +26,8 @@ const UrpSpace = (props: SpaceProps) => {
         overflow: mergedProps.overflow,
         scrollBar: mergedProps.scrollBar
       },
-      'urp-space',
-      'urp-space'
+      'u-space',
+      'u-space'
     )
   }, [mergedProps.direction, mergedProps.overflow])
 

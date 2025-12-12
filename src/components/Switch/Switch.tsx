@@ -80,8 +80,8 @@ export default function UrpSwitch(props: SwitchType) {
         size: mergedProps.size,
         disabled: currLoading || mergedProps.disabled
       }, 
-      'urp-switch',
-      'urp-switch'
+      'u-switch',
+      'u-switch'
     )
   }, [currState, mergedProps.shape, mergedProps.size, currLoading, mergedProps.disabled])
 
@@ -92,8 +92,8 @@ export default function UrpSwitch(props: SwitchType) {
         state: currState ? 'open' : 'close',
         shape: mergedProps.shape
       }, 
-      'urp-switch-slider', 
-      'urp-switch-slider'
+      'u-switch-slider', 
+      'u-switch-slider'
     )
   }, [currState, mergedProps.shape]) 
 
@@ -101,16 +101,16 @@ export default function UrpSwitch(props: SwitchType) {
   const descClassName = useMemo(() => {
     return genClassNameFromProps(
       { state: currState ? 'open' : 'close' },
-      'urp-desc-inner',
-      'urp-desc-inner'
+      'u-desc-inner',
+      'u-desc-inner'
     )
   }, [currState]) 
   // 外部描述信息 className
   const outerDescClassName = useMemo(() => {
     return genClassNameFromProps(
       { state: currState ? 'open' : 'close' },
-      'urp-desc-outer',
-      'urp-desc-outer'
+      'u-desc-outer',
+      'u-desc-outer'
     )
   }, [currState]) 
 
@@ -142,7 +142,7 @@ export default function UrpSwitch(props: SwitchType) {
   
   // 返回主结构
   return (
-    <div data-testid="urp-switch"  onClick={stateChange} className={switchClassName}>
+    <div data-testid="u-switch"  onClick={stateChange} className={switchClassName}>
       <div className={sliderClassName}>
         <div className={descClassName}>
           { displayDesc() }

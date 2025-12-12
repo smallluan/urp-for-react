@@ -1,21 +1,21 @@
-.urp-grid-row-flex,
-.urp-grid-row-grid {
+.u-grid-row-flex,
+.u-grid-row-grid {
   width: 100%;
 }
 
-.urp-grid-row-grid {
+.u-grid-row-grid {
   display: grid;
   grid-template-columns: repeat(var(--grids), 1fr);
   gap: var(--gutter);
   align-items: var(--align);  
 }
 
-.urp-grid-row-flex {
+.u-grid-row-flex {
   display: flex;
   justify-content: var(--justify);
 }
 
-.urp-grid-col {
+.u-grid-col {
   grid-column: var(--offset) / span var(--span);
 }
 
@@ -35,42 +35,42 @@
 
 // 1. <768px （极小屏，可选）
 @media screen and (max-width: @sm-max) {
-  .urp-grid-col-reactive {
+  .u-grid-col-reactive {
     grid-column: span var(--xsSpan);
   }
 }
 
 // 2. ≥768px - sm 断点
 @media screen and (min-width: @sm) {
-  .urp-grid-col-reactive {
+  .u-grid-col-reactive {
     grid-column: span var(--smSpan);
   }
 }
 
 // 3. ≥992px - md 断点（优先级高于sm）
 @media screen and (min-width: @md) {
-  .urp-grid-col-reactive {
+  .u-grid-col-reactive {
     grid-column: span var(--mdSpan);
   }
 }
 
 // 4. ≥1200px - lg 断点
 @media screen and (min-width: @lg) {
-  .urp-grid-col-reactive {
+  .u-grid-col-reactive {
     grid-column: span var(--lgSpan);
   }
 }
 
 // 5. ≥1400px - xl 断点
 @media screen and (min-width: @xl) {
-  .urp-grid-col-reactive {
+  .u-grid-col-reactive {
     grid-column: span var(--xlSpan);
   }
 }
 
 // 6. ≥1880px - xxl 断点（优先级最高）
 @media screen and (min-width: @xxl) {
-  .urp-grid-col-reactive {
+  .u-grid-col-reactive {
     grid-column: span var(--xxlSpan);
   }
 }

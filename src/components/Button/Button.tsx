@@ -90,8 +90,8 @@ export default function UrpButton(props: ButtonType) {
         block: block,
         disabled: disabled || loading
       },
-      'urp-button',
-      'urp-button'
+      'u-button',
+      'u-button'
     )
   }, [variant, theme, shape, size, block, disabled, loading])
 
@@ -104,25 +104,25 @@ export default function UrpButton(props: ButtonType) {
       className={buttonClass}
       disabled={disabled || loading}
       aria-disabled={disabled || loading} // ARIA属性，增强可访问性
-      data-testid="urp-button"
+      data-testid="u-button"
     >
       {/* 按钮内容容器 */}
       <div style={{ position: 'relative', zIndex: 2 }}>
         {
           (icon && !loading && !purIcon) && 
-          <UrpIcon className='urp-button-icon' style={{ marginRight: '4px' }} type={icon} />
+          <UrpIcon className='u-button-icon' style={{ marginRight: '4px' }} type={icon} />
         }
         {
           (icon && !loading && purIcon) && 
-          <UrpIcon className='urp-button-icon'  type={icon} />
+          <UrpIcon className='u-button-icon'  type={icon} />
         }
         {
           (loading && !purIcon) &&
-          <UrpIcon className='urp-button-icon'  style={{ marginRight: '4px' }} type="LoadingOutlined" />
+          <UrpIcon className='u-button-icon'  style={{ marginRight: '4px' }} type="LoadingOutlined" />
         }
         {
           (loading && purIcon) &&
-          <UrpIcon className='urp-button-icon'  type="LoadingOutlined" />
+          <UrpIcon className='u-button-icon'  type="LoadingOutlined" />
         }
         {
           !purIcon &&
@@ -134,7 +134,7 @@ export default function UrpButton(props: ButtonType) {
       {showActiveBgEl && (
         <div 
           style={activeBgStyle} 
-          className="urp-button-active-bg"
+          className="u-button-active-bg"
           aria-hidden="true" // 告知辅助技术忽略此元素
         />
       )}

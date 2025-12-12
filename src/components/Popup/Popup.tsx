@@ -66,7 +66,7 @@ const UrpPopup = (props: Popup) => {
       ref={popupRef}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className={`urp-popup ${mergedProps.className}`}
+      className={`u-popup ${mergedProps.className}`}
     >
       {
         contentChildren ?
@@ -74,7 +74,7 @@ const UrpPopup = (props: Popup) => {
         mergedProps.content ?
         <Content
           style={{...mergedProps.style}}
-          className={`urp-popup-content-inner`}
+          className={`u-popup-content-inner`}
           visible={mergedProps.visible}
           position={mergedProps.position}
           mouseEnter={mouseEnter}
@@ -128,8 +128,8 @@ const Content = (props) => {
         display: showPopup,
         position: props.position,
       },
-      'urp-popup-content',
-      'urp-popup-content'
+      'u-popup-content',
+      'u-popup-content'
     )
   }, [showPopup, props.position])
 
@@ -138,11 +138,11 @@ const Content = (props) => {
       onMouseEnter={props.handleMouseEnter}
       className={contentClass}
     >
-      {props.arrow && <div className="urp-popup-arrow" />}
+      {props.arrow && <div className="u-popup-arrow" />}
       <div
         style={{ ...props.style }}
         onMouseEnter={props.onMouseEnter}
-        className={`urp-popup-content-inner ${props.className}`}
+        className={`u-popup-content-inner ${props.className}`}
       >
         {props.children}
       </div>

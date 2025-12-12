@@ -1,12 +1,12 @@
 @import "../utils/styles/colors/color.less";
 
-.urp-select {
+.u-select {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: inherit;
   height: inherit;
-  border: 1px solid var( --urp-gray-color-4);
+  border: 1px solid var( --u-gray-color-4);
   cursor: text;
   transition: all .2s ease-in-out;
   border-radius: 4px;
@@ -17,48 +17,48 @@
 }
 
 /* size 属性相关 */
-.urp-select-popup-size-normal {
+.u-select-popup-size-normal {
   font-size: 14px;
   height: 28px;
   width: 120px;
 }
 
-.urp-select-popup-size-small {
+.u-select-popup-size-small {
   font-size: 12px;
   height: 26px;
   width: 100px;
 }
 
-.urp-select-popup-size-large {
+.u-select-popup-size-large {
   font-size: 16px;
   height: 30px;
   width: 140px;
 }
 /* size 属性相关 */
-.urp-select-hover {
-  border: 1px solid var(--urp-primary-color);
+.u-select-hover {
+  border: 1px solid var(--u-primary-color);
 }
 
-.urp-select-focus {
-  border: 1px solid var(--urp-primary-color);
-  box-shadow: 0 0 2px 2px var(--urp-primary-color-disabled);
+.u-select-focus {
+  border: 1px solid var(--u-primary-color);
+  box-shadow: 0 0 2px 2px var(--u-primary-color-disabled);
 }
 
-.urp-select-borderless {
+.u-select-borderless {
   border: 1px solid transparent;
 }
 
-.urp-select-borderless.urp-select-hover {
-  border: 1px solid var( --urp-gray-color-4);
+.u-select-borderless.u-select-hover {
+  border: 1px solid var( --u-gray-color-4);
 }
 
-.urp-select-borderless.urp-select-focus {
-  border: 1px solid var(--urp-primary-color);
-  box-shadow: 0 0 2px 2px var(--urp-primary-color-disabled);
+.u-select-borderless.u-select-focus {
+  border: 1px solid var(--u-primary-color);
+  box-shadow: 0 0 2px 2px var(--u-primary-color-disabled);
 }
 
 /* 图标区域 */
-.urp-select-icons {
+.u-select-icons {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -68,26 +68,26 @@
   background-color: white;
 }
 
-.urp-select-icon {
-  color: var(--urp-font-gray-3) !important;
+.u-select-icon {
+  color: var(--u-font-gray-3) !important;
   font-size: inherit !important;
 }
 
-.urp-select-icon-arrow {
+.u-select-icon-arrow {
   transition: all .2s ease-in-out;
-  color: var(--urp-font-gray-3) !important;
+  color: var(--u-font-gray-3) !important;
   font-size: inherit !important;
 }
 
-.urp-select-icon-arrow-down {
+.u-select-icon-arrow-down {
   transform: rotate(0);
 }
 
-.urp-select-icon-arrow-up {
+.u-select-icon-arrow-up {
   transform: rotate(-180deg);
 }
 
-.urp-select-pop-content {
+.u-select-pop-content {
   width: inherit; 
 }
 
@@ -97,15 +97,15 @@
   border-radius: 4px;
   transition: all .2s ease-in-out;
   &:hover {
-    background-color: var(--urp-primary-color-light);
+    background-color: var(--u-primary-color-light);
     .check-box-label {
-      color: var(--urp-primary-color) !important;
+      color: var(--u-primary-color) !important;
     }
   }
 }
 
 .check-box:has(.check-box-label-checked) {
-  background-color: var(--urp-primary-color-light);
+  background-color: var(--u-primary-color-light);
 }
 
 .check-box-label {
@@ -114,24 +114,24 @@
 
 .check-box-label-checked {
   font-size: inherit;
-  color: var(--urp-primary-color) !important;
+  color: var(--u-primary-color) !important;
 }
 
 // 选择器内部输入框
-.urp-select-input {
+.u-select-input {
   font-size: inherit;
   flex: 1;
   min-width: 0;
 }
 
-.urp-select-selected {
+.u-select-selected {
   // border: 1px solid red;
 }
 
 // 多选，显示在框内的每一项元素
-.urp-select-selected-muti {
+.u-select-selected-muti {
   font-size: calc(inherit - 2px);
-  background-color: var(--urp-gray-color-1);
+  background-color: var(--u-gray-color-1);
   padding: 2px 4px;
   border-radius: 4px;
 }

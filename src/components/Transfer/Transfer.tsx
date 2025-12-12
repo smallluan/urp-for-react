@@ -79,7 +79,7 @@ const UrpTransfer = (props) => {
     }
   }
   return(
-    <div className='urp-transfer'>
+    <div className='u-transfer'>
       {/* 左侧数据源 */}
       <UrpSingleTransfer
         data={sourceList}
@@ -127,8 +127,8 @@ const UrpSingleTransfer = (props) => {
   }, [props])
 
   return(
-    <div className='urp-single-transfer'>
-      <div className='urp-single-transfer-head'>
+    <div className='u-single-transfer'>
+      <div className='u-single-transfer-head'>
         <UrpCheckBox.Group
             onChange={handleCheckAll}
             multiple
@@ -141,7 +141,7 @@ const UrpSingleTransfer = (props) => {
           </UrpCheckBox.Group>
         <div></div>
       </div>
-      <div className='urp-single-transfer-body'>
+      <div className='u-single-transfer-body'>
         {
           <UrpCheckBox.Group 
             onChange={handleCheckBoxChange} 
@@ -164,14 +164,14 @@ const UrpSingleTransfer = (props) => {
           
         }
       </div>
-      <div className='urp-single-transfer-footer'></div>
+      <div className='u-single-transfer-footer'></div>
     </div>
   )
 }
 
 const UrpTansferButtons = (props) => {
   return(
-    <div className='urp-transfer-buttons'>
+    <div className='u-transfer-buttons'>
       <UrpButton onClick={props.transferToRight} variant='outline' theme='default' size='small' icon='RightOutlined' purIcon />
       <UrpButton onClick={props.transferToLeft} variant='outline' theme='default' size='small' icon='LeftOutlined' purIcon />
     </div>

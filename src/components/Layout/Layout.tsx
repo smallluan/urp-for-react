@@ -15,8 +15,8 @@ const UrpLayout = (props) => {
     {
       row: hasAside
     },
-    'urp-layout',
-    'urp-layout'
+    'u-layout',
+    'u-layout'
   )
 
   return(
@@ -36,7 +36,7 @@ const Head = (props) => {
   return(
     <div
       style={{...props.style, ...headStyle}}
-      className="urp-layout-head"
+      className="u-layout-head"
     >
       {props.children}
     </div>
@@ -45,7 +45,7 @@ const Head = (props) => {
 
 const Body = (props) => {
   return(
-    <div className="urp-layout-body">{props.children}</div>
+    <div className="u-layout-body">{props.children}</div>
   )
 }
 
@@ -58,7 +58,7 @@ const Aside = (props) => {
   return(
     <div 
       style={{...props.style, ...AsideStyle}} 
-      className="urp-layout-aside"
+      className="u-layout-aside"
     >
       {props.children}
     </div>
@@ -74,7 +74,7 @@ const Footer = (props) => {
   return(
     <div
       style={{...props.style, ...footerStyle}}
-      className="urp-layout-footer"
+      className="u-layout-footer"
     >
       {props.children}
     </div>

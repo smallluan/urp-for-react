@@ -11,13 +11,13 @@ describe('Divider 组件', () => {
   it('默认应该渲染为水平实线分割线', () => {
     render(<UrpDivider/>)
 
-    const divider = screen.getByTestId('urp-divider')
+    const divider = screen.getByTestId('u-divider')
     expect(divider).toBeInTheDocument()
-    expect(divider).toHaveClass('urp-divider')
+    expect(divider).toHaveClass('u-divider')
     
     const lineChild = divider.firstChild
-    expect(lineChild).toHaveClass('urp-line-layout-horizontal')
-    expect(lineChild).not.toHaveClass('urp-line-dashed')
+    expect(lineChild).toHaveClass('u-line-layout-horizontal')
+    expect(lineChild).not.toHaveClass('u-line-dashed')
   })
 
   // 测试水平分割线含有单一子元素的情况
@@ -36,7 +36,7 @@ describe('Divider 组件', () => {
       <UrpDivider align="left">分割线内容</UrpDivider>
     )
 
-    const divider = screen.getByTestId('urp-divider')
+    const divider = screen.getByTestId('u-divider')
     expect(divider).toBeInTheDocument()
     // 左布局为例
     const lineLeft = divider.children[0]
@@ -56,13 +56,13 @@ describe('Divider 组件', () => {
       </UrpDivider>
     )
 
-    const divider = screen.getByTestId('urp-divider')
-    expect(divider).toHaveClass('urp-divider-vertical')
+    const divider = screen.getByTestId('u-divider')
+    expect(divider).toHaveClass('u-divider-vertical')
 
     const line = divider.firstChild?.childNodes[1]
-    expect(line).toHaveClass('urp-line-layout-vertical')
-    expect(line).not.toHaveClass('urp-line-dashed')
-    expect(line).not.toHaveClass('urp-line-slope')
+    expect(line).toHaveClass('u-line-layout-vertical')
+    expect(line).not.toHaveClass('u-line-dashed')
+    expect(line).not.toHaveClass('u-line-slope')
   })
 
   // 测试垂直分割线 space 和 slope 属性，顺便测一下 dashed
@@ -76,11 +76,11 @@ describe('Divider 组件', () => {
       </UrpDivider>
     )
 
-    const divider = screen.getByTestId('urp-divider')
+    const divider = screen.getByTestId('u-divider')
     expect(divider).toHaveStyle('--space: 100px')
     
     const line = divider.firstChild?.childNodes[1]
-    expect(line).toHaveClass('urp-line-slope')
-    expect(line).toHaveClass('urp-line-dashed')
+    expect(line).toHaveClass('u-line-slope')
+    expect(line).toHaveClass('u-line-dashed')
   })
 })

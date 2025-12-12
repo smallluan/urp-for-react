@@ -2,7 +2,7 @@
 
 @animation-time: .2s;
 
-.urp-switch {
+.u-switch {
   box-sizing: border-box;
   position: relative;
   width: 38px;
@@ -16,70 +16,70 @@
   touch-action: manipulation; /* 移动端 */
 
   &:active {
-    .urp-switch-slider {
+    .u-switch-slider {
       width: 18px;
     }
     /* -4px 抵消宽度变化带来的位移 */
-    .urp-switch-slider-state-open {
+    .u-switch-slider-state-open {
       left: calc(100% - 14px - 4px - 4px);
     }
   }
 }
 
-.urp-switch-size-small {
+.u-switch-size-small {
   zoom: .8;
 }
 
-.urp-switch-size-large {
+.u-switch-size-large {
   zoom: 1.15;
 }
 
-.urp-switch-shape-round {
+.u-switch-shape-round {
   border-radius: 100vh;
 }
 
-.urp-switch-shape-rect {
+.u-switch-shape-rect {
   border-radius: 4px;
 }
 
-.urp-switch-state-open {
-  background-color: var(--urp-primary-color);
+.u-switch-state-open {
+  background-color: var(--u-primary-color);
 }
 
-.urp-switch-state-close {
-  background-color: var(--urp-gray-color-5);
+.u-switch-state-close {
+  background-color: var(--u-gray-color-5);
   &:hover {
-    background-color: var(--urp-gray-color-6);
+    background-color: var(--u-gray-color-6);
   }
 }
 
-.urp-switch-disabled {
+.u-switch-disabled {
   cursor: not-allowed;
   &:active {
-    .urp-switch-slider {
+    .u-switch-slider {
       width: 14px;
     }
-    .urp-switch-slider-state-open {
+    .u-switch-slider-state-open {
       left: calc(100% - 14px - 4px);
     }
   }
 }
 
-.urp-switch-state-close.urp-switch-disabled {
-  background-color: var(--urp-gray-color-5) !important;
+.u-switch-state-close.u-switch-disabled {
+  background-color: var(--u-gray-color-5) !important;
   &:hover {
-    background-color: var(--urp-gray-color-5) !important;
+    background-color: var(--u-gray-color-5) !important;
   }
 }
 
-.urp-switch-state-open.urp-switch-disabled {
-  background-color: var(--urp-primary-color-disabled) !important;
+.u-switch-state-open.u-switch-disabled {
+  background-color: var(--u-primary-color-disabled) !important;
   &:hover {
-    background-color: var(--urp-primary-color-disabled) !important;
+    background-color: var(--u-primary-color-disabled) !important;
   }
 }
 
-.urp-switch-slider {
+.u-switch-slider {
   box-sizing: border-box;
   display: flex;
   position: absolute;
@@ -94,35 +94,35 @@
   background-color: white;
 }
 
-.urp-switch-slider-shape-round {
+.u-switch-slider-shape-round {
   border-radius: 100vh;
 }
 
-.urp-switch-slider-shape-rect {
+.u-switch-slider-shape-rect {
   border-radius: 4px;
 }
 
-.urp-switch-slider-state-open {
+.u-switch-slider-state-open {
   left: calc(100% - 14px - 4px);
 }
 
-.urp-switch-slider-state-close {
+.u-switch-slider-state-close {
   left: 4px;
 }
 
-.urp-desc-inner {
+.u-desc-inner {
   font-size: 8px;
 }
 
-.urp-desc-inner-state-open {
-  color: var(--urp-primary-color);
+.u-desc-inner-state-open {
+  color: var(--u-primary-color);
 }
 
-.urp-desc-inner-state-close {
-  color: var(--urp-font-gray-2);
+.u-desc-inner-state-close {
+  color: var(--u-font-gray-2);
 }
 
-.urp-desc-outer {
+.u-desc-outer {
   display: flex;
   position: absolute;
   justify-content: center;
@@ -134,12 +134,12 @@
   transition: all @animation-time ease-in-out;
 }
 
-.urp-desc-outer-state-close {
+.u-desc-outer-state-close {
   right: 6px;
-  color: var(--urp-font-gray-2);
+  color: var(--u-font-gray-2);
 }
 
-.urp-desc-outer-state-open {
+.u-desc-outer-state-open {
   right: calc(100% - 10px - 6px);
-  color: var(--urp-font-white-1);
+  color: var(--u-font-white-1);
 }
