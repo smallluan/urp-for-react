@@ -1,26 +1,47 @@
 import React, { useState, useRef, useCallback, useEffect, useMemo } from 'react'
-import { ButtonType } from "./type.ts"
+import { Button } from "./type"
 import defaultProperties from "./properties.ts"
 import genClassNameFromProps from "../utils/tools/className.ts"
 import { UrpIcon } from '../Icon/index.ts'
-import genStyleFromPrpos from '../utils/tools/style.ts'
+import genStyleFromProps from '../utils/tools/style.ts'
+import useMergedProps from '../utils/hooks/useMergedProps.ts'
 import './style.less'
 
-export default function UrpButton(props: ButtonType) {
-  // 合并属性（默认属性与传入属性）
-  const _props = { ...defaultProperties, ...props }
-  const { variant, theme, shape, size, block, disabled, loading, icon, purIcon, onClick } = _props
-  // 状态管理：使用useRef存储不需要触发渲染的变量
+const ACTIVE_BG_DURATION = 250  // 背景激活时长 ms
+
+export default function UrpButton(props: Button) {
+  
+  // 合并属性
+  const {merged: _props} = useMergedProps(
+    defaultProperties,
+    props,
+    [
+      'variant', 'theme', 'shape', 'size', 'block', 'disabled', 
+      'loading', 'icon', 'pureIcon', 'children', 'content',
+      'className', 'style'
+    ]
+  )
+  const { 
+    variant, theme, shape, size, block, 
+    disabled, loading, icon, pureIcon,
+    className, style
+  } = _props
+  const { onClick } = props
+
+  // 点击时背景元素相关变量
   const prevMouseDown = useRef<number>(0)
   const timerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
-  // 状态管理：需要触发渲染的状态
-  const [showActiveBgEl, setShowActiveBgEl] = useState(false)
-  const [activeBgStyle, setActiveBgStyle] = useState<React.CSSProperties>({})
+  const [activeBg, setActiveBg] = useState<{visible: boolean; styles: React.CSSProperties}>({
+    visible: false,
+    styles: {}
+  })
 
-  // 确定按钮内容（优先使用content属性，其次使用children）
-  const buttonContent = _props.content ?? _props.children
+  // 确定按钮内容，content 属性优先
+  const buttonContent = useMemo(() => (
+    _props.content ?? _props.children
+  ), [_props.content, _props.children])
 
-  // 清理定时器副作用
+  // 组件卸载时清定时器，避免内存泄漏
   useEffect(() => {
     return () => {
       if (timerRef.current) {
@@ -29,55 +50,76 @@ export default function UrpButton(props: ButtonType) {
     }
   }, [])
 
-  // 点击事件处理（使用useCallback记忆函数）
+  //避免定时器堆积导致异常状态
+  const clearActiveBgTimer = useCallback(() => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current)
+      timerRef.current = undefined
+    }
+  }, [])
+
+  // 点击事件处理
   const handleClick = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
     if (disabled || loading) return
 
+    clearActiveBgTimer()
     const currentTime = Date.now()
+
     // 处理激活背景的显示时长
-    if (currentTime - prevMouseDown.current > 250) {
-      setShowActiveBgEl(false)
+    if (currentTime - prevMouseDown.current > ACTIVE_BG_DURATION) {
+      setActiveBg(prev => ({...prev, visible: false}))
     } else {
       timerRef.current = setTimeout(() => {
-        setShowActiveBgEl(false)
+        setActiveBg(prev => ({...prev, visible: false}))
         timerRef.current = undefined
-      }, 250 - (currentTime - prevMouseDown.current))
+      }, ACTIVE_BG_DURATION - (currentTime - prevMouseDown.current))
     }
 
-    // 触发外部点击回调
-    if (typeof onClick === 'function') {
-      onClick(e)
-    }
-  }, [disabled, loading, onClick])
+    onClick?.(e)
+  }, [disabled, loading, onClick, clearActiveBgTimer])
 
-  // 鼠标按下事件（显示激活背景）
+  // 鼠标按下显示激活背景
   const handleMouseDown = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
-    if (disabled || loading || showActiveBgEl) return
+    if (disabled || loading || activeBg.visible) return
 
+    clearActiveBgTimer()
     prevMouseDown.current = Date.now()
     const buttonEl = e.currentTarget
-    const rect = buttonEl.getBoundingClientRect()
-    const relativeX = e.clientX - rect.left
-    const relativeY = e.clientY - rect.top
 
-    setShowActiveBgEl(true)
-    setActiveBgStyle(genStyleFromPrpos({ relativeX, relativeY }) as React.CSSProperties)
-  }, [disabled, loading, showActiveBgEl])
+    requestAnimationFrame(() => {
+      const rect = buttonEl.getBoundingClientRect()
+      const relativeX = e.clientX - rect.left
+      const relativeY = e.clientY - rect.top
 
-  // 鼠标抬起事件（隐藏激活背景）
+      setActiveBg({
+        visible: true,
+        styles: genStyleFromProps({ relativeX, relativeY }),
+      })
+    })
+  }, [disabled, loading, activeBg.visible, clearActiveBgTimer])
+
+  // 鼠标抬起隐藏(或延时隐藏)背景，清空定时器
   const handleMouseUp = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
     if (disabled || loading) return
 
+    clearActiveBgTimer()
     const currentTime = Date.now()
-    if (currentTime - prevMouseDown.current > 250) {
-      setShowActiveBgEl(false)
+
+    if (currentTime - prevMouseDown.current > ACTIVE_BG_DURATION) {
+      setActiveBg(prev => ({...prev, visible: false}))
     } else {
       timerRef.current = setTimeout(() => {
-        setShowActiveBgEl(false)
+        setActiveBg(prev => ({...prev, visible: false}))
         timerRef.current = undefined
-      }, 250 - (currentTime - prevMouseDown.current))
+      }, ACTIVE_BG_DURATION - (currentTime - prevMouseDown.current))
     }
-  }, [disabled, loading])
+  }, [disabled, loading, clearActiveBgTimer])
+
+  // 鼠标离开隐藏背景，防止激活背景不消失
+  const handleMouseLeave = useCallback(() => {
+    clearActiveBgTimer()
+    setActiveBg({ visible: false, styles: {} })
+  }, [setActiveBg, clearActiveBgTimer])
 
   // 生成按钮类名
   const buttonClass = useMemo(() => {
@@ -90,54 +132,56 @@ export default function UrpButton(props: ButtonType) {
         block: block,
         disabled: disabled || loading
       },
-      'u-button',
+      'u-button' + (className && ' ' + className),
       'u-button'
     )
-  }, [variant, theme, shape, size, block, disabled, loading])
+  }, [variant, theme, shape, size, block, disabled, loading, className])
+
+  // 激活背景类名：通过visible控制显隐，避免DOM反复创建销毁
+  const activeBgClass = useMemo(() => {
+    return genClassNameFromProps(
+      { visible: activeBg.visible },
+      'u-button-active-bg',
+      'u-button-active-bg'
+    )
+  }, [activeBg.visible])
+
+  const renderIcon = useCallback(() => {
+    const iconType = loading ? 'LoadingOutlined' : icon
+    if (!iconType) return null
+
+    return (
+      <UrpIcon
+        className={`u-button-icon ${pureIcon ? '' : 'u-button-icon-with-margin'}`}
+        type={iconType}
+      />
+    )
+  }, [icon, loading, pureIcon])
 
   return (
     <button
-      type="button" // 明确按钮类型，避免默认提交行为
+      type="button"
       onClick={handleClick}
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
+      onMouseLeave={handleMouseLeave}
       className={buttonClass}
       disabled={disabled || loading}
       aria-disabled={disabled || loading} // ARIA属性，增强可访问性
       data-testid="u-button"
+      style={style}
     >
       {/* 按钮内容容器 */}
       <div style={{ position: 'relative', zIndex: 2 }}>
-        {
-          (icon && !loading && !purIcon) && 
-          <UrpIcon className='u-button-icon' style={{ marginRight: '4px' }} type={icon} />
-        }
-        {
-          (icon && !loading && purIcon) && 
-          <UrpIcon className='u-button-icon'  type={icon} />
-        }
-        {
-          (loading && !purIcon) &&
-          <UrpIcon className='u-button-icon'  style={{ marginRight: '4px' }} type="LoadingOutlined" />
-        }
-        {
-          (loading && purIcon) &&
-          <UrpIcon className='u-button-icon'  type="LoadingOutlined" />
-        }
-        {
-          !purIcon &&
-          <span>{buttonContent}</span>
-        }
+        {renderIcon()}
+        {!pureIcon &&<span>{buttonContent}</span>}
       </div>
-      
       {/* 激活背景元素 */}
-      {showActiveBgEl && (
-        <div 
-          style={activeBgStyle} 
-          className="u-button-active-bg"
-          aria-hidden="true" // 告知辅助技术忽略此元素
-        />
-      )}
+      <div 
+        style={activeBg.styles} 
+        className={activeBgClass}
+        aria-hidden={!activeBg.visible}
+      />
     </button>
   )
 }

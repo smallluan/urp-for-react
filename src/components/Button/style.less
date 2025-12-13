@@ -50,10 +50,10 @@
     color: @content-color-active;
   }
   .u-button-active-bg {
+    opacity: 0;
     position: absolute;
     top: calc(var(--relativeY) * 1px);
     left: calc(var(--relativeX) * 1px);
-    animation: active-bg .25s ease-in forwards;
     background-color: @background-color-active;
     border-radius: 100vh;
     z-index: 1;
@@ -61,12 +61,17 @@
     transform: translate(-50%, -50%);
   }
 
+  .u-button-active-bg-visible {
+    opacity: 1;
+    animation: active-bg .25s ease-in forwards;
+  }
+
   @keyframes active-bg {
     from {
       width: 0;
     }
     to {
-      width: 200%;
+      width: 300%;
     }
   }
 }
@@ -687,14 +692,6 @@
   font-size: inherit !important;
 }
 
-.u-button-active-bg {
-  position: absolute;
-  top: calc(var(--relativeY) * 1px);
-  left: calc(var(--relativeX) * 1px);
-  animation: aa .3s ease-in;
-  background-color: var(--u-primary-color-active);
-  border-radius: 100vh;
-  z-index: 1;
-  aspect-ratio: 1 / 1;
-  transform: translate(-50%, -50%);
+.u-button-icon-with-margin {
+  margin-right: 4px;
 }

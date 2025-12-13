@@ -1,7 +1,9 @@
-import { ButtonType } from "./type"
+import { Button } from "./type"
 
-const defaultProperties: Required<ButtonType> = {
-  children: '',
+const defaultProperties: Omit<Required<Button>, 'onClick'> = {
+  className: '',
+  style: {},
+  children: null,
   content: '确定',
   variant: 'base',
   theme: 'primary',
@@ -11,8 +13,7 @@ const defaultProperties: Required<ButtonType> = {
   block: false,
   icon: '',
   size: 'normal',
-  purIcon: false,
-  onClick: () => { return },
+  pureIcon: false,
 }
 
 export default defaultProperties

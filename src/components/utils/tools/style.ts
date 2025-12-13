@@ -5,7 +5,7 @@
  * @description - 所有不可枚举(或者很难枚举)的属性都应该被如此处理
  *              - 与 vue 和 小程序不同，此处必须返回的是一个对象，而不是一个字符串
  */
-export default function genStyleFromPrpos<T extends object>(
+export default function genStyleFromProps<T extends object>(
   props: T
 ): Record<string, string> {
   const styles: Record<string, string> = {}

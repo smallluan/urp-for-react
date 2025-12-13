@@ -1,4 +1,6 @@
-export interface ButtonType {
+export interface Button {
+  className?: string,
+  style?: React.CSSProperties,
   children?: React.ReactNode,
   content?: React.ReactNode,
   variant?: 'base' | 'outline' | 'dashed' | 'text',
@@ -9,6 +11,6 @@ export interface ButtonType {
   block?: boolean,
   icon?: string,
   size?: 'normal' | 'small' | 'large',
-  purIcon?: boolean,
-  onClick?: (...args) => void,
+  pureIcon?: boolean,
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void,
 }
