@@ -7,7 +7,7 @@ import { Layout } from '../utils/types/index.ts'
 import { createContext, useContext } from 'react'
 import genClassNameFromProps from '../utils/tools/className.ts'
 import { getPartialProps } from '../utils/tools/properties.ts'
-import genStyleFromPrpos from '../utils/tools/style.ts'
+import genStyleFromProps from '../utils/tools/style.ts'
 import defaultProperties, { lineDefaultProps, linePropsCode, formatProps } from './properties.ts'
 import classNames  from 'classnames'
 
@@ -36,7 +36,7 @@ export default function UrpDivider({ children, ...props }: DividerType) {
 
   // context 传值
   const contextValue = { children, props: _props }
-  const _styles = genStyleFromPrpos(_props)
+  const _styles = genStyleFromProps(_props)
 
   // 根据标签子元素数量不同进行不同的处理
   let innerElem = <Line/>
@@ -84,7 +84,7 @@ function Line(_props?: Partial<LineType>) {
 
   // 生成静态类名和动态样式
   const className = genClassNameFromProps(props, 'u-line', 'u-line')
-  const _styles = genStyleFromPrpos(props)
+  const _styles = genStyleFromProps(props)
 
   // 返回线条的 jsx
   return <div style={_styles} className={className} />

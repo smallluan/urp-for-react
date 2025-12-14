@@ -2,8 +2,8 @@ import { useMemo } from "react"
 import { defaultProps } from "./properties.ts"
 import { SpaceProps } from "./type"
 import genClassNameFromProps from '../utils/tools/className.ts'
-import genStyleFromPrpos from '../utils/tools/style.ts'
-import { useMergedProps } from "../utils/tools/props.ts"
+import genStyleFromProps from '../utils/tools/style.ts'
+import useMergedProps from '../utils/hooks/useMergedProps.ts'
 import { formatProps } from './properties.ts'
 
 import { SpaceGap } from './type'
@@ -43,7 +43,7 @@ const UrpSpace = (props: SpaceProps) => {
       vertialGap = _props.gap
     }
     
-    return genStyleFromPrpos({
+    return genStyleFromProps({
       'props-gap-vertial': vertialGap,
       'props-gap-horizontal': horizontalGap,
       'props-align': _props.align

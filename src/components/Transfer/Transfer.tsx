@@ -172,8 +172,8 @@ const UrpSingleTransfer = (props) => {
 const UrpTansferButtons = (props) => {
   return(
     <div className='u-transfer-buttons'>
-      <UrpButton onClick={props.transferToRight} variant='outline' theme='default' size='small' icon='RightOutlined' purIcon />
-      <UrpButton onClick={props.transferToLeft} variant='outline' theme='default' size='small' icon='LeftOutlined' purIcon />
+      <UrpButton onClick={props.transferToRight} variant='outline' theme='default' size='small' icon='RightOutlined' pureIcon />
+      <UrpButton onClick={props.transferToLeft} variant='outline' theme='default' size='small' icon='LeftOutlined' pureIcon />
     </div>
   )
 }

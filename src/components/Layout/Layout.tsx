@@ -1,6 +1,6 @@
 import React from "react"
 import genClassNameFromProps from "../utils/tools/className.ts"
-import genStyleFromPrpos from "../utils/tools/style.ts"
+import genStyleFromProps from "../utils/tools/style.ts"
 
 import './style.less'
 
@@ -28,7 +28,7 @@ const UrpLayout = (props) => {
 
 
 const Head = (props) => {
-  const headStyle = genStyleFromPrpos(
+  const headStyle = genStyleFromProps(
     {
       headHeight: props.height
     }
@@ -50,7 +50,7 @@ const Body = (props) => {
 }
 
 const Aside = (props) => {
-  const AsideStyle = genStyleFromPrpos(
+  const AsideStyle = genStyleFromProps(
     {
       AsideWidth: props.width
     }
@@ -58,7 +58,7 @@ const Aside = (props) => {
   return(
     <div 
       style={{...props.style, ...AsideStyle}} 
-      className="u-layout-aside"
+      className={"u-layout-aside " + props.className}
     >
       {props.children}
     </div>
@@ -66,7 +66,7 @@ const Aside = (props) => {
 }
 
 const Footer = (props) => {
-  const footerStyle = genStyleFromPrpos(
+  const footerStyle = genStyleFromProps(
     {
       headHeight: props.height
     }

@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react'
-import genStyleFromPrpos from "../utils/tools/style.ts"
+import genStyleFromProps from "../utils/tools/style.ts"
 import genClassNameFromProps from "../utils/tools/className.ts"
 import { GridRow, GridCol } from './type'
 // import { rowDefaultProps, colDefaultProps } from './properties.ts'
@@ -16,7 +16,7 @@ const UrpGridRow = (props: GridRow) => {
     '',
     'u-grid-row'
   )
-  const rowStyle = genStyleFromPrpos({
+  const rowStyle = genStyleFromProps({
     grids: props.grids,
     gutter: props.gutter + 'px',
     align: props.align,
@@ -99,7 +99,7 @@ const UrpGridCol = (props: GridCol) => {
   props.span
 ]) // 依赖数组：仅列出函数内用到的props属性
   
-  const colStyle = genStyleFromPrpos({
+  const colStyle = genStyleFromProps({
     span: props.span,
     xsSpan: getFallbackSizeValue('xs'),
     smSpan: getFallbackSizeValue('sm'),
@@ -110,7 +110,7 @@ const UrpGridCol = (props: GridCol) => {
     offset: (props.offset || 0) + props.beforeOffset + props.beforeSpan + 1
   })
   return(
-    <div className={colClass} style={{...colStyle, ...props.style}}>{props.children}</div>
+    <div className={colClass + ' ' + props.className} style={{...colStyle, ...props.style}}>{props.children}</div>
   )
 }
 
