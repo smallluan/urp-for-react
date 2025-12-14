@@ -24,3 +24,4 @@ yarn-error.log*
 
 # pages
 src/pages/
+src/router/
