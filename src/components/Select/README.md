@@ -17,3 +17,5 @@
 |**selectLimit**|N|`number`|`-1`|多选可选的数量上限（checkbox）|
 |**maxVisibleNum**||||多选最多完整显示多少个元素|
 |**size**||||尺寸|
+
+**多选不允许隐藏已选择项**

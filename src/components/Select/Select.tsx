@@ -1,35 +1,38 @@
-import { Select, Context } from "./type"
-import genClassNameFromProps from "../utils/tools/className.ts"
-
+import { useCallback, useMemo, useRef, useState } from "react"
 import { UrpIcon } from "../Icon/index.ts"
 import { UrpPopup } from "../Popup/index.ts"
-import { UrpCheckBox } from "../CheckBox/index.ts"
 import { UrpSpace } from "../Space/index.ts"
-// import { UrpButton } from "../Button/index.ts"
-// import { UrpGrid } from "../Grid/index.ts"
-import { selectDefaultProps } from "./properties.ts"
-
-import classNames from "classnames"
-
+import Icons from "./components/Icons.tsx"
+import Options from "./components/Options.tsx"
 import useClickOutside from "../utils/hooks/useClickOutside.ts"
-
+import useMergedProps from "../utils/hooks/useMergedProps.ts"
+import genClassNameFromProps from "../utils/tools/className.ts"
+import { Select } from "./type"
+import { defaultProps, formatProps } from "./properties.ts"
+import SelectContext from "./Context.ts"
 import "./style.less"
-import { createContext, forwardRef, useCallback, useContext, useMemo, useRef, useState } from "react"
-
-const SelectContext = createContext<Context | undefined>(undefined)
 
 const UrpSelect = (props: Select) => {
+  const { merged: _props } = useMergedProps(
+    defaultProps,
+    props,
+    [
+      'multiple', 'options', 'defaultValue', 'value', 'clearable', 'inputable',
+      'hideSelected', 'hideRadioCircle', 'cancleable', 'selectLimit', 'onChange',
+      'borderless', 'size', 'maxVisibleNum'
+    ],
+    formatProps
+  )
+  const {
+    multiple, options, defaultValue, value, clearable, inputable,
+    hideSelected, hideRadioCircle, cancleable, selectLimit, onChange,
+    borderless, size
+  } = _props  // 解构进行依赖精细化管理
 
-  const _props = { ...selectDefaultProps, ...props }
-
-  // state —— 鼠标进入组件
   const [mouseEnter, setMouseEnter] = useState(false)
-  // state —— 组件聚焦
   const [isFocus, setIsFocus] = useState(false)
-  // ref —— Select 组件自身，用于判断鼠标点击时的点击位置，从而设置聚焦状态
-  const selectRef = useRef(null)
+  const selectRef = useRef(null)  // 用于判断鼠标点击时的点击位置，从而设置聚焦状态
   const ignoreRefs = useRef(null)
-  // ref —— Inputable 属性相关，当 Select 可输入时的输入框 
   const inputRef = useRef(null)
 
   useClickOutside(
@@ -47,43 +50,43 @@ const UrpSelect = (props: Select) => {
       {
         hover: mouseEnter,
         focus: isFocus,
-        borderless: _props.borderless
+        borderless: borderless
       },
       'u-select',
       'u-select'
     )
-  }, [isFocus, mouseEnter, _props.borderless])
+  }, [isFocus, mouseEnter, borderless])
 
 
   const popupClass = useMemo(() => {
     return genClassNameFromProps(
-      { size: _props.size },
+      { size: size },
       'u-select-popup',
       'u-select-popup'
     )
-  }, [_props.size])
+  }, [size])
 
   // memo —— 输入框显示条件
   const showInput = useMemo(() => {
     // 当属性为可输入，且组件被聚焦时显示输入框
-    return _props.inputable && isFocus
-  }, [_props.inputable, isFocus])
+    return inputable && isFocus
+  }, [inputable, isFocus])
 
   // memo —— 单选值容器的显示条件
   const showSingleSelected = useMemo(() => {
     return (
-      !_props.multiple &&
-      !(_props.inputable && isFocus)
+      !multiple &&
+      !(inputable && isFocus)
     )
-  }, [_props.multiple, _props.inputable, isFocus])
+  }, [multiple, inputable, isFocus])
 
   // memo —— 多选值容器的显示条件
   const showMutipleSelected = useMemo(() => {
     return (
-      _props.multiple &&
-      !(_props.inputable && isFocus)
+      multiple &&
+      !(inputable && isFocus)
     )
-  }, [_props.multiple, _props.inputable, isFocus])
+  }, [multiple, inputable, isFocus])
 
   const setFoucsState = useCallback(() => {
     setIsFocus(!isFocus)
@@ -91,31 +94,34 @@ const UrpSelect = (props: Select) => {
 
   // callback —— 清空选值
   const handleClearValue = useCallback(() => {
-    if (_props.multiple) {
-      _props.onChange?.([])
+    if (multiple) {
+      onChange?.([])
     } else {
-      _props.onChange?.('')
+      onChange?.('')
     }
-  }, [props.multiple, _props.onChange])
+  }, [multiple, onChange])
 
   // context —— 提供的上下文
   const contextValue = useMemo(() => ({
-    multiple: _props.multiple,
-    options: _props.options,
-    defaultValue: _props.defaultValue,
-    value: _props.value,
+    multiple: multiple,
+    options: options,
+    defaultValue: defaultValue,
+    value: value,
     isFocus: isFocus,
     mouseEnter: mouseEnter,
-    clearable: _props.clearable,
-    hideRadioCircle: _props.hideRadioCircle,
-    hideSelected: _props.hideSelected,
-    cancleable: _props.cancleable,
-    selectLimit: _props.selectLimit,
-    onChange: _props.onChange,
+    clearable: clearable,
+    hideRadioCircle: hideRadioCircle,
+    hideSelected: hideSelected,
+    cancleable: cancleable,
+    selectLimit: selectLimit,
+    onChange: onChange,
     onClearValue: handleClearValue,
     setIsFocus: setIsFocus,
-  }), [_props.options, _props.defaultValue, _props.value, _props.onChange, _props.clearable, isFocus, handleClearValue])
-
+  }), [
+    options, defaultValue, value, onChange, clearable, isFocus, 
+    handleClearValue, cancleable, hideRadioCircle, hideSelected, 
+    mouseEnter, multiple, selectLimit
+  ])
 
   const genMutiDisplayElems = useCallback(() => {
     const elems = _props.value.map(value => {
@@ -220,125 +226,5 @@ const UrpSelect = (props: Select) => {
     </SelectContext.Provider>
   )
 }
-
-/**
- * 选项组件
- */
-const Options = forwardRef<HTMLDivElement, any>((props, ref) => {
-  const context = useContext(SelectContext) as Required<Context>
-  if (!context) {
-    throw new Error("Select 组件中 Options 未获取上下文数据")
-  }
-
-  const filtedOptions = useMemo(() => {
-    if (context.hideSelected) {
-      return context.options.filter(opt => opt.value !== context.value)
-    }
-    return context.options
-  }, [context.options])
-
-  return (
-    <div style={{ width: '100%' }} ref={ref}>
-      <UrpCheckBox.Group
-      onChange={(newValue: Context['value']) => {
-        context.onChange?.(newValue)
-      }}
-      defaultValue={context.defaultValue}
-      multiple={context.multiple}
-      cancelable={context.cancleable}
-      selectLimit={context.selectLimit}
-      value={context.value}
-    >
-      <UrpSpace direction="vertial" gap={4}>
-        {
-          filtedOptions.map((item) => (
-            <UrpCheckBox.Item
-              key={item.value}
-              labelOnly={!context.multiple && context.hideRadioCircle}
-              className="check-box"
-              value={item.value}
-            >
-              <div className={classNames("check-box-label", { "check-box-label-checked": item.value === context.value })}>{item.label}</div>
-            </UrpCheckBox.Item>
-          ))
-        }
-      </UrpSpace>
-    </UrpCheckBox.Group>
-    </div>
-    
-  )
-})
-
-Options.displayName = 'Option'
-
-/**
- * 图标组件
- */
-const Icons = () => {
-  const context = useContext(SelectContext)
-  if (!context) {
-    throw new Error("Select 组件中 Icons 未获取上下文数据")
-  }
-
-  const arrowIconClass = useMemo(() => {
-    return genClassNameFromProps(
-      {
-        down: !context.isFocus,
-        up: context.isFocus,
-      },
-      'u-select-icon-arrow',
-      'u-select-icon-arrow'
-    )
-  }, [context.isFocus])
-
-  const showCloseIcon = useMemo(() => {
-    return (
-      context.clearable &&
-      (context.mouseEnter || context.isFocus) &&
-      (
-        context.multiple ?
-          context.value?.length !== 0 :
-          context.value !== ''  // checkbox 好像单选的时候什么都没选中返回的是空字符
-      )
-    )
-  }, [context.clearable, context.mouseEnter, context.isFocus, context.multiple, context.value])
-
-  return (
-    <UrpSpace
-      className="u-select-icons"
-      gap={4}
-    >
-      {
-        showCloseIcon ?
-          <UrpIcon
-            onClick={context.onClearValue}
-            className="u-select-icon"
-            type="CloseCircleOutlined"
-          />
-          :
-          <UrpIcon
-            className={arrowIconClass}
-            type="DownOutlined"
-          />
-      }
-    </UrpSpace>
-  )
-}
-
-/**
- * 底部组件
- */
-// const Footer = () => {
-//   return (
-//     <UrpGrid.Row justify="end">
-//       <UrpGrid.Col span={24}>
-//         <UrpSpace direction="horizontal" gap={8}>
-//           <UrpButton content="取消" theme="default" size="small" />
-//           <UrpButton content="确定" size="small" />
-//         </UrpSpace>
-//       </UrpGrid.Col>
-//     </UrpGrid.Row>
-//   )
-// }
 
 export default UrpSelect

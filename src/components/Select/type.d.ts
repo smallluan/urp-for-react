@@ -1,9 +1,11 @@
-export type Options = { label: string, value: string | number }
+export type Option = { label: string, value: string | number }
+type OptionValue = Option['value']
+type Value = OptionValue | OptionValue[]
 
 export interface Select {
-  value?: string | string[],
+  value?: Value,
   defaultValue?: string | string[],
-  options?: Options | Options[],
+  options:  Option[],  // options 必传
   multiple?: boolean,
   borderless?: boolean,
   position?: 'bottom' | 'top' | 'left' | 'right',
