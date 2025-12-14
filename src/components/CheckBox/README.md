@@ -35,3 +35,5 @@
 |`children`|N|`React.ReactNode`|`null`|内容|
 |`className`|||||
 |`style`|||||
+
+**暂时还没有支持在 group 上写 options 属性，目前所有关于options 的类型都是其他组件自己封装的**

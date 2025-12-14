@@ -3,7 +3,7 @@ export type Value = string | number | null
 
 /** 选项组类型 */
 export interface CheckBoxGroupType {
-  lassName?: string,
+  className?: string,
   style?: React.CSSProperties,
   defaultValue?: Value | Array<Value>
   value?: Value | Array<Value>,
@@ -20,7 +20,7 @@ export interface CheckBoxGroupType {
 
 /** 选项类型 */
 export interface CheckBoxItemType {
-  lassName?: string,
+  className?: string,
   style?: React.CSSProperties,
   value?: Value,
   label?: React.ReactNode,

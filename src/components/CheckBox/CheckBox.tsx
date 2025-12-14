@@ -1,7 +1,7 @@
 import { createContext, useContext, useMemo, useState, useRef, useEffect, useCallback, memo } from 'react'
 import { CheckBoxContextType, CheckBoxGroupType, CheckBoxItemType, Value } from './type'
 import { groupDefaultProperties, itemDefaultProperties } from './properties.ts'
-import { useMergedProps } from '../utils/tools/props.ts'
+import useMergedProps from '../utils/hooks/useMergedProps.ts'
 import { UrpIcon } from '../Icon/index.ts'
 import './style.less'
 import genClassNameFromProps from '../utils/tools/className.ts'
