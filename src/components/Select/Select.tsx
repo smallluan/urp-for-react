@@ -19,7 +19,7 @@ const UrpSelect = (props: Select) => {
     [
       'multiple', 'options', 'defaultValue', 'value', 'clearable', 'inputable',
       'hideSelected', 'hideRadioCircle', 'cancleable', 'selectLimit', 'onChange',
-      'borderless', 'size', 'maxVisibleNum'
+      'borderless', 'size', 'maxVisibleNum', 'position'
     ],
     formatProps
   )
@@ -161,7 +161,7 @@ const UrpSelect = (props: Select) => {
       <UrpPopup
         trigger="click"
         className={popupClass}
-        position={props.position}
+        position={_props.position}
       >
         <div
           ref={selectRef}
