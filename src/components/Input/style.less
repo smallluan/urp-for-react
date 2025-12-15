@@ -3,7 +3,7 @@
 .u-input-container {
   display: flex;
   flex-direction: column;
-  width: 200px;
+  width: 120px;
   color: var(--u-font-gray-1);
   --input-size-related-height: 14px; 
   &-size-normal {
@@ -18,11 +18,14 @@
     font-size: 16px;
     --input-size-related-height: 16px
   }
-  transition: all .1s ease-in-out;
+}
+
+.u-input-container-autoWidth {
+  width: auto;
 }
 
 .u-input-up {
-  border: 1px solid var(--u-font-gray-3);
+  border: 1px solid var(--u-gray-color-4);
   position: relative;
   display: flex;
   align-items: center;
@@ -46,6 +49,7 @@
     border: 1px solid var(--u-primary-color-hover);
   }
   &:focus {
+    box-shadow: 0 0 2px 2px var(--u-primary-color-disabled);
     border: 1px solid var(--u-primary-color);
   }
   &-disabled {
@@ -53,15 +57,25 @@
     color: var(--u-font-gray-3) !important;
     background-color: var(--u-bg-gray-7) !important;
     &:hover {
-      border: 1px solid var(--u-font-gray-3) !important;
+      border: 1px solid var(--u-gray-color-4) !important;
     }
   }
   &-readonly {
     cursor: pointer;
     &:hover {
-      border: 1px solid var(--u-font-gray-3) !important;
+      border: 1px solid var(--u-gray-color-4) !important;
     }
   }
+  transition: all .2s ease-in-out;
+}
+
+.u-input-up-isFocused {
+  box-shadow: 0 0 2px 2px var(--u-primary-color-disabled);
+  border: 1px solid var(--u-primary-color);
+}
+
+.u-input-up-borderless {
+  border: none !important
 }
 
 .u-input-children {

@@ -11,29 +11,40 @@ export default function UrpInput(props: InputType) {
   }, [props])
   const { size, shape, disabled, readonly, maxlength, 
     type, placeholder, clearable, showCount, description,
-    children, icons
+    children, icons, borderless, onChange, autoWidth
   } = _props
   const [value, setValue] = useState(_props.value)
   const [hidePassword, setHidePassword] = useState(true)
   const [isFocused, setIsFocused] = useState(false)
   const [isClearIconHover, setIsClearIconHover] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
+
+
+  // const handleClick = useCallback(() => {
+  //   if (disabled || readonly) return
+  //   setIsFocused(prev => {
+  //     inputRef.current?.focus()
+  //     return !prev
+  //   })
+  // }, [disabled, readonly, inputRef])
+
   useEffect(() => {
     setValue(_props.value)
   }, [_props.value])
   // 外层容器 class
   const containerClass = useMemo(() => {
     return genClassNameFromProps(
-      { shape, size},
-      'u-input-container', 'u-input-container'
+      { shape, size, autoWidth },
+      'u-input-container', 
+      'u-input-container'
     )
-  }, [shape, size])
+  }, [shape, size, autoWidth])
   // 输入框上层容器 class
   const inputUpClass = useMemo(() => {
     return genClassNameFromProps(
-      { shape, size, disabled, readonly, isFocused},
+      { shape, size, disabled, readonly, isFocused, borderless },
       'u-input-up','u-input-up')
-  }, [size, shape, disabled, readonly, isFocused])
+  }, [size, shape, disabled, readonly, isFocused, borderless])
   // 输入框本体 class
   const inputClass = useMemo(() => {
     return genClassNameFromProps(
@@ -50,6 +61,7 @@ export default function UrpInput(props: InputType) {
   
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value)
+    onChange?.(e.target.value)
   }
 
   const handleClear = () => {
@@ -60,6 +72,7 @@ export default function UrpInput(props: InputType) {
   return(
     <div className={containerClass}>
       <div
+        tabIndex={0}
         className={inputUpClass}
         onMouseEnter={() => setIsClearIconHover(true)}
         onMouseLeave={() => setIsClearIconHover(false)}
@@ -76,9 +89,9 @@ export default function UrpInput(props: InputType) {
           className={inputClass}
           type={inputType}
           placeholder={placeholder}
-          onChange={handleInput}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
+          onChange={handleInput}
         />
         <div className="u-input-icons">
           {
@@ -106,12 +119,12 @@ export default function UrpInput(props: InputType) {
                       setHidePassword(false)
                     }}
                     className="u-close-icon"
-                    type='EyeOutlined'
+                    type='EyeInvisibleOutlined'
                   /> :
                   <UrpIcon
                     onClick={() => setHidePassword(true)}
                     className="u-close-icon"
-                    type='EyeInvisibleOutlined'
+                    type='EyeOutlined'
                   />
               }
             </span>
@@ -128,19 +141,22 @@ export default function UrpInput(props: InputType) {
           }
         </div>
       </div>
-      <div className="u-input-down">
-        <div>{ description }</div>
-        {
-          showCount &&
-          <span className="u-count">
-            <span>{ value.length }</span>
-            {
-              maxlength > 0 &&
-              <div> /{ maxlength }</div>
-            }
-          </span>
-        }
-      </div>
+      {
+        (description || showCount) &&
+        <div className="u-input-down">
+          <div>{ description }</div>
+          {
+            showCount &&
+            <span className="u-count">
+              <span>{ value.length }</span>
+              {
+                maxlength > 0 &&
+                <div> /{ maxlength }</div>
+              }
+            </span>
+          }
+        </div>
+      }  
     </div>
   )
 }

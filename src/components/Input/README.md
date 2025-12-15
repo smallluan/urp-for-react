@@ -16,3 +16,5 @@
 |`description`|N|`string`|-|描述文字|
 |`children`|N|`ReactNode`|-|输入框前缀|
 |`icons`|N|`string \| string[]`|-|额外的图标|
+|**borderless**||||无边框|
+|**onChange**||||输入触发|

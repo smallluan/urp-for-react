@@ -13,7 +13,9 @@ interface InputType {
   showCount?: boolean,
   description?: string,
   children?: React.ReactNode,
-  icons?: string | string[] | React.ReactNode
+  icons?: string | string[] | React.ReactNode,
+  borderless?: boolean,
+  onChange?: (newValue: string) => void
 }
 
 export default InputType

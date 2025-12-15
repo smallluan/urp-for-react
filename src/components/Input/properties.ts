@@ -15,7 +15,8 @@ const defaultProperties: Required<InputType> = {
   showCount: false,
   description: '',
   children: null,
-  icons: ''
+  icons: '',
+  borderless: false,
 }
 
 export default defaultProperties
