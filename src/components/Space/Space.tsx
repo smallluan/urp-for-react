@@ -10,7 +10,7 @@ import { SpaceGap } from './type'
 
 import './style.less'
 
-const UrpSpace = (props: SpaceProps) => {
+const USpace = (props: SpaceProps) => {
 
   const { merged: _props } = useMergedProps(
     defaultProps,
@@ -60,4 +60,4 @@ const UrpSpace = (props: SpaceProps) => {
   )
 }
 
-export default UrpSpace
+export default USpace

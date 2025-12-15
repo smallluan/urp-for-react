@@ -1,1 +1,1 @@
-export { default as UrpCheckBox } from './CheckBox.tsx'
+export { default as UCheckBox } from './CheckBox.tsx'

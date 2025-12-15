@@ -1,1 +1,1 @@
-export { default as UrpSelect } from './Select.tsx'
+export { default as USelect } from './Select.tsx'

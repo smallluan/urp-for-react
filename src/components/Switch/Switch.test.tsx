@@ -2,14 +2,14 @@
 import React from "react"
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import UrpSwitch from './Switch'
+import USwitch from './Switch'
 import '@testing-library/jest-dom'
 
 describe('Switch 组件', () => {
   // 测试默认渲染
   it('渲染默认 Switch 组件', async () => {
     const user = userEvent.setup()
-    render(<UrpSwitch/>)
+    render(<USwitch/>)
     // 默认状态
     const urpSwitch = screen.getByTestId('u-switch')
     expect(urpSwitch).toBeInTheDocument()
@@ -26,7 +26,7 @@ describe('Switch 组件', () => {
   })
   // 测试方形 Switch
   it('方形 Switch', () => {
-    render(<UrpSwitch shape="rect" />)
+    render(<USwitch shape="rect" />)
     const urpSwitch = screen.getByTestId('u-switch')
     expect(urpSwitch).toBeInTheDocument()
     expect(urpSwitch).toHaveClass('u-switch-shape-rect')
@@ -34,7 +34,7 @@ describe('Switch 组件', () => {
   // 测试禁用状态
   it('禁用状态点击无效', async () => {
     const user = userEvent.setup()
-    render(<UrpSwitch disabled />)
+    render(<USwitch disabled />)
     const urpSwitch = screen.getByTestId('u-switch')
     expect(urpSwitch).toBeInTheDocument()
     expect(urpSwitch).toHaveClass('u-switch-state-close')
@@ -44,7 +44,7 @@ describe('Switch 组件', () => {
   // 测试 loading
   it('加载状态', async () => {
     const user = userEvent.setup()
-    render(<UrpSwitch loading disabled={false} />)
+    render(<USwitch loading disabled={false} />)
     const urpSwitch = screen.getByTestId('u-switch')
     expect(urpSwitch).toBeInTheDocument()
     expect(urpSwitch).toHaveClass('u-switch-state-close')
@@ -58,7 +58,7 @@ describe('Switch 组件', () => {
   // 测试滑块内置描述
   it('内置描述生效', async () => {
     const user = userEvent.setup()
-    render(<UrpSwitch desc={['开', '关']} />)
+    render(<USwitch desc={['开', '关']} />)
     const urpSwitch = screen.getByTestId('u-switch')
     expect(urpSwitch).toBeInTheDocument()
     // 查看关闭状态下滑块内部是否显示正确的描述文字
@@ -73,7 +73,7 @@ describe('Switch 组件', () => {
   // 测试滑块外部描述
   it('外置描述生效', async () => {
     const user = userEvent.setup()
-    render(<UrpSwitch descPos="outer" desc={['开', '关']} />)
+    render(<USwitch descPos="outer" desc={['开', '关']} />)
     const urpSwitch = screen.getByTestId('u-switch')
     expect(urpSwitch).toBeInTheDocument()
     // 查看关闭状态下滑块外部是否显示正确的描述文字

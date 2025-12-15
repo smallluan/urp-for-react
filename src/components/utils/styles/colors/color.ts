@@ -1,5 +1,5 @@
 
-const UrpColor = {
+const UColor = {
   'urp-primary': '#0052d9',
   'urp-primary-hover': '#f2f3ff',
   'urp-primary-click': '#0034b5',
@@ -32,4 +32,4 @@ const UrpColor = {
   'urp-gray-3': '#e7e7e7'
 }
 
-export default UrpColor
+export default UColor

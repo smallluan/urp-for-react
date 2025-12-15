@@ -1,7 +1,7 @@
-const UrpTree = () => {
+const UTree = () => {
   return(
     <div>Tree 组件</div>
   )
 }
 
-export default UrpTree
+export default UTree

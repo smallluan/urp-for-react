@@ -3,7 +3,7 @@ import * as AllIcons from '@ant-design/icons'
 import type { IconProps } from './type'
 import { formatIconProps } from './properties.ts'
 
-const UrpIcon: React.FC<IconProps> = (props) => {
+const UIcon: React.FC<IconProps> = (props) => {
   const finalProps = formatIconProps(props) as Required<IconProps>
   const { type, className, style, size, onClick, ...restProps } = finalProps
 
@@ -26,4 +26,4 @@ const UrpIcon: React.FC<IconProps> = (props) => {
   )
 }
 
-export default UrpIcon
+export default UIcon

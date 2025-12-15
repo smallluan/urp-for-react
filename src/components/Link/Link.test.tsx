@@ -1,11 +1,11 @@
 /** 单元测试文件 */
 import { render, screen } from '@testing-library/react'
-import UrpLink from './Link'
+import ULink from './Link'
 import '@testing-library/jest-dom'
 
 describe('Link 组件', () => {
   it('默认渲染 Link 组件', () => {
-    render(<UrpLink/>)
+    render(<ULink/>)
     const urpLink = screen.getByTestId('u-link')
 
     expect(urpLink).toBeInTheDocument()
@@ -19,10 +19,10 @@ describe('Link 组件', () => {
   it('测试主题样式渲染', () => {
     render(
       <>
-        <UrpLink theme='default' />
-        <UrpLink theme='warning' />
-        <UrpLink theme='success' />
-        <UrpLink theme='error' />
+        <ULink theme='default' />
+        <ULink theme='warning' />
+        <ULink theme='success' />
+        <ULink theme='error' />
       </>
     )
     const urpLinks = screen.getAllByTestId('u-link')
@@ -36,8 +36,8 @@ describe('Link 组件', () => {
   it('测试尺寸', () => {
     render(
       <>
-        <UrpLink size='small'/>
-        <UrpLink size='large'/>
+        <ULink size='small'/>
+        <ULink size='large'/>
       </>
     )
     const urpLinks = screen.getAllByTestId('u-link')
@@ -49,8 +49,8 @@ describe('Link 组件', () => {
   it('测试图标渲染', () => {
     render(
       <>
-        <UrpLink prefixIcon='LinkOutlined' />
-        <UrpLink suffixIcon='LinkOutlined' />
+        <ULink prefixIcon='LinkOutlined' />
+        <ULink suffixIcon='LinkOutlined' />
       </>
     )
     const urpLinks = screen.getAllByTestId('u-link')
@@ -66,7 +66,7 @@ describe('Link 组件', () => {
 
   it('测试链接禁用', () => {
     render(
-      <UrpLink href="https://tdesign.tencent.com/" disabled />
+      <ULink href="https://tdesign.tencent.com/" disabled />
     )
     const urpLink = screen.getByTestId('u-link')
 

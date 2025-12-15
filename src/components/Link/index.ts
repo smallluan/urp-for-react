@@ -1,1 +1,1 @@
-export { default as UrpLink } from './Link.tsx'
+export { default as ULink } from './Link.tsx'

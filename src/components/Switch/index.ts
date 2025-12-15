@@ -1,1 +1,1 @@
-export { default as UrpSwitch } from './Switch.tsx'
+export { default as USwitch } from './Switch.tsx'

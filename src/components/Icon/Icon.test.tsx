@@ -1,6 +1,6 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
-import UrpIcon from './Icon'
+import UIcon from './Icon'
 
 import '@testing-library/jest-dom'
 
@@ -9,7 +9,7 @@ describe('Icon Component', () => {
 
   // 测试1：默认属性渲染
   it('展示图标', () => {
-    render(<UrpIcon type="SearchOutlined" />)
+    render(<UIcon type="SearchOutlined" />)
     
     // 验证图标渲染
     const iconElement = screen.getByTestId('u-icon')
@@ -25,7 +25,7 @@ describe('Icon Component', () => {
   // 测试2：自定义size和style属性生效
   it('自定义尺寸和颜色', () => {
     render(
-      <UrpIcon 
+      <UIcon 
         type="ArrowRightOutlined" 
         size={24} 
         style={{ color: '#f00', margin: '10px' }} 
@@ -42,7 +42,7 @@ describe('Icon Component', () => {
 
   // 测试3：自定义className生效
   it('自定义类名', () => {
-    render(<UrpIcon type="UserOutlined" className="test-icon-class" />)
+    render(<UIcon type="UserOutlined" className="test-icon-class" />)
     
     const iconElement = screen.getByTestId('u-icon')
     expect(iconElement).toHaveClass('icon-custom')

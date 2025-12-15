@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useRef, useState } from "react"
-import { UrpIcon } from "../Icon/index.ts"
-import { UrpPopup } from "../Popup/index.ts"
-import { UrpSpace } from "../Space/index.ts"
+import { UIcon } from "../Icon/index.ts"
+import { UPopup } from "../Popup/index.ts"
+import { USpace } from "../Space/index.ts"
 import Icons from "./components/Icons.tsx"
 import Options from "./components/Options.tsx"
 import useClickOutside from "../utils/hooks/useClickOutside.ts"
@@ -12,7 +12,7 @@ import { defaultProps, formatProps } from "./properties.ts"
 import SelectContext from "./Context.ts"
 import "./style.less"
 
-const UrpSelect = (props: Select) => {
+const USelect = (props: Select) => {
   const { merged: _props } = useMergedProps(
     defaultProps,
     props,
@@ -128,20 +128,20 @@ const UrpSelect = (props: Select) => {
       const targetOpt = _props.options.find(opt => opt.value === value)
       if (targetOpt) {
         return (
-          <UrpSpace
+          <USpace
             style={{ width: 'fit-content' }}
             className="u-select-selected-muti"
             key={value}
           >
             <span>{targetOpt?.label}</span>
-            <UrpIcon
+            <UIcon
               className="u-select-icon"
               type="CloseOutlined"
               onClick={() => {
                 _props.onChange(_props.value.filter(v => v !== value))
               }}
             />
-          </UrpSpace>
+          </USpace>
         )
       }
     })
@@ -158,7 +158,7 @@ const UrpSelect = (props: Select) => {
 
   return (
     <SelectContext.Provider value={contextValue}>
-      <UrpPopup
+      <UPopup
         trigger="click"
         className={popupClass}
         position={_props.position}
@@ -183,9 +183,9 @@ const UrpSelect = (props: Select) => {
           {/* 多选选中项容器 */}
           {
             showMutipleSelected &&
-            <UrpSpace scrollBar="none" overflow="scroll" gap={4}>
+            <USpace scrollBar="none" overflow="scroll" gap={4}>
               {genMutiDisplayElems()}
-            </UrpSpace>
+            </USpace>
           }
           {
             showInput &&
@@ -209,22 +209,22 @@ const UrpSelect = (props: Select) => {
           }
           <Icons />
         </div>
-        <UrpPopup.Content
+        <UPopup.Content
           position={_props.position}
           visible={isFocus}
           className="u-select-pop-content"
           arrow
         >
           <div style={{ width: '100%' }}>
-            <UrpSpace direction="vertial" gap={8}>
+            <USpace direction="vertial" gap={8}>
               <Options ref={ignoreRefs} />
               {/* <Footer/>  */}
-            </UrpSpace>
+            </USpace>
           </div>
-        </UrpPopup.Content>
-      </UrpPopup>
+        </UPopup.Content>
+      </UPopup>
     </SelectContext.Provider>
   )
 }
 
-export default UrpSelect
+export default USelect

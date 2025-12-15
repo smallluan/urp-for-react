@@ -2,10 +2,10 @@ import { useEffect, useMemo, useRef, useState, Dispatch, SetStateAction } from "
 import InputType from "./type"
 import defaultProperties, { formatProps } from './properties.ts'
 import genClassNameFromProps from '../utils/tools/className.ts'
-import { UrpIcon } from '../Icon/index.ts'
+import { UIcon } from '../Icon/index.ts'
 import './style.less'
 
-export default function UrpInput(props: InputType) {
+export default function UInput(props: InputType) {
   const _props = useMemo(() => {
     return formatProps({ ...defaultProperties, ...props })
   }, [props])
@@ -106,7 +106,7 @@ export default function UrpInput(props: InputType) {
             <span
               onClick={handleClear}
             >
-              <UrpIcon className="u-close-icon" type='CloseCircleOutlined' />
+              <UIcon className="u-close-icon" type='CloseCircleOutlined' />
             </span>
           }
           {
@@ -114,14 +114,14 @@ export default function UrpInput(props: InputType) {
             <span>
               {
                 hidePassword ?
-                  <UrpIcon
+                  <UIcon
                     onClick={() => {
                       setHidePassword(false)
                     }}
                     className="u-close-icon"
                     type='EyeInvisibleOutlined'
                   /> :
-                  <UrpIcon
+                  <UIcon
                     onClick={() => setHidePassword(true)}
                     className="u-close-icon"
                     type='EyeOutlined'
@@ -169,7 +169,7 @@ export default function UrpInput(props: InputType) {
 const genNumberIcons = (setValue: Dispatch<SetStateAction<string>>) => {
   return (
     <span className="u-number-icons">
-      <UrpIcon
+      <UIcon
         onClick={() => setValue((prev: string) => {
           const newValue = Number(prev) + 1
           return String(newValue)
@@ -177,7 +177,7 @@ const genNumberIcons = (setValue: Dispatch<SetStateAction<string>>) => {
         className="u-number-icon-up"
         type='CaretUpOutlined'
       />
-      <UrpIcon
+      <UIcon
         onClick={() => setValue((prev: string) => {
           const newValue = Number(prev) - 1
           return String(newValue)
@@ -196,7 +196,7 @@ const genNumberIcons = (setValue: Dispatch<SetStateAction<string>>) => {
 const genCustomIcons = (icons: InputType['icons']) => {
   if (typeof icons === 'string') {
     return (
-      <UrpIcon
+      <UIcon
         className="u-close-icon"
         type={icons}
       />
@@ -207,7 +207,7 @@ const genCustomIcons = (icons: InputType['icons']) => {
       icons.map((icon, index) => {
         if (typeof icon === 'string') {
           return (
-            <UrpIcon
+            <UIcon
               key={index}
               className="u-close-icon"
               type={icon}

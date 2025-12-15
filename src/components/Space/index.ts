@@ -1,1 +1,1 @@
-export { default as UrpSpace } from './Space.tsx'
+export { default as USpace } from './Space.tsx'

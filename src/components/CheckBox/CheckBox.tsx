@@ -2,13 +2,13 @@ import { createContext, useContext, useMemo, useState, useRef, useEffect, useCal
 import { CheckBoxContextType, CheckBoxGroupType, CheckBoxItemType, Value } from './type'
 import { groupDefaultProperties, itemDefaultProperties } from './properties.ts'
 import useMergedProps from '../utils/hooks/useMergedProps.ts'
-import { UrpIcon } from '../Icon/index.ts'
+import { UIcon } from '../Icon/index.ts'
 import './style.less'
 import genClassNameFromProps from '../utils/tools/className.ts'
 import { formatGroupProps } from './properties.ts'
 const CheckBoxContext = createContext<CheckBoxContextType|undefined>(undefined)
 
-const UrpCheckBoxGroup = (props: CheckBoxGroupType) => {
+const UCheckBoxGroup = (props: CheckBoxGroupType) => {
   // 调用工具函数，自动合并 props + 生成精准依赖
   const { merged: _props } = useMergedProps(
     groupDefaultProperties,
@@ -125,7 +125,7 @@ const UrpCheckBoxGroup = (props: CheckBoxGroupType) => {
   ) 
 }
 
-const UrpCheckBoxItem = memo((props: CheckBoxItemType) => {
+const UCheckBoxItem = memo((props: CheckBoxItemType) => {
   const context =  useContext(CheckBoxContext)
   if (!context) {
     throw new Error('Radio 组件必须在 CheckBox 组件内使用')
@@ -202,7 +202,7 @@ const UrpCheckBoxItem = memo((props: CheckBoxItemType) => {
           <div className={bgClass}>
             {
               (multiple) &&
-              <UrpIcon size='10px'style={{color: 'white',}}type={checkedIcon}/>
+              <UIcon size='10px'style={{color: 'white',}}type={checkedIcon}/>
             }
           </div>
         </div>
@@ -219,16 +219,16 @@ const UrpCheckBoxItem = memo((props: CheckBoxItemType) => {
       />
       {
         props.children ? 
-          UrpCheckBoxLabel({ children: props.children }) : 
-          UrpCheckBoxLabel({ children: label })
+          UCheckBoxLabel({ children: props.children }) : 
+          UCheckBoxLabel({ children: label })
       }
     </label>
   )
 })
 
-UrpCheckBoxItem.displayName = 'UrpCheckBoxItem'
+UCheckBoxItem.displayName = 'UCheckBoxItem'
 
-const UrpCheckBoxLabel = (
+const UCheckBoxLabel = (
   props: 
   { 
     children?: React.ReactNode,
@@ -247,9 +247,9 @@ const UrpCheckBoxLabel = (
 }
 
 const CheckBox = {
-  Group: UrpCheckBoxGroup,
-  Item: UrpCheckBoxItem,
-  Label: UrpCheckBoxLabel,
+  Group: UCheckBoxGroup,
+  Item: UCheckBoxItem,
+  Label: UCheckBoxLabel,
 }
 
 export default CheckBox

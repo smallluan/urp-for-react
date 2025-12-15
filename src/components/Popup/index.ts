@@ -1,1 +1,1 @@
-export { default as UrpPopup } from './Popup.tsx'
+export { default as UPopup } from './Popup.tsx'

@@ -1,12 +1,12 @@
 import { useCallback, useMemo, useState } from 'react'
-import { UrpButton } from '../Button/index.ts'
-import { UrpCheckBox } from '../CheckBox/index.ts'
+import { UButton } from '../Button/index.ts'
+import { UCheckBox } from '../CheckBox/index.ts'
 import './style.less'
 
 /**
  * Transfer 穿梭框组件（默认导出）
  */
-const UrpTransfer = (props) => {
+const UTransfer = (props) => {
   const [sourceList, setSourceList] = useState(props.data)
   const [selectedList, setSelectedList] = useState([]) as any
 
@@ -81,7 +81,7 @@ const UrpTransfer = (props) => {
   return(
     <div className='u-transfer'>
       {/* 左侧数据源 */}
-      <UrpSingleTransfer
+      <USingleTransfer
         data={sourceList}
         checkedList={leftCheckedList}
         isCheckAll={isLeftCheckAll}
@@ -93,12 +93,12 @@ const UrpTransfer = (props) => {
         onCheckAll={(value) => onCheckAll(value, 'left')}
       />
       {/* 穿梭按键 */}
-      <UrpTansferButtons 
+      <UTansferButtons 
         transferToLeft={transferToLeft}
         transferToRight={transferToRight}
       />
       {/* 右侧选中区 */}
-      <UrpSingleTransfer 
+      <USingleTransfer 
         data={selectedList}
         checkedList={rightCheckedList}
         isCheckAll={isRightCheckAll}
@@ -116,7 +116,7 @@ const UrpTransfer = (props) => {
 /**
  * 单个穿梭框
  */
-const UrpSingleTransfer = (props) => {
+const USingleTransfer = (props) => {
 
   const handleCheckBoxChange = useCallback((value) => {
     props.onChange(value)
@@ -129,21 +129,21 @@ const UrpSingleTransfer = (props) => {
   return(
     <div className='u-single-transfer'>
       <div className='u-single-transfer-head'>
-        <UrpCheckBox.Group
+        <UCheckBox.Group
             onChange={handleCheckAll}
             multiple
             cancelable
             value={props.isCheckAll ? ['0'] : []}
           >
-            <UrpCheckBox.Item value='0'>
-              <UrpCheckBox.Label>{props.checkedList.length}/{props.data.length}</UrpCheckBox.Label>
-            </UrpCheckBox.Item>
-          </UrpCheckBox.Group>
+            <UCheckBox.Item value='0'>
+              <UCheckBox.Label>{props.checkedList.length}/{props.data.length}</UCheckBox.Label>
+            </UCheckBox.Item>
+          </UCheckBox.Group>
         <div></div>
       </div>
       <div className='u-single-transfer-body'>
         {
-          <UrpCheckBox.Group 
+          <UCheckBox.Group 
             onChange={handleCheckBoxChange} 
             value={props.checkedList}
             cancelable 
@@ -153,14 +153,14 @@ const UrpSingleTransfer = (props) => {
               props.data.map((item) => {
                 return(
                   <div key={item.value}>
-                    <UrpCheckBox.Item value={item.value}>
-                      <UrpCheckBox.Label>{ item.label }</UrpCheckBox.Label>
-                    </UrpCheckBox.Item>
+                    <UCheckBox.Item value={item.value}>
+                      <UCheckBox.Label>{ item.label }</UCheckBox.Label>
+                    </UCheckBox.Item>
                   </div>
                 )
               })
             }
-          </UrpCheckBox.Group>
+          </UCheckBox.Group>
           
         }
       </div>
@@ -169,13 +169,13 @@ const UrpSingleTransfer = (props) => {
   )
 }
 
-const UrpTansferButtons = (props) => {
+const UTansferButtons = (props) => {
   return(
     <div className='u-transfer-buttons'>
-      <UrpButton onClick={props.transferToRight} variant='outline' theme='default' size='small' icon='RightOutlined' pureIcon />
-      <UrpButton onClick={props.transferToLeft} variant='outline' theme='default' size='small' icon='LeftOutlined' pureIcon />
+      <UButton onClick={props.transferToRight} variant='outline' theme='default' size='small' icon='RightOutlined' pureIcon />
+      <UButton onClick={props.transferToLeft} variant='outline' theme='default' size='small' icon='LeftOutlined' pureIcon />
     </div>
   )
 }
 
-export default UrpTransfer
+export default UTransfer

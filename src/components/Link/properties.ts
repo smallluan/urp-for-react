@@ -1,6 +1,8 @@
 import { LinkType } from "./type"
 
 const defaultProperties: Required<LinkType> = {
+  className: '',
+  style: {},
   content: null,
   children: null,
   theme: 'primary',

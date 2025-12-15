@@ -1,4 +1,6 @@
 export interface LinkType {
+  className?: string,
+  style?: React.CSSProperties,
   content?: React.ReactNode,
   children?: React.ReactNode,
   theme?: 'default' | 'primary' | 'warning' | 'success' | 'error',

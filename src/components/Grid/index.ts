@@ -1,1 +1,1 @@
-export { default as UrpGrid } from './Grid.tsx'
+export { default as UGrid } from './Grid.tsx'

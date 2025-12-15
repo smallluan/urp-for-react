@@ -3,9 +3,9 @@ import './style.less'
 import { useEffect, useMemo, useState } from "react"
 import defaultProperties, { formatProps } from "./properties.ts"
 import genClassNameFromProps from "../utils/tools/className.ts"
-import { UrpIcon } from '../Icon/index.ts'
+import { UIcon } from '../Icon/index.ts'
 
-export default function UrpSwitch(props: SwitchType) {
+export default function USwitch(props: SwitchType) {
   const _props = formatProps({ ...defaultProperties, ...props })
   // 是否是一个受控开关
   const isControlled = _props.state !== undefined
@@ -120,7 +120,7 @@ export default function UrpSwitch(props: SwitchType) {
     // 加载状态图标
     if (currLoading) {
       return (
-         <UrpIcon 
+         <UIcon 
           size={iconSize + 2} 
           type='LoadingOutlined'
         />
@@ -131,7 +131,7 @@ export default function UrpSwitch(props: SwitchType) {
       return currState ? _props.desc[0] : _props.desc[1]
     } else if (_props.descIcon.length) {
       return (
-        <UrpIcon 
+        <UIcon 
           size={iconSize} 
           type={currState ? _props.descIcon[0] : _props.descIcon[1]}
         />

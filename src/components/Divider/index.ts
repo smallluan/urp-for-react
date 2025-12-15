@@ -1,1 +1,1 @@
-export { default as UrpDivider } from "./Divider.tsx"
+export { default as UDivider } from "./Divider.tsx"

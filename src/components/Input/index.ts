@@ -1,1 +1,1 @@
-export { default as UrpInput } from './Input.tsx'
+export { default as UInput } from './Input.tsx'

@@ -30,7 +30,7 @@ const useDividerContext = () => {
 /** 
  * 主组件(默认导出组件)
 */
-export default function UrpDivider({ children, ...props }: DividerType) {
+export default function UDivider({ children, ...props }: DividerType) {
   // 合并默认属性和传入属性，在子组件层不需要单独合并了
   const _props = formatProps({ ...defaultProperties, ...props })
 
@@ -136,7 +136,7 @@ function GenHorizontalGroup() {
     children.map((child, index) => {
       return (
         <div key={index} style={{ 'flex': 1 }}>
-          <UrpDivider >{ child }</UrpDivider>
+          <UDivider >{ child }</UDivider>
         </div>
       )
     })

@@ -37,51 +37,51 @@
 ## 三、如何使用
 ```html
 <!-- 水平分割线(实线) -->
-<UrpDivider/>
+<UDivider/>
 
 <!-- 水平分割线(虚线) -->
-<UrpDivider dashed />
+<UDivider dashed />
 
 <!-- 带文字的水平分割线 -->
-<UrpDivider>分割线</UrpDivider>
+<UDivider>分割线</UDivider>
 
 <!-- 文字左对齐 -->
-<UrpDivider align='left'>分割线</UrpDivider>
+<UDivider align='left'>分割线</UDivider>
 
 <!-- 文字右对齐 -->
-<UrpDivider dashed align='right'>分割线</UrpDivider>
+<UDivider dashed align='right'>分割线</UDivider>
 
 <!-- 垂直分割线 -->
-<UrpDivider layout='vertical'>
+<UDivider layout='vertical'>
    <div>富强</div>
    <div>民主</div>
    <div>文明</div>
    <div>和谐</div>
-</UrpDivider>
+</UDivider>
 
 <!-- 垂直虚线分割 -->
-<UrpDivider layout='vertical' dashed>
+<UDivider layout='vertical' dashed>
    <div>自由</div>
    <div>平等</div>
    <div>公正</div>
    <div>法治</div>
-</UrpDivider>
+</UDivider>
 
 <!-- 倾斜垂直分割 -->
-<UrpDivider layout='vertical' dashed space='8px' slope>
+<UDivider layout='vertical' dashed space='8px' slope>
    <div>爱国</div>
    <div>敬业</div>
    <div>诚信</div>
    <div>友善</div>
-</UrpDivider>
+</UDivider>
 
 <!-- 水平分割组 -->
- <UrpDivider>
+ <UDivider>
    <div>富强</div>
    <div>民主</div>
    <div>文明</div>
    <div>和谐</div>
-</UrpDivider>
+</UDivider>
 ```
 
 ## 四、迭代历史

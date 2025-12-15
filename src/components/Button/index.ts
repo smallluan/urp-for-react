@@ -1,1 +1,1 @@
-export { default as UrpButton } from './Button.tsx'
+export { default as UButton } from './Button.tsx'

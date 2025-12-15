@@ -1,1 +1,1 @@
-export { default as UrpTypo } from "./Typo.tsx"
+export { default as UTypo } from "./Typo.tsx"

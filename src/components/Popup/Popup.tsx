@@ -5,7 +5,7 @@ import { defaultProps } from "./properties.ts"
 import genClassNameFromProps from "../utils/tools/className.ts"
 import React from "react"
 
-const UrpPopup = (props: Popup) => {
+const UPopup = (props: Popup) => {
 
   const _props = { ...defaultProps, ...props }
 
@@ -14,7 +14,7 @@ const UrpPopup = (props: Popup) => {
   const popupRef = useRef(null)
   const hasBindClickRef = useRef(false)
 
-  const contentChildren = React.Children.toArray(props.children).find(item => item.type === UrpPopup.Content)
+  const contentChildren = React.Children.toArray(props.children).find(item => item.type === UPopup.Content)
 
   useEffect(() => {
     if (_props.trigger === 'click') {
@@ -150,6 +150,6 @@ const Content = (props) => {
   )
 }
 
-UrpPopup.Content = Content
+UPopup.Content = Content
 
-export default UrpPopup
+export default UPopup

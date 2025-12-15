@@ -2,14 +2,14 @@ import React, { useState, useRef, useCallback, useEffect, useMemo } from 'react'
 import { Button } from "./type"
 import defaultProperties from "./properties.ts"
 import genClassNameFromProps from "../utils/tools/className.ts"
-import { UrpIcon } from '../Icon/index.ts'
+import { UIcon } from '../Icon/index.ts'
 import genStyleFromProps from '../utils/tools/style.ts'
 import useMergedProps from '../utils/hooks/useMergedProps.ts'
 import './style.less'
 
 const ACTIVE_BG_DURATION = 250  // 背景激活时长 ms
 
-export default function UrpButton(props: Button) {
+export default function UButton(props: Button) {
   
   // 合并属性
   const {merged: _props} = useMergedProps(
@@ -151,7 +151,7 @@ export default function UrpButton(props: Button) {
     if (!iconType) return null
 
     return (
-      <UrpIcon
+      <UIcon
         className={`u-button-icon ${pureIcon ? '' : 'u-button-icon-with-margin'}`}
         type={iconType}
       />

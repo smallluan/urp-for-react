@@ -1,1 +1,1 @@
-export { default as UrpIcon } from "./Icon.tsx"
+export { default as UIcon } from "./Icon.tsx"

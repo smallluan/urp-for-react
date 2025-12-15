@@ -1,6 +1,6 @@
 import { useContext, useMemo } from "react"
-import UrpSpace from "../../Space/Space.tsx"
-import UrpIcon from "../../Icon/Icon.tsx"
+import USpace from "../../Space/Space.tsx"
+import UIcon from "../../Icon/Icon.tsx"
 import SelectContext from "../Context.ts"
 import genClassNameFromProps from "../../utils/tools/className.ts"
 
@@ -38,24 +38,24 @@ const Icons = () => {
   }, [context.clearable, context.mouseEnter, context.isFocus, context.multiple, context.value])
 
   return (
-    <UrpSpace
+    <USpace
       className="u-select-icons"
       gap={4}
     >
       {
         showCloseIcon ?
-        <UrpIcon
+        <UIcon
           onClick={context.onClearValue}
           className="u-select-icon"
           type="CloseCircleOutlined"
         />
         :
-        <UrpIcon
+        <UIcon
           className={arrowIconClass}
           type="DownOutlined"
         />
       }
-    </UrpSpace>
+    </USpace>
   )
 }
 

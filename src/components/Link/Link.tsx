@@ -1,16 +1,17 @@
 import { LinkType } from "./type.ts"
 import defaultProperties from "./properties.ts"
-import { UrpIcon } from '../Icon/index.ts'
+import { UIcon } from '../Icon/index.ts'
 import { useMemo } from "react"
 import genClassNameFromProps from "../utils/tools/className.ts"
 import { Link } from "react-router-dom"
 import './style.less'
 
-export default function UrpLink(props: LinkType) {
+export default function ULink(props: LinkType) {
   const _props = { ...defaultProperties, ...props }
   const { 
     content, children, href, target, theme, 
-    size, disabled, underline, prefixIcon, suffixIcon, to 
+    size, disabled, underline, prefixIcon, suffixIcon, to,
+    className, style, onClick
   } = _props
   const linkContent = content ?? children
 
@@ -19,33 +20,33 @@ export default function UrpLink(props: LinkType) {
       { theme, size, disabled, underline },
       'u-link',
       'u-link'
-    )
-  , [theme, size, disabled, underline])
+    ) + (className && ' ' + className)
+  , [theme, size, disabled, underline, className])
 
   const renderLink = () => {
     if (disabled) {
       return (
         <div style={{ pointerEvents: 'none' }}>
-          {prefixIcon && <UrpIcon type={prefixIcon} />}
+          {prefixIcon && <UIcon type={prefixIcon} />}
           <span>{linkContent}</span>
-          {suffixIcon && <UrpIcon type={suffixIcon} />}
+          {suffixIcon && <UIcon type={suffixIcon} />}
         </div>
       )
     }
     if (to) {
       return (
         <Link to={to} target={target}>
-          {prefixIcon && <UrpIcon type={prefixIcon} />}
+          {prefixIcon && <UIcon type={prefixIcon} />}
           <span>{linkContent}</span>
-          {suffixIcon && <UrpIcon type={suffixIcon} />}
+          {suffixIcon && <UIcon type={suffixIcon} />}
         </Link>
       )
     }
     return (
       <a href={href} target={target}>
-        {prefixIcon && <UrpIcon type={prefixIcon} />}
+        {prefixIcon && <UIcon type={prefixIcon} />}
         <span>{linkContent}</span>
-        {suffixIcon && <UrpIcon type={suffixIcon} />}
+        {suffixIcon && <UIcon type={suffixIcon} />}
       </a>
     )
   }
@@ -55,6 +56,8 @@ export default function UrpLink(props: LinkType) {
       aria-disabled={disabled}
       data-testid='u-link'
       className={linkClass}
+      style={{...style}}
+      onClick={onClick}
     >
       {renderLink()}
       {underline !== 'none' && !disabled && (

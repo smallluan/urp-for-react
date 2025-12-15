@@ -1,1 +1,1 @@
-export { default as UrpTransfer } from './Transfer.tsx'
+export { default as UTransfer } from './Transfer.tsx'

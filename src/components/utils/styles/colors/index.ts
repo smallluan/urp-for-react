@@ -1,2 +1,2 @@
-import UrpColor from './color.ts'
-export default UrpColor
+import UColor from './color.ts'
+export default UColor

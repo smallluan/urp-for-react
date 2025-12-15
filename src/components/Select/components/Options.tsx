@@ -1,8 +1,8 @@
 import { forwardRef, useContext, useMemo } from "react"
 import SelectContext from "../Context.ts"
 import classNames from "classnames"
-import UrpCheckBox from "../../CheckBox/CheckBox.tsx"
-import UrpSpace from "../../Space/Space.tsx"
+import UCheckBox from "../../CheckBox/CheckBox.tsx"
+import USpace from "../../Space/Space.tsx"
 
 
 const Options = forwardRef<HTMLDivElement, any>((props, ref) => {
@@ -20,7 +20,7 @@ const Options = forwardRef<HTMLDivElement, any>((props, ref) => {
 
   return (
     <div style={{ width: '100%' }} ref={ref}>
-      <UrpCheckBox.Group
+      <UCheckBox.Group
       onChange={(newValue) => {
         context.onChange?.(newValue)
       }}
@@ -30,21 +30,21 @@ const Options = forwardRef<HTMLDivElement, any>((props, ref) => {
       selectLimit={context.selectLimit}
       value={context.value}
     >
-      <UrpSpace direction="vertical" gap={4}>
+      <USpace direction="vertical" gap={4}>
         {
           filtedOptions.map((item) => (
-            <UrpCheckBox.Item
+            <UCheckBox.Item
               key={item.value}
               labelOnly={!context.multiple && context.hideRadioCircle}
               className="check-box"
               value={item.value}
             >
               <div className={classNames("check-box-label", { "check-box-label-checked": item.value === context.value })}>{item.label}</div>
-            </UrpCheckBox.Item>
+            </UCheckBox.Item>
           ))
         }
-      </UrpSpace>
-    </UrpCheckBox.Group>
+      </USpace>
+    </UCheckBox.Group>
     </div>
   )
 })

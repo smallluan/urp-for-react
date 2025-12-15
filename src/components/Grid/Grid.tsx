@@ -6,7 +6,7 @@ import { GridRow, GridCol } from './type'
 
 import './style.less'
 
-const UrpGridRow = (props: GridRow) => {
+const UGridRow = (props: GridRow) => {
 
   const rowClass = genClassNameFromProps(
     {
@@ -31,8 +31,8 @@ const UrpGridRow = (props: GridRow) => {
       // 跳过无效子元素
       if (!React.isValidElement(child)) return child
 
-      // 仅处理UrpGridCol，非Col元素直接返回（不参与累加）
-      if (child.type === UrpGridCol) {
+      // 仅处理UGridCol，非Col元素直接返回（不参与累加）
+      if (child.type === UGridCol) {
         // 1. 获取当前Col自身的offset和span（无值则默认0）
         const colOffset = child.props.offset || 0
         const colSpan = child.props.span || 0
@@ -61,7 +61,7 @@ const UrpGridRow = (props: GridRow) => {
   )
 }
 
-const UrpGridCol = (props: GridCol) => {
+const UGridCol = (props: GridCol) => {
 
   const colClass = genClassNameFromProps(
     { 
@@ -114,9 +114,9 @@ const UrpGridCol = (props: GridCol) => {
   )
 }
 
-const UrpGrid = {
-  Row: UrpGridRow,
-  Col: UrpGridCol
+const UGrid = {
+  Row: UGridRow,
+  Col: UGridCol
 }
 
-export default UrpGrid
+export default UGrid

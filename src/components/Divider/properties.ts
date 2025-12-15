@@ -1,6 +1,6 @@
 import { PropertiesType, LineType, DividerType } from "./type"
 import { Layout } from '../utils/types/index.ts'
-import { UrpColor } from "../utils/styles/index.ts"
+import { UColor } from "../utils/styles/index.ts"
 
 // Line 子组件需要提取的属性名
 export const linePropsCode: Array<keyof LineType> = ['layout', 'dashed', 'color', 'slope']
@@ -8,7 +8,7 @@ export const linePropsCode: Array<keyof LineType> = ['layout', 'dashed', 'color'
 export const lineDefaultProps: LineType = {
   layout: Layout.HORIZONTAL,
   dashed: false,
-  color: UrpColor['urp-font-3'],
+  color: UColor['urp-font-3'],
   slope: false,
   flex: 1,
 }

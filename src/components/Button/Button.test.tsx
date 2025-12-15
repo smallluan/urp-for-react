@@ -2,14 +2,14 @@
 import { useState } from 'react'
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import UrpButton from './Button'
+import UButton from './Button'
 import '@testing-library/jest-dom'
 
 describe('Button 组件', () => {
   // 测试默认渲染
   it('默认渲染 Button 组件', async () => {
     const user = userEvent.setup()
-    render(<UrpButton/>)
+    render(<UButton/>)
 
     const urpButton = screen.getByTestId('u-button')
     let activeBgEl = urpButton.querySelector('u-button-active-bg')
@@ -35,10 +35,10 @@ describe('Button 组件', () => {
   it('测试主题渲染', () => {
     render(
       <>
-        <UrpButton/>
-        <UrpButton theme='warning' />
-        <UrpButton theme='success' />
-        <UrpButton theme='error' />
+        <UButton/>
+        <UButton theme='warning' />
+        <UButton theme='success' />
+        <UButton theme='error' />
       </>
     )
     const urpButtons = screen.getAllByTestId('u-button')
@@ -53,10 +53,10 @@ describe('Button 组件', () => {
   it('测试变种按钮', () => {
     render(
       <>
-        <UrpButton/>
-        <UrpButton variant='outline' />
-        <UrpButton variant='dashed' />
-        <UrpButton variant='text' />
+        <UButton/>
+        <UButton variant='outline' />
+        <UButton variant='dashed' />
+        <UButton variant='text' />
       </>
     )
     const urpButtons = screen.getAllByTestId('u-button')
@@ -79,7 +79,7 @@ describe('Button 组件', () => {
         setDisabled(true)
       }
       
-      return <UrpButton onClick={handleClick} disabled={disabled} />
+      return <UButton onClick={handleClick} disabled={disabled} />
     }
     
     render(<ButtonWithCount />)
@@ -108,7 +108,7 @@ describe('Button 组件', () => {
         setLoading(true)
       }
       
-      return <UrpButton onClick={handleClick} loading={loading} />
+      return <UButton onClick={handleClick} loading={loading} />
     }
 
     render(<ButtonWithCount />)
