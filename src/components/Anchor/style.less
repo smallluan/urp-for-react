@@ -1,0 +1,51 @@
+@import "../utils/styles/colors/color.less";
+
+.u-anchor {
+  display: flex;
+  justify-content: space-between;
+  // height: fit-content;
+  width: fit-content;
+  // position: relative;
+  // border: 1px solid red;
+}
+
+.u-anchor-line {
+  position: relative;
+  width: 1px;
+  height: inherit;
+  background-color: var(--u-gray-color-3);
+}
+
+.u-anchor-line-cursor {
+  position: absolute;
+  top: var(--marginTop);
+  transform: translateY(var(--cursorOffset));
+  width: 1px;
+  height: var(--cursorHeight);
+  background-color: var(--u-primary-color);
+  transition: all .2s ease-in-out;
+}
+
+.u-anchor-item,
+.u-anchor-item-active {
+  display: block;
+  padding: 4px 16px;
+  font-size: 12px;
+  transition: all .2s ease-in-out;
+  cursor: pointer;
+  user-select: none;
+}
+
+.u-anchor-item {
+  color: var(--u-font-gray-2);
+  &:hover {
+    color: var(--u-font-gray-1);
+  }
+}
+
+.u-anchor-item-active {
+  color: var(--u-primary-color);
+  &:hover {
+    color: var(--u-primary-color);
+  }
+}
