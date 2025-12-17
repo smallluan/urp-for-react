@@ -1,0 +1,46 @@
+@import "../utils/styles/colors/color.less";
+
+.u-tree {
+  width: fit-content;
+  // border: 1px solid red;
+}
+
+.u-tree-item {
+  display: flex;
+  align-items: center;
+  // border: 1px solid red;
+  padding: 0 0 0 calc(var(--level) * 24px);
+  color: var(--u-font-gray-1);
+  cursor: pointer;
+  user-select: none;
+  .u-tree-icon-container {
+    align-self: stretch;
+    width: 20px;
+    display: flex;
+    align-items: center;
+    // border: 1px solid red;
+    margin-right: 4px;
+    font-size: 12px;
+    color: var(--u-font-gray-3);
+    .u-tree-icon {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 20px;
+      height: 20px;
+      border-radius: 2px;
+      color: inherit;
+      // border: 1px solid red;
+      &:hover {
+        background-color: var(--u-gray-color-1);
+      }
+    }
+  }
+  .u-tree-label {
+    font-size: 12px;
+    // &:hover {
+    //   background-color: var(--u-gray-color-1);
+    // }
+  }
+}
+
