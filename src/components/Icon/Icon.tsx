@@ -19,7 +19,7 @@ const UIcon: React.FC<IconProps> = (props) => {
     <AntdIconComponent
       data-testid='u-icon'
       {...restProps}
-      style={{ ...style, fontSize: size || style?.fontSize }}
+      style={{ fontSize: style?.fontSize || size || 'inherit', ...style }}
       className={`icon-custom ${className || ''}`}
       onClick={() => onClick()}
     />
