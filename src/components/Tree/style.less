@@ -2,7 +2,6 @@
 
 .u-tree {
   width: fit-content;
-  // border: 1px solid red;
 }
 
 .u-tree-item {
@@ -13,34 +12,45 @@
   color: var(--u-font-gray-1);
   cursor: pointer;
   user-select: none;
+  animation: fade-in .2s ease-in-out forwards;
   .u-tree-icon-container {
-    align-self: stretch;
-    width: 20px;
+    width: 16px;
+    height: 16px;
     display: flex;
     align-items: center;
     // border: 1px solid red;
     margin-right: 4px;
     font-size: 12px;
+    border-radius: 4px;
+    &:hover {
+      background-color: var(--u-gray-color-1);
+    }
     color: var(--u-font-gray-3);
     .u-tree-icon {
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 20px;
-      height: 20px;
+      width: 16px;
+      height: 16px;
       border-radius: 2px;
       color: inherit;
-      // border: 1px solid red;
-      &:hover {
-        background-color: var(--u-gray-color-1);
-      }
+      transition: all .2s ease-in-out;
+    }
+    .u-tree-icon-open {
+      color: var(--u-primary-color) !important;
+      transform: rotate(90deg);
     }
   }
   .u-tree-label {
     font-size: 12px;
-    // &:hover {
-    //   background-color: var(--u-gray-color-1);
-    // }
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  } to {
+    opacity: 1;
   }
 }
 

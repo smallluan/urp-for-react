@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from "react"
 import "./style.less"
 import genStyleFromProps from "../utils/tools/style.ts"
 import { UIcon } from "../Icon/index.ts"
+import genClassNameFromProps from "../utils/tools/className.ts"
 
 // data 单节点
 type TreeOriginalNode = {
@@ -114,11 +115,6 @@ const UTree = (props) => {
 
   }, [props.data]) 
 
-  // item 的动态类
-  const itemStyle = useCallback((level: string) => {
-    return genStyleFromProps({ level })
-  }, [])
-
   const unfoldNode = useCallback((targetNode:TreeFlattenedNode, targetIndex: number) => {
     const children = targetNode.children
     if (!children.length) return
@@ -205,6 +201,20 @@ const UTree = (props) => {
     }
   }, [flatArray, keyToIndexMap, foldNode, unfoldNode,])
 
+  // item 的动态类
+  const itemStyle = useCallback((level: string) => {
+    return genStyleFromProps({ level })
+  }, [])
+
+  // icon 动态类(仅箭头图标，自定义图标不能加旋转)
+  const iconCalss = useCallback((isOpen: boolean) => {
+    return genClassNameFromProps(
+      { open: isOpen },
+      'u-tree-icon',
+      'u-tree-icon'
+    )
+  }, [])
+
   return (
     <div className="u-tree">
       {
@@ -221,7 +231,7 @@ const UTree = (props) => {
                 item.hasChildren &&
                 <UIcon
                   onClick={() => handleClick(item)}
-                  className="u-tree-icon"
+                  className={iconCalss(item.isOpen)}
                   type="CaretRightOutlined"
                 />
               }
