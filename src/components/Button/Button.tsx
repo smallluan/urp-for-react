@@ -36,9 +36,9 @@ export default function UButton(props: Button) {
     styles: {}
   })
 
-  // 确定按钮内容，content 属性优先
+  // 确定按钮内容，children 属性优先
   const buttonContent = useMemo(() => (
-    _props.content ?? _props.children
+    _props.children ?? _props.content
   ), [_props.content, _props.children])
 
   // 组件卸载时清定时器，避免内存泄漏
