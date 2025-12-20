@@ -74,7 +74,7 @@ const UPopup = (props: Popup) => {
       ref={popupRef}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className={`u-popup ${_props.className}`}
+      className={'u-popup'}
     >
       {
         contentChildren ?
@@ -82,7 +82,7 @@ const UPopup = (props: Popup) => {
         _props.content ?
         <Content
           style={{..._props.style}}
-          className={`u-popup-content-inner`}
+          className={_props.className || ''}
           visible={_props.visible}
           position={_props.position}
           mouseEnter={mouseEnter}
@@ -144,13 +144,13 @@ const Content = (props) => {
   return (
     <div
       onMouseEnter={props.handleMouseEnter}
-      className={contentClass}
+      className={contentClass + ' ' + props.className}
     >
       {props.arrow && <div className="u-popup-arrow" />}
       <div
         style={{ ...props.style }}
         onMouseEnter={props.onMouseEnter}
-        className={`u-popup-content-inner ${props.className}`}
+        className={`u-popup-content-inner`}
       >
         {props.children}
       </div>
