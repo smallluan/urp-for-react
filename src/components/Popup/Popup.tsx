@@ -4,10 +4,18 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { defaultProps } from "./properties.ts"
 import genClassNameFromProps from "../utils/tools/className.ts"
 import React from "react"
+import useMergedProps from "../utils/hooks/useMergedProps.ts"
 
 const UPopup = (props: Popup) => {
 
-  const _props = { ...defaultProps, ...props }
+  const { merged: _props } = useMergedProps(
+    defaultProps,
+    props,
+    [
+      'content', 'visible', 'trigger', 'position', 'arrow', 
+      'className', 'style', 'onChange'
+    ]
+  )
 
   const [mouseEnter, setMouseEnter] = useState(false)
   const [clicked, setClicked] = useState(false)
