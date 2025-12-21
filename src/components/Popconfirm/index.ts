@@ -1,0 +1,1 @@
+export { default as UPopconfirm } from './Popconfirm.tsx'
