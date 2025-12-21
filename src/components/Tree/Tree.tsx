@@ -10,7 +10,6 @@ type TreeOriginalNode = {
   label: string;
   value?: string | number;
   children?: TreeOriginalNode[];
-
 }
 
 // 扁平化后的单个节点
@@ -206,6 +205,14 @@ const UTree = (props) => {
     return genStyleFromProps({ level })
   }, [])
 
+  const iconContainerClass = useCallback((hasChildren: boolean) => {
+    return genClassNameFromProps(
+      { hasChildren: hasChildren },
+      'u-tree-icon-container',
+      'u-tree-icon-container'
+    )
+  }, [])
+
   // icon 动态类(仅箭头图标，自定义图标不能加旋转)
   const iconCalss = useCallback((isOpen: boolean) => {
     return genClassNameFromProps(
@@ -226,7 +233,7 @@ const UTree = (props) => {
             data-level={item.level} 
             key={item.key}
           >
-            <div className="u-tree-icon-container">
+            <div className={iconContainerClass(item.hasChildren)}>
               {
                 item.hasChildren &&
                 <UIcon
