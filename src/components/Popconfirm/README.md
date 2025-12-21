@@ -4,13 +4,14 @@
 |**className**||||透传类名|
 |**style**||||透传样式|
 |**chilren**||||被挂载元素|
+|**visible**||||可见性（受控属性）|
+|**defaultVisible**||||可见性（非受控属性）|
 |**theme**||||主题|
 |**icon**||||标题左侧自定义图标|
 |**arrow**||||是否显示箭头（popup属性）|
 |**title**||||标题|
 |**description**||||描述信息|
 |**position**||||弹层位置（popup属性）|
-|**trigger**||||如何触发（popup属性）|
 |**cancelBtn**||||取消按钮，不传则默认不显示，传字符串默认配置按钮文字，传对象则透传至UButton|
 |**confirmBtn**||||确认按钮，不传则默认不显示，传字符串默认配置按钮文字，传对象则透传至UButton|
 |**onCancel**||||点击取消按钮回调|

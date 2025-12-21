@@ -12,21 +12,34 @@ import genClassNameFromProps from "../utils/tools/className.ts"
 
 const UPopconfirm = (props: Popconfirm) => {
 
-  const [visible, setVisible] = useState(false)
+  const isControlled = props.visible !== undefined
+  const [innerVisible, setInnerVisible] = useState(props.defaultVisible ?? false)
+  const visible = isControlled ? props.visible : innerVisible
+
   const childrenRef = useRef(null)
   const popconfirmRef = useRef(null)
 
   useClickOutside(
     childrenRef,
-    () => setVisible(false),
+    () => setInnerVisible(false),
     {
       ignoreRefs: [popconfirmRef]
     }
   )
 
   const handleChildrenClick = useCallback(() => {
-    setVisible(prev => !prev)
+    setInnerVisible(prev => !prev)
   }, [])
+
+  const handleCancel = useCallback(() => {
+    setInnerVisible(false)
+    props.onCancel?.()
+  }, [props.onCancel])
+
+  const handleConfirm = useCallback(() => {
+    setInnerVisible(false)
+    props.onConfirm?.()
+  }, [props.onConfirm])
 
   const iconClass = useMemo(() => {
     return genClassNameFromProps(
@@ -34,11 +47,12 @@ const UPopconfirm = (props: Popconfirm) => {
       'u-popupconfirm-icon',
       'u-popupconfirm-icon'
     )
-  })
+  }, [props.theme])
 
   return (
     <UPopup
-      trigger={props.trigger || 'click'}
+      trigger="click"  // 考虑到使用场景为二次确认，所以这里触发条件限制为点击
+      onChange={props.onVisibleChange}
     >
       {/* 被挂载的元素 */}
       <div
@@ -73,8 +87,8 @@ const UPopconfirm = (props: Popconfirm) => {
                 <UTypo.Description>{props.description}</UTypo.Description>
               }
               <USpace style={{ display: 'flex', justifyContent: 'flex-end' }} gap={8}>
-                <UButton onClick={props.onCancel} theme="default" size="small" content="取消" />
-                <UButton onClick={props.onConfirm} theme={props.theme || 'primary'} size="small" content="确认" />
+                <UButton onClick={handleCancel} theme="default" size="small" content="取消" />
+                <UButton onClick={handleConfirm} theme={props.theme || 'primary'} size="small" content="确认" />
               </USpace>
             </USpace>
 
