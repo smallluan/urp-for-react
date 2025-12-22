@@ -19,18 +19,10 @@ export default function UInput(props: InputType) {
   const [isClearIconHover, setIsClearIconHover] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
 
-
-  // const handleClick = useCallback(() => {
-  //   if (disabled || readonly) return
-  //   setIsFocused(prev => {
-  //     inputRef.current?.focus()
-  //     return !prev
-  //   })
-  // }, [disabled, readonly, inputRef])
-
   useEffect(() => {
     setValue(_props.value)
   }, [_props.value])
+
   // 外层容器 class
   const containerClass = useMemo(() => {
     return genClassNameFromProps(
@@ -72,7 +64,6 @@ export default function UInput(props: InputType) {
   return(
     <div className={containerClass}>
       <div
-        tabIndex={0}
         className={inputUpClass}
         onMouseEnter={() => setIsClearIconHover(true)}
         onMouseLeave={() => setIsClearIconHover(false)}
