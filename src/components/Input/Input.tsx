@@ -16,7 +16,7 @@ export default function UInput(props: InputType) {
   const [value, setValue] = useState(_props.value)
   const [hidePassword, setHidePassword] = useState(true)
   const [isFocused, setIsFocused] = useState(false)
-  const [isClearIconHover, setIsClearIconHover] = useState(false)
+  const [isHover, setIsHover] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
@@ -65,8 +65,8 @@ export default function UInput(props: InputType) {
     <div className={containerClass}>
       <div
         className={inputUpClass}
-        onMouseEnter={() => setIsClearIconHover(true)}
-        onMouseLeave={() => setIsClearIconHover(false)}
+        onMouseEnter={() => setIsHover(true)}
+        onMouseLeave={() => setIsHover(false)}
       >
         {
           children &&
@@ -90,7 +90,7 @@ export default function UInput(props: InputType) {
             因为它可能频繁的显示隐藏出现bug */
           }
           {
-            ( clearable && (isFocused || isClearIconHover) &&
+            ( clearable && (isFocused || isHover) &&
               value.length > 0 &&
               !readonly && !disabled
             ) &&
@@ -125,6 +125,7 @@ export default function UInput(props: InputType) {
           {/* 数字类型输入框增减图标 */}
           {
             (
+              isHover &&
               type === 'number' &&
               !readonly && !disabled
             ) &&
