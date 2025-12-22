@@ -1,9 +1,10 @@
-import { useEffect, useMemo, useRef, useState, Dispatch, SetStateAction } from "react"
+import { useEffect, useMemo, useRef, useState, Dispatch, SetStateAction, useCallback } from "react"
 import InputType from "./type"
 import defaultProperties, { formatProps } from './properties.ts'
 import genClassNameFromProps from '../utils/tools/className.ts'
 import { UIcon } from '../Icon/index.ts'
 import './style.less'
+import debounce from 'lodash/debounce'
 
 export default function UInput(props: InputType) {
   const _props = useMemo(() => {
@@ -22,6 +23,10 @@ export default function UInput(props: InputType) {
   useEffect(() => {
     setValue(_props.value)
   }, [_props.value])
+
+  useEffect(() => {
+    debouncedOnchange(value)
+  }, [value])
 
   // 外层容器 class
   const containerClass = useMemo(() => {
@@ -50,10 +55,16 @@ export default function UInput(props: InputType) {
     }
     return type
   }, [type, hidePassword])
+
+  const debouncedOnchange = useCallback(
+    debounce((val: string) => {
+      onChange?.(val)
+    }, 200, { leading: true }), 
+    [onChange]
+  )
   
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value)
-    onChange?.(e.target.value)
   }
 
   const handleClear = () => {
