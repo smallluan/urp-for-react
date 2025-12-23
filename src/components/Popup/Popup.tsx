@@ -13,7 +13,7 @@ const UPopup = (props: Popup) => {
     props,
     [
       'content', 'visible', 'trigger', 'position', 'arrow', 
-      'className', 'style', 'onChange'
+      'className', 'style', 'onChange', 'contentClassName', 'contentStyle'
     ]
   )
 
@@ -74,15 +74,22 @@ const UPopup = (props: Popup) => {
       ref={popupRef}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className={'u-popup'}
+      className={'u-popup' + ' ' + _props.className}
+      style={_props.style}
     >
+      {/* 
+        这块 class 别搞混了，如果是在 popup 内部使用了 content，
+        走的是 content 标签内定义的 class 没问题
+        如果没使用 content 标签，也就是作为属性传进来的，在此处把他包装成 content
+        这个时候走的是 popup 上边透传下来的 content 样式。
+      */}
       {
         contentChildren ?
         contentChildren:
         _props.content ?
         <Content
-          style={{..._props.style}}
-          className={_props.className || ''}
+          style={{..._props.contentStyle}}
+          className={_props.contentClassName || ''}
           visible={_props.visible}
           position={_props.position}
           mouseEnter={mouseEnter}

@@ -1,8 +1,10 @@
 ## 二、参数定义（Props）
 |参数名|是否必填|参数类型|默认值|说明|
 |--|--|--|--|--|
-|**className**|N|`string`|-|透传类名|
-|**style**|N|`object`|-|透传样式|
+|**className**|N|`string`|-|透传类名（popup）|
+|**contentClassName**||||透传类名（content）|
+|**style**|N|`object`|-|透传样式（popup）|
+|**contentStyle**||||透传样式（content）|
 |**absolute**|N|`boolean`|`false`|是否脱离标准流显示|
 |**position**|N|`bottom \| top \| left \| right`|`bottom`|弹层位置|
 |**arrow**|N|`boolean`|`false`|是否显示箭头|
