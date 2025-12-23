@@ -5,6 +5,7 @@
 |**container**||||指定滚动的容器|
 |**cursor**||||游标|
 |**size**||||尺寸|
+|**scrollOffset**||||滚动偏移量|
 |**onChange**||||锚点改变事件|
 |**onClick**|||锚点点击事件|
 
@@ -14,5 +15,4 @@ AnchorItem
 |**className**||||透传类名|
 |**style**||||透传样式|
 |**href**|Y||||
-|**target**|||||
 |**title**||||锚点文本|
