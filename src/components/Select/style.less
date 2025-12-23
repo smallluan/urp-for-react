@@ -16,25 +16,24 @@
   background-color: white;
 }
 
-/* size 属性相关 */
-.u-select-popup-size-normal {
+.u-select-size-normal {
   font-size: 14px;
-  height: 28px;
+  height: 30px;
   width: 120px;
 }
 
-.u-select-popup-size-small {
+.u-select-size-small {
   font-size: 12px;
-  height: 26px;
+  height: 28px;
   width: 100px;
 }
 
-.u-select-popup-size-large {
+.u-select-size-large {
   font-size: 16px;
-  height: 30px;
+  height: 32px;
   width: 140px;
 }
-/* size 属性相关 */
+
 .u-select-hover {
   border: 1px solid var(--u-primary-color);
 }
@@ -86,7 +85,10 @@
 }
 
 .u-select-pop-content {
-  width: inherit; 
+  width: 100%;
+  .u-popup-content-inner {
+    width: 100%;
+  }
 }
 
 .check-box {

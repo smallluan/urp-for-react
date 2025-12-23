@@ -48,6 +48,7 @@ const USelect = (props: Select) => {
   const selectClass = useMemo(() => {
     return genClassNameFromProps(
       {
+        size: size,
         hover: mouseEnter,
         focus: isFocus,
         borderless: borderless
