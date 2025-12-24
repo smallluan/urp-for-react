@@ -1,6 +1,8 @@
 
 import React, { ReactElement } from 'react'
 
+export type TargetContainer =  Window & typeof globalThis | Element
+
 /* 主容器类型 */
 export interface Anchor {
   className?: string;
@@ -37,6 +39,7 @@ export interface AnchorTarget {
 export interface Context {
   currAnchor: number;
   scrollOffset: number;
+  targetContainer: TargetContainer;
   handleClick: (newAnchor: number) => void;
 }
 

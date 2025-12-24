@@ -6,86 +6,107 @@ import "./style.less"
 import genStyleFromProps from "../utils/tools/style.ts"
 import genClassNameFromProps from "../utils/tools/className.ts"
 
-import { Anchor, AnchorItem, AnchorTarget, Context, AnchorItemClickEvent } from "./type"
+import { Anchor, AnchorItem, AnchorTarget, Context, AnchorItemClickEvent, TargetContainer } from "./type"
 
 const AnchorContext = createContext<Context | undefined>(undefined)
 
 const UAnchor = (props: Anchor) => {
   const [currAnchor, setCurrAnchor] = useState(0)
   const isScroll = useRef(false)
-  // 滚动偏移量
   const scrollOffset = props.scrollOffset || 0
+  const targetContainerRef = useRef<TargetContainer>(window)
 
- const handleTargetScroll = useCallback(() => {
-  const anchorItems = React.Children.toArray(props.children).filter(child =>
-    isValidElement(child) && child.type === Item
-  ) as ReactElement<AnchorItem>[]
-
-  if (anchorItems.length === 0) return
-
-  let activeIndex = 0
-  const totalLength = anchorItems.length
-  // 提前获取最后一个锚点元素
-  const lastItem = anchorItems[totalLength - 1]
-  const lastTargetId = lastItem.props.href?.replace(/^#/, '')
-
-  if (!lastTargetId) {
-    return
-  }
-
-  const lastTarget = document.getElementById(lastTargetId)
-  
-  // 优先判断最后一个元素是否满足可见条件，满足则直接设为激活项
-  if (lastTarget) {
-    const lastRect = lastTarget.getBoundingClientRect()
-    const isLastInView = lastRect.top < window.innerHeight * 0.8 && lastRect.bottom > 0
-    if (isLastInView) {
-      activeIndex = totalLength - 1
-      // 直接跳过后续循环，更新锚点状态
-      if (activeIndex !== currAnchor && !isScroll.current) {
-        setCurrAnchor(activeIndex)
+  // 实时获取目标容器
+  const getTargetContainer = useCallback((): TargetContainer => {
+    if (props.container) {
+      const container = document.querySelector(props.container)
+      if (container) {
+        targetContainerRef.current = container
+        return container
       }
+    }
+    targetContainerRef.current = window
+    return window
+  }, [props.container])
+
+  const handleTargetScroll = useCallback(() => {
+    const targetContainer = getTargetContainer()
+    const anchorItems = React.Children.toArray(props.children).filter(child =>
+      isValidElement(child) && child.type === Item
+    ) as ReactElement<AnchorItem>[]
+
+    if (anchorItems.length === 0) return
+
+    let activeIndex = 0
+    const totalLength = anchorItems.length
+    const lastItem = anchorItems[totalLength - 1]
+    const lastTargetId = lastItem.props.href?.replace(/^#/, '')
+
+    if (!lastTargetId) {
       return
     }
-  }
 
-  // 最后一个元素未满足条件时，执行原有的正序遍历逻辑
-  for (let i = 0; i < totalLength; i++) {
-    const targetId = anchorItems[i].props.href?.replace(/^#/, '')
-    if (!targetId) continue
-    const target = document.getElementById(targetId)
-    if (!target) continue
-
-    const rect = target.getBoundingClientRect()
-    // 判定条件（对第一个元素友好：只要顶部进入视口就选中）
-    const isInView = rect.top < window.innerHeight * 0.8 && rect.bottom > 0
-    if (isInView) {
-      activeIndex = i
-      break
+    const checkInview = (container, anchor) => {
+      if (container === window) {
+        return anchor.top < window.innerHeight * 0.8 && anchor.bottom > 0
+      } else {
+        const containerRect = container.getBoundingClientRect()
+        const anchorRelativeTop = anchor.top - containerRect.top
+        const anchorRelativeBottom = anchor.bottom - containerRect.top
+        const containerHeight = containerRect.height
+        return anchorRelativeTop < containerHeight * 0.8 && anchorRelativeBottom > 0
+      }
     }
-  }
 
-  // 仅锚点变化时更新（非点击滚动状态下）
-  if (activeIndex !== currAnchor && !isScroll.current) {
-    setCurrAnchor(activeIndex)
-  }
-}, [currAnchor, props.children])
+    const lastTarget = document.getElementById(lastTargetId)
+    
+    if (lastTarget) {
+      const lastRect = lastTarget.getBoundingClientRect()
+      const isLastInView = checkInview(targetContainer, lastRect)
+      if (isLastInView) {
+        activeIndex = totalLength - 1
+        if (activeIndex !== currAnchor && !isScroll.current) {
+          setCurrAnchor(activeIndex)
+        }
+        return
+      }
+    }
 
-  // 绑定/解绑滚动事件（确保每次绑定前先移除，避免重复监听）
+    for (let i = 0; i < totalLength; i++) {
+      const targetId = anchorItems[i].props.href?.replace(/^#/, '')
+      if (!targetId) continue
+      const target = document.getElementById(targetId)
+      if (!target) continue
+
+      const rect = target.getBoundingClientRect()
+      const isInView = checkInview(targetContainer, rect)
+      if (isInView) {
+        activeIndex = i
+        break
+      }
+    }
+
+    if (activeIndex !== currAnchor && !isScroll.current) {
+      setCurrAnchor(activeIndex)
+    }
+  }, [currAnchor, props.children, getTargetContainer])
+
   const bindScrollEvent = useCallback(() => {
-    window.removeEventListener('scroll', handleTargetScroll)
-    window.addEventListener('scroll', handleTargetScroll, { passive: true })
-  }, [handleTargetScroll])
+    const targetContainer = getTargetContainer()
+    targetContainer.removeEventListener('scroll', handleTargetScroll)
+    targetContainer.addEventListener('scroll', handleTargetScroll, { passive: true })
+
+    return () => {
+      targetContainer.removeEventListener('scroll', handleTargetScroll)
+    }
+  }, [handleTargetScroll, getTargetContainer])
 
   useEffect(() => {
-    bindScrollEvent()
-    // 卸载时清理事件
-    return () => {
-      window.removeEventListener('scroll', handleTargetScroll)
-    }
-  }, [bindScrollEvent])
+    const cleanup = bindScrollEvent()
+    handleTargetScroll() // 挂载后主动触发一次判定
+    return cleanup
+  }, [bindScrollEvent, handleTargetScroll])
 
-  // 渲染有效子元素（锚点项）
   const renderValidChildren = () => {
     const childrenArray = React.Children.toArray(props.children)
     const anchorItems = childrenArray.filter(child => (
@@ -95,45 +116,58 @@ const UAnchor = (props: Anchor) => {
       cloneElement(child, {
         key: child.key || `item-${index}`,
         anchorIndex: index,
-        scrollOffset, // 传递偏移量给Item组件
+        scrollOffset,
         ...child.props
       })
     ))
   }
 
-  // 手动点击锚点时更新状态：先取消监听，滚动完成后重新监听
   const handleClick = useCallback((newAnchor: number) => {
-    // 1. 立即移除滚动监听，避免滚动过程中更新currAnchor
-    window.removeEventListener('scroll', handleTargetScroll)
+    const targetContainer = getTargetContainer()
+    targetContainer.removeEventListener('scroll', handleTargetScroll)
     isScroll.current = true
-    setCurrAnchor(newAnchor)
+    setCurrAnchor(newAnchor) 
 
-    // 2. 滚动完成后重新绑定监听（优先用原生scrollend，兼容用setTimeout）
     const resetScrollListener = () => {
-      bindScrollEvent() // 重新绑定监听
+      bindScrollEvent()
       isScroll.current = false
     }
 
-    // 现代浏览器支持scrollend事件
-    if ('onscrollend' in window) {
-      const onScrollEnd = () => {
-        window.removeEventListener('scrollend', onScrollEnd)
-        resetScrollListener()
+    if (targetContainer === window) {
+      if ('onscrollend' in window) {
+        const onScrollEnd = () => {
+          window.removeEventListener('scrollend', onScrollEnd)
+          resetScrollListener()
+        }
+        window.addEventListener('scrollend', onScrollEnd, { once: true })
+      } else {
+        setTimeout(resetScrollListener, 800)
       }
-      window.addEventListener('scrollend', onScrollEnd, { once: true })
     } else {
-      // 兼容不支持scrollend的浏览器（平滑滚动通常300-600ms，设800ms兜底）
-      setTimeout(resetScrollListener, 800)
+      let scrollTimer = null
+      const onScroll = () => {
+        clearTimeout(scrollTimer)
+        scrollTimer = setTimeout(() => {
+          targetContainer.removeEventListener('scroll', onScroll)
+          resetScrollListener()
+        }, 100)
+      }
+      targetContainer.addEventListener('scroll', onScroll, { passive: true })
+      setTimeout(() => {
+        clearTimeout(scrollTimer)
+        targetContainer.removeEventListener('scroll', onScroll)
+        resetScrollListener()
+      }, 800)
     }
-  }, [bindScrollEvent, handleTargetScroll])
+  }, [bindScrollEvent, handleTargetScroll, getTargetContainer])
 
   const contextValue = useMemo(() => ({
     handleClick,
     currAnchor,
-    scrollOffset
-  }), [handleClick, currAnchor, scrollOffset])
+    scrollOffset,
+    targetContainer: getTargetContainer()
+  }), [handleClick, currAnchor, scrollOffset, getTargetContainer])
 
-  // 锚点样式计算
   const anchorStyle = useMemo(() => {
     const childrenLength = renderValidChildren().length
     return genStyleFromProps({
@@ -157,7 +191,6 @@ const UAnchor = (props: Anchor) => {
   )
 }
 
-// 锚点项组件
 const Item = (props: AnchorItem) => {
   const context = useContext(AnchorContext)
   if (!context) {
@@ -167,28 +200,39 @@ const Item = (props: AnchorItem) => {
   const ctx = context as Context
 
   const handleClick = useCallback((e: AnchorItemClickEvent) => {
-    e?.preventDefault() // 阻止a标签默认跳转
+    e?.preventDefault()
 
-    const targetId: string | undefined = props.href?.replace(/^#/, '')
+    const targetId = props.href?.replace(/^#/, '')
     if (!targetId) return
 
-    const target: HTMLElement | null = document.getElementById(targetId)
+    const target = document.getElementById(targetId)
     if (!target) {
       console.warn(`锚点元素 ${targetId} 不存在`)
       return
     }
 
-    // 使用原生scrollTo API实现平滑滚动
-    window.scrollTo({
-      top: target.offsetTop - ctx.scrollOffset, // 应用偏移量
-      behavior: 'smooth' // 原生平滑滚动
+    const container = context.targetContainer
+    const isWindow = container === window
+    let scrollTop = 0
+
+    if (isWindow) {
+      // window场景：基于文档的偏移
+      scrollTop = target.offsetTop - ctx.scrollOffset
+    } else {
+      // 自定义容器：基于容器的偏移
+      const containerRect = (container as Element).getBoundingClientRect()
+      const targetRect = target.getBoundingClientRect()
+      scrollTop = (container as Element).scrollTop + (targetRect.top - containerRect.top - ctx.scrollOffset)
+    }
+
+    container.scrollTo({
+      top: scrollTop,
+      behavior: 'smooth'
     })
 
-    // 手动更新锚点激活状态（触发UAnchor的handleClick，取消滚动监听）
     ctx.handleClick(props.anchorIndex!)
   }, [props.href, props.anchorIndex, context])
 
-  // 计算锚点项类名（激活态）
   const itemClass = useMemo(() => {
     return genClassNameFromProps(
       { active: context.currAnchor === props.anchorIndex },
@@ -207,8 +251,6 @@ const Item = (props: AnchorItem) => {
     </a>
   )
 }
-
-// 锚点目标组件
 const Target = (props: AnchorTarget) => {
   return (
     <div id={props.id} className={props.className}>
@@ -217,7 +259,6 @@ const Target = (props: AnchorTarget) => {
   )
 }
 
-// 挂载子组件
 UAnchor.Item = Item
 UAnchor.Target = Target
 
