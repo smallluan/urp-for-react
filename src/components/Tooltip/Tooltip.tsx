@@ -20,8 +20,8 @@ const UTooltip = (props: Tooltip) => {
       trigger={props.trigger}
       position={props.position}
       arrow={props.arrow}
-      className={tooltipClass}
-      style={props.style || {}}
+      contentClassName={tooltipClass}
+      contentStyle={props.style || {}}
     >
       {props.children}
     </UPopup>
