@@ -1,0 +1,19 @@
+@import "../utils/styles/colors/color.less";
+
+.u-image {
+  width: 80px;
+  height: 150px;
+  background-color: var(--u-gray-color-2);
+  overflow: hidden;
+  &>img {
+    object-fit: var(--objectFit);
+  }
+}
+
+.u-image-shape-rect {
+  border-radius: 8px;
+}
+
+.u-image-shape-round {
+  border-radius: 100vh;
+}
