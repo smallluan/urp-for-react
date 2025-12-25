@@ -49,6 +49,8 @@ function isValidCSSValue(value: string): boolean {
     CSS.supports('align-items', value) ||
     CSS.supports('justify-content', value) ||
     // 补充
-    CSS.supports('line-height', value)
+    CSS.supports('line-height', value) ||
+    // objectFit 属性
+    CSS.supports('object-fit', value)
   )
 }
