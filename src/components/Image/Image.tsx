@@ -33,6 +33,7 @@ const UImage = (props: Image) => {
   const hasUseFallback = useRef(false)
   const [loadFail, setLoadFail] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
+  const [isHover, setIsHover] = useState(false)
 
   /**
    * 图片加载失败回调
@@ -83,11 +84,10 @@ const UImage = (props: Image) => {
     <div
       className={imgContainerClass}
       style={_props.style}
+      onMouseEnter={() => setIsHover(true)}
+      onMouseLeave={() => setIsHover(false)}
     >
-      {
-        isLoading &&
-        _props.loading
-      }
+      { isLoading && _props.loading }
       {
         loadFail ?
         _props.error : 
@@ -101,6 +101,22 @@ const UImage = (props: Image) => {
           onError={handleLoadError}
           style={imgStyle}
         />
+      }
+      { 
+        (
+          (
+            typeof _props.overlayTrigger === 'boolean' &&
+            _props.overlayTrigger
+          ) ||
+          _props.overlayTrigger === 'always' ||
+          (
+            _props.overlayContent && !loadFail && 
+           _props.overlayTrigger === 'hover' && isHover
+          )
+        ) &&
+        <div className="u-overlay">
+          { _props.overlayContent }
+        </div>
       }
     </div>
   )

@@ -1,6 +1,7 @@
 @import "../utils/styles/colors/color.less";
 
 .u-image {
+  position: relative;
   width: 300px;
   height: 150px;
   background-color: var(--u-gray-color-2);
@@ -17,4 +18,14 @@
 
 .u-image-shape-round {
   border-radius: 100vh;
+}
+
+.u-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--u-bg-gray-2);
+  cursor: pointer;
 }
