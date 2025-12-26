@@ -53,12 +53,14 @@ const UImage = (props: Image) => {
 
     setLoadFail(true)
     setIsLoading(false)
+    _props.onError?.()
   }
 
   // 加载成功回调
   const handleLoadSuccess = () => {
     setLoadFail(false)
     setIsLoading(false)
+    _props.onLoad?.()
   }
 
   // 图片容器类名
