@@ -13,7 +13,7 @@ const UImage = (props: Image) => {
     defaultProps,
     props,
     [
-      'className', 'style', 'alt', 'src', 'objectFit',
+      'className', 'style', 'alt', 'src', 'objectFit', 'objectPosition',
       'lazy', 'shape', 'loading', 'error', 'fallback',
       'overlayContent', 'overlayTrigger', 'onError', 'onLoad'
     ]
@@ -72,13 +72,17 @@ const UImage = (props: Image) => {
   // 图片样式
   const imgStyle = useMemo(() => {
     return genStyleFromProps(
-      { objectFit: _props.objectFit }
+      { 
+        objectFit: _props.objectFit,
+        objectPosition: _props.objectPosition
+      }
     )
   }, [_props.objectFit])
 
   return (
     <div
       className={imgContainerClass}
+      style={_props.style}
     >
       {
         isLoading &&
@@ -92,6 +96,7 @@ const UImage = (props: Image) => {
           ref={imgRef}
           src={_props.src} 
           alt={_props.alt}
+          loading={_props.lazy ? 'lazy' : 'eager'}
           onLoad={handleLoadSuccess}
           onError={handleLoadError}
           style={imgStyle}

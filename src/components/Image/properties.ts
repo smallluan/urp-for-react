@@ -8,6 +8,7 @@ export const defaultProps: Image = {
   style: {},
   alt: '',
   objectFit: 'fill',
+  objectPosition: 'center',
   src: '',
   fallback: '',
   lazy: false,
