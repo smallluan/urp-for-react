@@ -51,6 +51,8 @@ function isValidCSSValue(value: string): boolean {
     // 补充
     CSS.supports('line-height', value) ||
     // objectFit 属性
-    CSS.supports('object-fit', value)
+    CSS.supports('object-fit', value) ||
+    // objectPosition 属性
+    CSS.supports('object-position', value)
   )
 }
