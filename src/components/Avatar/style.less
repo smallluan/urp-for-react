@@ -1,0 +1,70 @@
+@import "../utils/styles/colors/color.less";
+
+@size-normal-width: 40px;
+@size-small-width: 30px;
+@size-large-width: 50px;
+
+@shape-rect-radius: 8px;
+@shape-round-radius: 100vh;
+
+.u-avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.u-avatar-image {
+  &>img {
+    width: inherit;
+    height: inherit;
+  }
+}
+
+.u-avatar-text {
+  font-size: var(--fontSize);
+  background-color: var(--u-primary-color-light);
+  color: var(--u-primary-color);
+  user-select: none;
+  line-height: var(--fontSize);
+}
+
+.u-avatar-icon {
+  background-color: var(--u-primary-color-light);
+  color: var(--u-primary-color);
+}
+
+.u-avatar-icon.u-avatar-size-normal {
+  font-size: 22px;
+}
+
+.u-avatar-icon.u-avatar-size-small {
+  font-size: 16px;
+}
+
+.u-avatar-icon.u-avatar-size-large {
+  font-size: 28px;
+}
+
+.u-avatar-size-normal {
+  width: @size-normal-width;
+  height: @size-normal-width;
+}
+
+.u-avatar-size-small {
+  width: @size-small-width;
+  height: @size-small-width;
+}
+
+.u-avatar-size-large {
+  width: @size-large-width;
+  height: @size-large-width;
+}
+
+.u-avatar-shape-rect {
+  border-radius: @shape-rect-radius;
+}
+
+.u-avatar-shape-round {
+  border-radius: @shape-round-radius;
+}
