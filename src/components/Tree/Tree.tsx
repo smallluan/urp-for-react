@@ -3,28 +3,9 @@ import "./style.less"
 import genStyleFromProps from "../utils/tools/style.ts"
 import { UIcon } from "../Icon/index.ts"
 import genClassNameFromProps from "../utils/tools/className.ts"
+import { TreeOriginalNode, TreeFlattenedNode, Tree } from "./type"
 
-// data 单节点
-type TreeOriginalNode = {
-  key: string;
-  label: string;
-  value?: string | number;
-  children?: TreeOriginalNode[];
-}
-
-// 扁平化后的单个节点
-type TreeFlattenedNode = {
-  key: string;
-  label: string;
-  value?: string | number;
-  level: string;
-  hasChildren: boolean;
-  parentNode: null | TreeFlattenedNode;
-  children: TreeOriginalNode[],
-  isOpen: boolean
-}
-
-const UTree = (props) => {
+const UTree = (props: Tree) => {
 
   // 内部维护 扁平化数组，方便展开/收起节点
   const [flatArray, setFlatArray] = useState<TreeFlattenedNode[]>(() => {
