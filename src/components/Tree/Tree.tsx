@@ -3,49 +3,17 @@ import "./style.less"
 import genStyleFromProps from "../utils/tools/style.ts"
 import { UIcon } from "../Icon/index.ts"
 import genClassNameFromProps from "../utils/tools/className.ts"
-import { TreeOriginalNode, TreeFlattenedNode, Tree } from "./type"
+import { TreeFlattenedNode, Tree } from "./type"
+import { expandNode } from "./utils.ts"
 
 const UTree = (props: Tree) => {
 
   // 内部维护 扁平化数组，方便展开/收起节点
-  const [flatArray, setFlatArray] = useState<TreeFlattenedNode[]>(() => {
-    // 执行一次数组扁平化，处理第一层节点
-    const originData: TreeOriginalNode[] = Array.isArray(props.data) ? props.data : []
-    if (originData.length === 0) return []
-
-    const res: TreeFlattenedNode[] = []
-    const stack: [TreeOriginalNode, string, null | TreeFlattenedNode][] = []
-
-    // 根节点逆序入栈
-    for (let i = originData.length - 1; i >= 0; i --) {
-      const node = originData[i]
-      if (typeof node !== 'object' || node === null) continue
-      stack.push([node, '0', null])
-    }
-
-    // 初始化仅处理根节点，子节点需要点击展开
-    while (stack.length) {
-      const poped = stack.pop()
-      if (!poped) continue
-
-      const [node, level, parentNode] = poped
-      const label = node.label ?? ''
-      const value = node.value ?? ''
-      const children = Array.isArray(node.children) ? node.children : []
-
-      res.push({
-        ...node,
-        label,
-        value,
-        level,
-        hasChildren: !!children.length,
-        parentNode,
-        children,
-        isOpen: false
-      })
-    }
-    return res
-  })
+  const [flatArray, setFlatArray] = useState<TreeFlattenedNode[]>([])
+  // 数据源发生变化同步更新到内部状态
+  useEffect(() => {
+    setFlatArray(expandNode(null, props.data, 2))
+  }, [props.data])
 
   // key 索引映射表
   const keyToIndexMap = useMemo(() => {
@@ -55,77 +23,8 @@ const UTree = (props: Tree) => {
     }, {} as Record<string, number>)
   }, [flatArray])
 
-  // props.data 变化是重新初始化节点
-  useEffect(() => {
-    const originData: TreeOriginalNode[] = Array.isArray(props.data) ? props.data : []
-    if (!originData.length) {
-      setFlatArray([])
-      return
-    }
-
-    const res: TreeFlattenedNode[] = []
-    const stack: [TreeOriginalNode, string, null | TreeFlattenedNode][] = []
-
-    for (let i = originData.length - 1; i >= 0; i--) {
-      const node = originData[i]
-      if (typeof node !== 'object' || node === null) continue
-      stack.push([node, '0', null])
-    }
-
-    while (stack.length) {
-      const popped = stack.pop()
-      if (!popped) continue
-      const [node, level, parentNode] = popped
-      const label = node.label ?? ''
-      const value = node.value ?? ''
-      const children = Array.isArray(node.children) ? node.children : []
-
-      res.push({
-        ...node,
-        label,
-        value,
-        level,
-        hasChildren: !!children.length,
-        parentNode,
-        children,
-        isOpen: false
-      })
-    }
-    setFlatArray(res)
-
-  }, [props.data]) 
-
   const unfoldNode = useCallback((targetNode:TreeFlattenedNode, targetIndex: number) => {
-    const children = targetNode.children
-    if (!children.length) return
-
-    const stack: [TreeOriginalNode, string, TreeFlattenedNode | null][] = []
-    for (let i = children.length - 1; i >= 0; i --) {
-      const child = children[i]
-      if (typeof child !== 'object' || child === null) continue
-      stack.push([child, String(Number(targetNode.level) + 1), targetNode])
-    }
-
-    const newChildrenNodes: TreeFlattenedNode[] = []
-    while (stack.length) {
-      const popped = stack.pop()
-      if (!popped) continue
-      const [node, level, parent] = popped
-      const label = node.label ?? ''
-      const value = node.value ?? ''
-      const children = Array.isArray(node.children) ? node.children : []
-      newChildrenNodes.push({
-        ...node,
-        label,
-        value,
-        level,
-        hasChildren: !!children.length,
-        parentNode: parent,
-        children: children,
-        isOpen: false
-      })
-    }
-
+    const newChildrenNodes = expandNode(targetNode, targetNode.children)
     // 将子节点插入到父节点的后边
     setFlatArray(prev => {
       const newArray = [...prev]
@@ -206,7 +105,7 @@ const UTree = (props: Tree) => {
   return (
     <div className="u-tree">
       {
-        flatArray.map(item => (
+        flatArray.map((item, index) => (
           <div
             className="u-tree-item"
             style={itemStyle(item.level)}
@@ -214,6 +113,17 @@ const UTree = (props: Tree) => {
             data-level={item.level} 
             key={item.key}
           >
+            {
+              (item.parentNode) &&
+              <>
+                {/* {
+                  Number(item.level) >  Number(flatArray[index + 1]?.level) ?
+                  <div style={{ height: '14px', borderRight: '1px solid', }}/> : 
+                  <div style={{ height: '28px', borderRight: '1px solid' }}/>
+                } */}
+                <div className="line"/>
+              </>
+            }
             <div className={iconContainerClass(item.hasChildren)}>
               {
                 item.hasChildren &&
