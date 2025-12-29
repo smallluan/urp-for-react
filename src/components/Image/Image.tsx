@@ -69,8 +69,8 @@ const UImage = (props: Image) => {
       { shape: _props.shape },
       "u-image",
       "u-image"
-    )
-  }, [_props.shape])
+    ) + (_props.className ? ` ${_props.className}` : '')
+  }, [_props.shape, _props.className])
 
   // 图片样式
   const imgStyle = useMemo(() => {
@@ -94,7 +94,6 @@ const UImage = (props: Image) => {
         loadFail ?
         _props.error : 
         <img
-          className="u-image"
           ref={imgRef}
           src={_props.src} 
           alt={_props.alt}
