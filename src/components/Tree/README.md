@@ -35,8 +35,12 @@ Tree 组件的 DOM 结构实现主要有两种主流方案：嵌套式与并列�
 |**data**|N|||数据源|
 |**activable**||||节点点击后是否高亮|
 |**actived**||||高亮的节点|
+|**activeMultiple**||||是否允许多节点高亮|
+|**checkable**||||是否为多选树|
 |**value**||||选中值（受控）|
 |**defaultValue**||||选中值（非受控）|
 |**expandOnClickNode**||||是否支持点击节点也可以展开/收起|
 |**expandAll**||||是否全部展开|
 |**expandLevel**||||默认展开层级|
+
+|**onActive**||||激活节点时触发|

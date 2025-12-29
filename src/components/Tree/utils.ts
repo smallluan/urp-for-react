@@ -23,15 +23,18 @@ export const expandNode = (
   ) return []
   
   const res: TreeFlattenedNode[] = []
-  const stack: [TreeOriginalNode, string, null | TreeFlattenedNode, number][] = []
+  const stack: [TreeOriginalNode, number, null | TreeFlattenedNode, number][] = []
 
   // 根节点逆序入栈，使用操作成本低的 push 和 pop
   for (let i = childrenNodes.length - 1; i >=0 ; i --) {
     const node = childrenNodes[i]
     if (typeof node !== 'object' || node === null) continue
-    const childLevel = parentNode ? String(Number(parentNode?.level) + 1) : '0'
+    const childLevel = parentNode ? parentNode?.level + 1 : 0
     stack.push([node, childLevel, parentNode, expandLevel])
   }
+
+  // 标记每个节点的字一个子节点（画线用的）
+  let isFirstChild = true   
 
   // 使用迭代，时间复杂度保持在 O(n)
   while (stack.length) {
@@ -51,9 +54,14 @@ export const expandNode = (
       hasChildren: !!children.length,
       parentNode: parent,
       children,
-      isOpen: false
+      isOpen: false,
+      isFirstChild: isFirstChild,
+      selected: false,
+      active: false
     }
     res.push(newFlattenedNode)
+
+    isFirstChild = false
 
     // 处理展开层级，将子元素的后代依次逆序入栈
     if (remainingExpandLevel > 0 && children.length > 0) {
@@ -61,7 +69,8 @@ export const expandNode = (
       for (let i = children.length - 1; i >= 0; i--) {
         const childNode = children[i]
         if (typeof childNode !== 'object' || childNode === null) continue
-        const nextLevel = String(Number(level) + 1)
+        const nextLevel = level + 1
+        i == 0 && (isFirstChild = true)
         stack.push([childNode, nextLevel, newFlattenedNode, remainingExpandLevel - 1])
       }
     }

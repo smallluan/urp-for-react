@@ -5,15 +5,19 @@ import { UIcon } from "../Icon/index.ts"
 import genClassNameFromProps from "../utils/tools/className.ts"
 import { TreeFlattenedNode, Tree } from "./type"
 import { expandNode } from "./utils.ts"
+import { UCheckBox } from "../CheckBox/index.ts"
 
 const UTree = (props: Tree) => {
 
-  // 内部维护 扁平化数组，方便展开/收起节点
+  // 将数据源扁平化后的数组
   const [flatArray, setFlatArray] = useState<TreeFlattenedNode[]>([])
   // 数据源发生变化同步更新到内部状态
   useEffect(() => {
-    setFlatArray(expandNode(null, props.data, 2))
+    setFlatArray(expandNode(null, props.data, props.expandLevel || 0))
   }, [props.data])
+
+  // 适配多选
+  // const [selectedValue, setSelectValue] = useState<TreeFlattenedNode[]>([])
 
   // key 索引映射表
   const keyToIndexMap = useMemo(() => {
@@ -39,13 +43,13 @@ const UTree = (props: Tree) => {
 
   const foldNode = useCallback((targetNode: TreeFlattenedNode, targetIndex: number) => {
   setFlatArray(prev => {
-    const targetLevel = Number(targetNode.level)
+    const targetLevel = targetNode.level
     const deleteStartIndex = targetIndex + 1
     let deleteEndIndex = deleteStartIndex
 
     while (deleteEndIndex < prev.length) {
       const currentNode = prev[deleteEndIndex]
-      const currentLevel = Number(currentNode.level)
+      const currentLevel = currentNode.level
       
       if (currentLevel <= targetLevel) break
       deleteEndIndex++
@@ -66,7 +70,7 @@ const UTree = (props: Tree) => {
 }, [])
 
   // 点击 图标/node 时，展开或者收起
-  const handleClick = useCallback((clickedNode: TreeFlattenedNode) => {
+  const handleIconClicked = useCallback((clickedNode: TreeFlattenedNode) => {
     // 找到被点击元素在 flatArray 中的索引
     const targetIndex = keyToIndexMap[clickedNode.key]
     if (targetIndex === -1) return  // 未找到目标元素
@@ -81,7 +85,7 @@ const UTree = (props: Tree) => {
   }, [flatArray, keyToIndexMap, foldNode, unfoldNode,])
 
   // item 的动态类
-  const itemStyle = useCallback((level: string) => {
+  const itemStyle = useCallback((level: number) => {
     return genStyleFromProps({ level })
   }, [])
 
@@ -102,6 +106,45 @@ const UTree = (props: Tree) => {
     )
   }, [])
 
+  // 节点被点击（需要分情况考虑，是多选模式还是高亮模式）
+  const handleNodeClicked = useCallback((clickedNode: TreeFlattenedNode) => {
+    if (!props.activable) return
+    const targetIndex = keyToIndexMap[clickedNode.key]
+    if (targetIndex === undefined) return
+
+    setFlatArray(prevFlatArray => {
+      const newFlatArray = [...prevFlatArray]
+      newFlatArray[targetIndex] = {
+        ...newFlatArray[targetIndex],
+        active: !clickedNode.active
+      }
+      const activeList = newFlatArray.filter(i => i.active)
+      if (props.onActive) {
+        props.onActive(activeList)
+      }
+      return newFlatArray
+    })
+  }, [props.activable, props.onActive, props.activeMultiple, keyToIndexMap])
+
+  // // 通过 level 生成阴影
+  // const genShadowByLevel = (level: number) => {
+  //   if (level <= 0) {
+  //     return 'none'
+  //   }
+    
+  //   const shadows = []
+  //   // 将循环的起始值从 2 改为 1
+  //   for (let i = 1; i <= level; i++) {
+  //     // 阴影的计算逻辑可以保持不变，或者根据需要调整
+  //     shadows.push(`calc(-${i} * 8px)) 0 black`)
+  //   }
+  //   const res = shadows.join(',')
+
+  //   return {
+  //     boxShadow: res
+  //   }
+  // }
+
   return (
     <div className="u-tree">
       {
@@ -113,28 +156,38 @@ const UTree = (props: Tree) => {
             data-level={item.level} 
             key={item.key}
           >
-            {
+            {/* {
               (item.parentNode) &&
               <>
-                {/* {
-                  Number(item.level) >  Number(flatArray[index + 1]?.level) ?
-                  <div style={{ height: '14px', borderRight: '1px solid', }}/> : 
-                  <div style={{ height: '28px', borderRight: '1px solid' }}/>
-                } */}
-                <div className="line"/>
+                {
+                  item.isFirstChild ? 
+                  <div className="line-first-child"/> : 
+                  <div style={genShadowByLevel(item.level)} className="line"/>
+                }
               </>
-            }
+            } */}
             <div className={iconContainerClass(item.hasChildren)}>
               {
                 item.hasChildren &&
                 <UIcon
-                  onClick={() => handleClick(item)}
+                  onClick={() => handleIconClicked(item)}
                   className={iconCalss(item.isOpen)}
                   type="CaretRightOutlined"
                 />
               }
             </div>
-            <div className="u-tree-label">{item.label}</div>
+            <div 
+              onClick={() => handleNodeClicked(item)} 
+              className={`${item.active ? 'u-tree-label-active' : 'u-tree-label'}`}
+            >
+              {
+                props.checkable ?
+                <UCheckBox.Group cancelable multiple>
+                  <UCheckBox.Item>{item.label}</UCheckBox.Item>
+                </UCheckBox.Group> : 
+                item.label
+              }
+            </div>
           </div>
         ))
       }

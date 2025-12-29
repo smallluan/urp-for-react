@@ -44,19 +44,30 @@
       background-color: var(--u-gray-color-1);
     }
   }
-  .u-tree-label {
+
+  .u-tree-label,
+  .u-tree-label-active {
     flex: 1;
     font-size: 12px;
     transition: all .2s ease-in-out;
-    padding: 4px 8px;
+    padding: 2px 4px;
     border-radius: 4px;
+    margin: 2px 0;
+    // border: 1px solid red;
+  }
+
+  .u-tree-label {
     &:hover {
       background-color: var(--u-gray-color-1);
     }
     &:active {
       background-color: var(--u-gray-color-3);
     }
-    // border: 1px solid red;
+  }
+
+  .u-tree-label-active {
+    background-color: var(--u-primary-color-light);
+    color: var(--u-primary-color);
   }
 }
 
@@ -71,9 +82,20 @@
 
 .line {
   position: absolute;
+  top: -50%;
+  width: 8px;
+  height: 28px; 
+  border-left: 1px solid;
+  border-bottom: 1px solid;
+  margin-bottom: 26px;
+  margin-left: -8px;
+}
+
+.line-first-child {
+  position: absolute;
   top: -20%;
   width: 8px;
-  height: 20px; 
+  height: 18px; 
   border-left: 1px solid;
   border-bottom: 1px solid;
   margin-bottom: 26px;
