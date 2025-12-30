@@ -1,0 +1,1 @@
+export { default as UCollapse } from "./Collapse.tsx"
