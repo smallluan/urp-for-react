@@ -22,5 +22,6 @@ export interface Panel {
   destroyOnCollapse?: boolean;
   expandOnRowClick?: boolean;
   disabled?: boolean;
+  unexpendHeight?: number;
   value: Value;
 }

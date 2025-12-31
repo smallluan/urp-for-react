@@ -18,7 +18,7 @@ const useResizeObserver = () => {
     return () => {
       resizeObserver.unobserve(observerTarget)
     }
-  })
+  }, [])
 
   return { ref, contentRect }
 }

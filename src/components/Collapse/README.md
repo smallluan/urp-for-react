@@ -23,4 +23,5 @@
 |**destroyOnCollapse**||||折叠后是否销毁对应的 dom 元素|
 |**expandOnRowClick**||||是否允许点击标题行展开面板|
 |**disabled**||||禁用，优先级大于父元素的同名属性|
+|**unexpendHeight**||||折叠时的展开|
 |**value**||||当前面板在面板组中的唯一标识|
