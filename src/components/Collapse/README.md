@@ -19,9 +19,13 @@
 |**children**||`React.ReactNode`||被折叠的内容(优先级高)|
 |**content**||`React.ReactNode`||被折叠的内容(优先级低)|
 |**header**||||头部区域(图标除外)|
+|**borderless**||||是否无边框(优先级高于父元素同名属性)|
 |**icon**||||图标自定义(不传入则不显示，但是强制允许点击标题行时展开面板)|
+|**iconPlacement**||||图标位置|
 |**destroyOnCollapse**||||折叠后是否销毁对应的 dom 元素|
 |**expandOnRowClick**||||是否允许点击标题行展开面板|
 |**disabled**||||禁用，优先级大于父元素的同名属性|
-|**unexpendHeight**||||折叠时的展开|
 |**value**||||当前面板在面板组中的唯一标识|
+|**expand**||||展开状态（受控属性）|
+|**defaultExpand**||||展开状态（非受控属性）|
+|**onChange**||||面板切换状态时触发|

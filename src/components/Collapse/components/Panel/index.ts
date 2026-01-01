@@ -1,0 +1,1 @@
+export { default as UPanel } from "./Panel.tsx"

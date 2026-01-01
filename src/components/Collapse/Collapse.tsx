@@ -1,90 +1,51 @@
-import { Collapse, Panel } from "./type"
-import { UIcon } from "../Icon/index.ts"
+import { Collapse } from "./type"
+import { Panel } from "./components/Panel/type"
+import { UPanel } from "./components/Panel/index.ts"
 import "./style.less"
-import { useCallback, useEffect, useRef, useState } from "react"
+import React, { cloneElement, isValidElement, ReactElement, useState } from "react"
 
 const UCollapse = (props: Collapse) => {
-  return (
-    <div>UCollapse</div>
-  )
-}
 
-const UPanel = (props: Panel) => {
-  const [isExpand, setIsExpend] = useState(false)
-  const [contentVisible, setContentVisible] = useState(false)
-  const [targetHeight, setTargetHeight] = useState('0')
+  const [innerValue, setInnerValue] = useState(() => {
+    return props.defaultValue ?? []
+  })
 
-  const contentRef  = useRef(null)
+  const handleValueChange = (value, state) => {
+    let valueArr = props.value || innerValue
 
-  const timerRef = useRef(null)
-
-  const toogleExpand = useCallback(() => {
-    setIsExpend(prev => {
-      return !prev
-    })
-  }, [])
-
-  useEffect(() => {
-    return () => {
-      clearTimeout(timerRef.current)
-    }
-  }, [])
-
-  useEffect(() => {
-    if (isExpand) {
-      if (timerRef.current) {
-        clearTimeout(timerRef.current)
-      }
-      setContentVisible(true)
-      setTimeout(() => {
-        setTargetHeight('auto')
-      }, 200)
+    if (state) {
+      valueArr.push(value)
     } else {
-      if (timerRef.current) {
-        clearTimeout(timerRef.current)
-      }
-      const el = contentRef?.current as HTMLElement | null
-      setTargetHeight((el?.scrollHeight ?? 0) + 'px')
-      setTimeout(() => {
-        setTargetHeight('0px')
-        // 给退出动画留时间 200 ms
-        timerRef.current = setTimeout(() => {
-          setContentVisible(false)
-        }, 200)
-      }, 100)
+      valueArr = valueArr.filter(item => item !== value)
     }
 
-  }, [isExpand])
+    props.onChange?.(valueArr)
+    setInnerValue(valueArr)
+  }
 
-  useEffect(() => {
-    if (contentVisible) {
-      requestAnimationFrame(() => {
-        const el = contentRef?.current as HTMLElement | null
-        setTargetHeight((el?.scrollHeight ?? 0) + 'px')
+  const renderPanel = () => {
+    const childrenArray = React.Children.toArray(props.children)
+    const panelItems = childrenArray.filter(child => (
+      isValidElement(child) && child.type === UPanel
+    )) as ReactElement<Panel>[]
+
+    return panelItems.map((child, index) => (
+      cloneElement(child, {
+        key: child.props.value || index,
+        value: index,
+        borderless: props.borderless,
+        disabled: props.disabled,
+        defaultExpand: props.defaultExpandAll || props.defaultValue?.includes(child.props.value || index),
+        expand: props.value?.includes(child.props.value || index),
+        onChange: handleValueChange,
+        ...child.props,
       })
-    }
-  }, [contentVisible])
-
+    ))
+  }
 
   return (
-    <div>
-      {/* 面板头部 */}
-      <div onClick={toogleExpand} >
-        <UIcon type="CaretRightOutlined"/>
-        {props.header}
-      </div>
-
-      {/* 被折叠部分 */}
-      <div
-        ref={contentRef}
-        className="u-panel-content"
-        style={{ height: targetHeight }}
-      >
-        {
-          contentVisible &&
-          props.children || props.content || null
-        }
-      </div>
+    <div className="u-collapse">
+      {renderPanel()}
     </div>
   )
 }

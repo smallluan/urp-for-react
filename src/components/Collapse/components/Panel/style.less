@@ -1,0 +1,44 @@
+@import "../../../utils/styles/colors/color.less";
+
+.u-panel {
+  width: 100%;
+  border: 1px solid var(--u-gray-color-5);
+  background-color: white;
+}
+
+/* 无边框 */
+.u-panel-borderless {
+  border: none;
+
+  .u-panel-header-expand {
+    border-bottom: none;
+  }
+
+  .u-panel-content {
+    background-color: white;
+  }
+}
+
+.u-panel-header {
+  padding: 4px 8px;
+  cursor: pointer;
+}
+
+.u-panel-header-expand {
+  border-bottom: 1px solid var(--u-gray-color-4);
+}
+
+.u-panel-content {
+  transition: height .2s ease-in-out;
+  overflow: hidden;
+  background-color: var(--u-gray-color-2);
+}
+
+.u-panel-icon {
+  transition: all .2s ease-in-out;
+  transform: rotate(0deg);
+}
+
+.u-panel-icon-expand {
+  transform: rotate(90deg);
+}
