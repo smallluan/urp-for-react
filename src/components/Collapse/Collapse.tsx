@@ -11,7 +11,12 @@ const UCollapse = (props: Collapse) => {
   })
 
   const handleValueChange = (value, state) => {
-    let valueArr = props.value || innerValue
+    let valueArr
+    if (props.value?.length) {
+      valueArr = [...props.value]
+    } else {
+      valueArr = [...innerValue]
+    }
 
     if (state) {
       valueArr.push(value)
