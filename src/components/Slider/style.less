@@ -1,0 +1,37 @@
+@import "../utils/styles/colors/color.less";
+
+.u-slider {
+  position: relative;
+  display: flex;
+  width: 200px;
+  height: 5px;
+  background-color: #f3f3f3;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.u-slider-button-tooltip {
+  position: absolute;
+  top: -5.5px;  // 8-5 + 2.5
+  transform: translate(-50%);
+  .u-popup-content-inner {
+    width: fit-content;
+  }
+}
+
+.u-slider-button {
+  border: 2px solid var(--u-primary-color);
+  width: 16px;
+  height: 16px;
+  border-radius: 12px;
+  background-color: white;
+}
+
+.u-slider-track {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 5px;
+  border-radius: 5px;
+  background-color: var(--u-primary-color);
+}
