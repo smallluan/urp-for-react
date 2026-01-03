@@ -8,4 +8,5 @@
 |**trigger**||||如何触发（popup属性）|
 |**content**||||内容文字（popup属性）|
 |**theme**||||主题|
+|**popupProps**||||popup属性透传|
 |**children**||||被挂载的元素|

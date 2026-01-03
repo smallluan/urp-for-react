@@ -22,6 +22,7 @@ const UTooltip = (props: Tooltip) => {
       arrow={props.arrow}
       contentClassName={tooltipClass}
       contentStyle={props.style || {}}
+      {...props.popupProps}
     >
       {props.children}
     </UPopup>
