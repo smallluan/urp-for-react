@@ -1,13 +1,13 @@
-import { useCallback, useEffect, useMemo, useState } from "react"
+import { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useState } from "react"
 import "./style.less"
 import genStyleFromProps from "../utils/tools/style.ts"
 import { UIcon } from "../Icon/index.ts"
 import genClassNameFromProps from "../utils/tools/className.ts"
 import { TreeFlattenedNode, Tree } from "./type"
-import { expandNode } from "./utils.ts"
+import { expandNode, findNodeByKey } from "./utils.ts"
 import { UCheckBox } from "../CheckBox/index.ts"
 
-const UTree = (props: Tree) => {
+const UTree = forwardRef((props: Tree, ref) => {
 
   // 将数据源扁平化后的数组
   const [flatArray, setFlatArray] = useState<TreeFlattenedNode[]>([])
@@ -108,23 +108,42 @@ const UTree = (props: Tree) => {
 
   // 节点被点击（需要分情况考虑，是多选模式还是高亮模式）
   const handleNodeClicked = useCallback((clickedNode: TreeFlattenedNode) => {
+    props.onClickNode?.(clickedNode)
     if (!props.activable) return
     const targetIndex = keyToIndexMap[clickedNode.key]
     if (targetIndex === undefined) return
 
     setFlatArray(prevFlatArray => {
-      const newFlatArray = [...prevFlatArray]
-      newFlatArray[targetIndex] = {
-        ...newFlatArray[targetIndex],
-        active: !clickedNode.active
+      const newFlatArray = [...prevFlatArray] // 1. 创建原数组的浅拷贝
+      
+      if (props.activeMultiple) {
+        // 多选模式：直接切换目标节点状态
+        newFlatArray[targetIndex] = {
+          ...newFlatArray[targetIndex],
+          active: !newFlatArray[targetIndex].active // 取反当前状态
+        }
+      } else {
+        // 单选模式：仅允许一个激活节点
+        const wasActive = prevFlatArray[targetIndex].active // 记录原状态
+        
+        // 重置所有节点为非激活状态
+        for (let i = 0; i < newFlatArray.length; i++) {
+          newFlatArray[i] = {
+            ...newFlatArray[i],
+            active: false
+          }
+        }
+        
+        // 切换目标节点状态（激活变非激活，非激活变激活）
+        newFlatArray[targetIndex] = {
+          ...newFlatArray[targetIndex],
+          active: !wasActive
+        }
       }
-      const activeList = newFlatArray.filter(i => i.active)
-      if (props.onActive) {
-        props.onActive(activeList)
-      }
-      return newFlatArray
+
+      return newFlatArray // 返回更新后的数组
     })
-  }, [props.activable, props.onActive, props.activeMultiple, keyToIndexMap])
+  }, [props.activable, props.activeMultiple, keyToIndexMap])
 
   // // 通过 level 生成阴影
   // const genShadowByLevel = (level: number) => {
@@ -144,6 +163,11 @@ const UTree = (props: Tree) => {
   //     boxShadow: res
   //   }
   // }
+
+  /** 暴露方法 */
+  useImperativeHandle(ref, () => ({
+    findNodeByKey: (key: string) => findNodeByKey(flatArray, key, keyToIndexMap)
+  }), [flatArray, keyToIndexMap])
 
   return (
     <div className="u-tree">
@@ -178,7 +202,8 @@ const UTree = (props: Tree) => {
             </div>
             <div 
               onClick={() => handleNodeClicked(item)} 
-              className={`${item.active ? 'u-tree-label-active' : 'u-tree-label'}`}
+              // className={`${item.active ? 'u-tree-label-active' : 'u-tree-label'}`} 先改成受控属性
+              className={`${props.actived?.includes(item.key) ? 'u-tree-label-active' : 'u-tree-label'}`}
             >
               {
                 props.checkable ?
@@ -193,6 +218,8 @@ const UTree = (props: Tree) => {
       }
     </div>
   )
-}
+})
+
+UTree.displayName = "UTree"
 
 export default UTree

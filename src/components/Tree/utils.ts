@@ -78,3 +78,19 @@ export const expandNode = (
 
   return res
 }
+
+/**
+ * forWord: 根据 key 找到一个节点
+ * @param flattenedNodes 
+ * @param key 
+ * @param keyToIndexMap 
+ * @returns node
+ * @description - 暴露内部基于 map 的高效检索能力，避免使用者使用时外部遍历树结构
+ */
+export const findNodeByKey = (
+  flattenedNodes: TreeFlattenedNode[],
+  key: TreeFlattenedNode['key'],
+  keyToIndexMap: Record<string, number>
+) => {
+  return flattenedNodes[keyToIndexMap[key]] || null
+}

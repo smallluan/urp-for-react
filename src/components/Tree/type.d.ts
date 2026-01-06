@@ -23,6 +23,7 @@ export interface Tree {
   data?: Array<TreeOriginalNode>;
   activable?: boolean;
   actived?: Array<TreeOriginalNode['key']>;
+  defaultActived?: Array<TreeOriginalNode['key']>;
   activeMultiple?: boolean;
   checkable?: boolean;
   value?: Array<TreeOriginalNode['key']>;
@@ -31,4 +32,5 @@ export interface Tree {
   expandAll?: boolean;
   expandLevel: number;
   onActive?: (nodes: TreeFlattenedNode[]) => void;
+  onClickNode?: (node: TreeFlattenedNode) => void;
 }
