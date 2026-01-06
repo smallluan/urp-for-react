@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import genStyleFromProps from "../utils/tools/style.ts"
 import genClassNameFromProps from "../utils/tools/className.ts"
 import { GridRow, GridCol } from './type'
@@ -99,16 +99,28 @@ const UGridCol = (props: GridCol) => {
   props.span
 ]) // 依赖数组：仅列出函数内用到的props属性
   
-  const colStyle = genStyleFromProps({
-    span: props.span,
-    xsSpan: getFallbackSizeValue('xs'),
-    smSpan: getFallbackSizeValue('sm'),
-    mdSpan: getFallbackSizeValue('md'),
-    lgSpan: getFallbackSizeValue('lg'),
-    xlSpan: getFallbackSizeValue('xl'),
-    xxlSpan: getFallbackSizeValue('xxl'),
-    offset: (props.offset || 0) + props.beforeOffset + props.beforeSpan + 1
-  })
+  const colStyle = useMemo(() => {
+    let offset = props.offset || 0
+
+    if (props.beforeOffset && props.beforeSpan) {
+      offset = props.beforeOffset + props.beforeSpan + 1
+    } else {
+      offset += 1
+    }
+  
+    return (
+      genStyleFromProps({
+        span: props.span,
+        xsSpan: getFallbackSizeValue('xs'),
+        smSpan: getFallbackSizeValue('sm'),
+        mdSpan: getFallbackSizeValue('md'),
+        lgSpan: getFallbackSizeValue('lg'),
+        xlSpan: getFallbackSizeValue('xl'),
+        xxlSpan: getFallbackSizeValue('xxl'),
+        offset: offset
+      })
+    )
+  }, [props.beforeOffset, props.beforeSpan, props.offset])
   return(
     <div className={colClass + ' ' + props.className} style={{...colStyle, ...props.style}}>{props.children}</div>
   )
