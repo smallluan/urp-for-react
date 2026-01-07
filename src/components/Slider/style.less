@@ -12,7 +12,7 @@
 
 .u-slider-button-tooltip {
   position: absolute;
-  top: -5.5px;  // 8-5 + 2.5
+  top: -4.5px;  // 7-5 + 2.5
   transform: translate(-50%);
   .u-popup-content-inner {
     width: fit-content;
@@ -21,10 +21,15 @@
 
 .u-slider-button {
   border: 2px solid var(--u-primary-color);
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
   border-radius: 12px;
   background-color: white;
+  transition: all .2s ease-in-out;
+  &:hover {
+    border-color: var(--u-primary-color-active);
+    scale: 1.2;
+  }
 }
 
 .u-slider-track {
