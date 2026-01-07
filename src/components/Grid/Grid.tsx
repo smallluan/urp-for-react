@@ -24,7 +24,7 @@ const UGridRow = (props: GridRow) => {
   })
 
   // 核心：累加布局偏移量（初始值0）
-  const handleChildren = () => {
+  const handleChildren = useMemo(() => {
     let beforeOffset = 0 // 累计偏移量，初始为0
     let beforeSpan = 0
     return React.Children.map(props.children, (child) => {
@@ -52,11 +52,11 @@ const UGridRow = (props: GridRow) => {
       // 非Col元素：直接返回，不参与累加
       return child
     })
-  }
+  }, [props.children])
 
   return(
     <div className={rowClass} style={{...rowStyle, ...props.style}}>
-      {handleChildren()}
+      {handleChildren}
     </div>
   )
 }
@@ -102,11 +102,15 @@ const UGridCol = (props: GridCol) => {
   const colStyle = useMemo(() => {
     let offset = props.offset || 0
 
-    if (props.beforeOffset && props.beforeSpan) {
-      offset = props.beforeOffset + props.beforeSpan + 1
-    } else {
-      offset += 1
+    if (props.beforeOffset || props.beforeSpan) {
+      if (props.beforeOffset) {
+        offset += props.beforeOffset
+      }
+      if (props.beforeSpan) {
+        offset += props.beforeSpan
+      }
     }
+    offset += 1
   
     return (
       genStyleFromProps({
