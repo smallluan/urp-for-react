@@ -36,7 +36,7 @@ const Head = (props) => {
   return(
     <div
       style={{...props.style, ...headStyle}}
-      className={"u-layout-head " + props.className}
+      className={"u-layout-head " + (props.className ? props.className : '')}
     >
       {props.children}
     </div>
@@ -45,7 +45,12 @@ const Head = (props) => {
 
 const Body = (props) => {
   return(
-    <div className="u-layout-body">{props.children}</div>
+    <div 
+      className={"u-layout-body" + (props.className ? ` ${props.className}` : '')}
+      style={props.style}
+    >
+      {props.children}
+    </div>
   )
 }
 
