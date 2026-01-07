@@ -1,0 +1,32 @@
+@import "../utils/styles/colors/color.less";
+
+.u-sub-menu {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all .2s ease-in-out;
+  &:hover {
+    color: var(--u-primary-color);
+  }
+}
+
+.u-menu-item {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all .2s ease-in-out;
+  &:hover {
+    background-color: var(--u-gray-color-1);
+  }
+}
+
+/* 重写 poupup 的一些样式 */
+.u-popup-content-position-bottom {
+  transform: translate(-50%, 0px) !important;
+}
+
+.u-popup-content-position-right {
+  transform: translate(0px, -50%) !important;
+}
