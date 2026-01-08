@@ -10,9 +10,11 @@ const MenuContext = createContext('menu')
 const UMenu = (props: Menu) => {
   return (
     <MenuContext.Provider value="menu">
-      <USpace>
-        { props.children }
-      </USpace>
+      <div className="u-menu">
+        <USpace>
+          { props.children }
+        </USpace>
+      </div>
     </MenuContext.Provider>
   )
 }
