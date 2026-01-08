@@ -25,6 +25,7 @@
 |**style**||||透传样式|
 |**children**||||React.ReactNode|
 |**content**||||同上|
+|**icon**||||图标|
 |**disabled**||||禁用（优先级小于submeun）|
 |**href**||||跳转链接|
 |**target**||_blank/_self/_parent/_top||跳转方式|

@@ -24,6 +24,7 @@ export interface MenuItem {
   style?: React.CSSProperties;
   children?: React.ReactNode;
   content?: React.ReactNode;
+  icon?: string;
   disabled?: boolean;
   href?: '';
   target?: '_blank' | '_self' | '_parent' | '_top';

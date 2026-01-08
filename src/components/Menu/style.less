@@ -1,6 +1,7 @@
 @import "../utils/styles/colors/color.less";
 
 .u-menu {
+  width: fit-content;
   /* 重写 poupup 的一些样式 */
   .u-popup-content-position-bottom {
     transform: translate(-50%, 0px) !important;
@@ -9,20 +10,33 @@
   .u-popup-content-position-right {
     transform: translate(0px, -50%) !important;
   }
+
 }
 
 .u-sub-menu {
+  flex-wrap: nowrap;
   padding: 4px 8px;
   border-radius: 4px;
   font-size: 14px;
   cursor: pointer;
   transition: all .2s ease-in-out;
-  &:hover {
-    color: var(--u-primary-color);
+
+  .u-submenu-arrow {
+    transition: all .2s ease-in-out;
+  }
+}
+
+.u-sub-menu-hover {
+  overflow: escape;
+  color: var(--u-primary-color);
+
+  .u-submenu-arrow {
+    transform: rotate(-180deg);
   }
 }
 
 .u-menu-item {
+  width: fit-content;
   padding: 4px 8px;
   border-radius: 4px;
   font-size: 14px;
@@ -33,4 +47,18 @@
   }
 }
 
-
+// 定制 popup
+.u-sub-menu-popup-content {
+  // 子项容器宽度范围
+  .u-popup-content-inner {
+    max-width: 200px;
+    min-width: 150px;
+    // 子项占满容器
+    &>div {
+      width: 100%;
+    }
+    .u-menu-item {
+      width: 100%;
+    }
+  }
+}
