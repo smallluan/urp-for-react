@@ -3,7 +3,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 1000;
+  background-color: rgba(0, 0, 0, .4);
   transition: all .2s ease-in-out;
 }
 
@@ -12,15 +12,15 @@
 }
 
 .u-overlay-container {
-  position: relative;
+  position: absolute;
 }
 
 .u-overlay-display {
-  background-color: transparent;
+  opacity: 0;
 }
 
 .u-overlay-visible  {
-  background-color: rgba(0, 0, 0, .4);
+ opacity: 1;
 }
 
 .u-overlay-hide {

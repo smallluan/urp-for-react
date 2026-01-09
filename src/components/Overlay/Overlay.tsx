@@ -13,7 +13,7 @@ const UOverlay = (props: Overlay) => {
     props,
     [
       'className', 'style', 'zIndex', 'attachBody',
-      'visible', 'destoryOnClose', 'onClick'
+      'visible', 'destoryOnClose', 'onClick', 'children', 'content'
     ]
   )
 
@@ -105,7 +105,9 @@ const UOverlay = (props: Overlay) => {
           }}
           onClick={_props.onClick}
           className={overlayClassName}
-        />
+        >
+          {_props.children || _props.content}
+        </div>
       }
     </>
   )
