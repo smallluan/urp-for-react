@@ -130,12 +130,13 @@ export default function UButton(props: Button) {
         shape: shape,
         size: size,
         block: block,
-        disabled: disabled || loading
+        disabled: disabled || loading,
+        pureIcon: pureIcon
       },
       'u-button' + (className && ' ' + className),
       'u-button'
     )
-  }, [variant, theme, shape, size, block, disabled, loading, className])
+  }, [variant, theme, shape, size, block, disabled, loading, className, pureIcon])
 
   // 激活背景类名：通过visible控制显隐，避免DOM反复创建销毁
   const activeBgClass = useMemo(() => {
