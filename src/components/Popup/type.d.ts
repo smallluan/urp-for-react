@@ -9,7 +9,7 @@ export interface Popup {
   position?: 'bottom' | 'top' | 'left' | 'right',
   arrow?: boolean,
   hide?: 'mouseLeave' | 'clickOutter' | boolean,
-  trigger?: 'hover' | 'click'
+  trigger?: 'hover' | 'click' | 'rightClick'
   content?: React.ReactNode,
   visible?: boolean,
   children?: React.ReactNode

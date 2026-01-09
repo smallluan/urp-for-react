@@ -9,7 +9,7 @@
 |**position**|N|`bottom \| top \| left \| right`|`bottom`|弹层位置|
 |**arrow**|N|`boolean`|`false`|是否显示箭头|
 |**hide(暂未)**|N|`(mouseLeave \| clickOutter) \|` |`mouseLeave`|内容何时消失|
-|**trigger**|N|`hover \| click \|`|`hover`|如何触发|
+|**trigger**|N|`hover \| click \| rightClick \|`|`hover`|如何触发|
 |**visible**|N|`boolean`|-|可见性（受控属性）|
 |**onMouseEnter**|N|||鼠标进入事件|
 |**content**|N|`string`|-|内容（标签属性）|

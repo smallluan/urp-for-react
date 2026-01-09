@@ -19,6 +19,8 @@ const UPopup = (props: Popup) => {
 
   const [mouseEnter, setMouseEnter] = useState(false)
   const [clicked, setClicked] = useState(false)
+  const [rightClicked, setRightClicked] = useState(false)
+
   const popupRef = useRef(null)
   const hasBindClickRef = useRef(false)
 
@@ -29,8 +31,10 @@ const UPopup = (props: Popup) => {
       _props.onChange?.(clicked)
     } else if (_props.trigger === 'hover') {
       _props.onChange?.(mouseEnter)
+    } else if (_props.trigger === 'rightClick') {
+      _props.onChange?.(rightClicked)
     }
-  }, [_props.trigger, _props.onChange, mouseEnter, clicked])
+  }, [_props.trigger, _props.onChange, mouseEnter, clicked, rightClicked])
 
   useEffect(() => {
     if (hasBindClickRef.current) return
@@ -42,6 +46,7 @@ const UPopup = (props: Popup) => {
         !popupRef.current.contains(e.target)
       ) {
         setClicked(false)
+        setRightClicked(false)
         props?.onClickOut?.()
       }
     }
@@ -52,6 +57,13 @@ const UPopup = (props: Popup) => {
       hasBindClickRef.current = false
     }
   }, [])
+
+  const handleRightClick = useCallback((e) => {
+    e.preventDefault()
+    if (_props.trigger === 'rightClick') {
+      setRightClicked(true)
+    }
+  }, [_props.trigger])
 
   const handleMouseEnter = useCallback(() => {
     if (_props.trigger === 'hover') {
@@ -74,6 +86,7 @@ const UPopup = (props: Popup) => {
       ref={popupRef}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      onContextMenu={handleRightClick}
       className={'u-popup' + ' ' + _props.className}
       style={_props.style}
     >
@@ -96,6 +109,7 @@ const UPopup = (props: Popup) => {
           clicked={clicked}
           trigger={_props.trigger}
           arrow={_props.arrow}
+          rightClicked={rightClicked}
           handleMouseEnter={handleMouseEnter}
         >
           {_props.content}
@@ -134,8 +148,9 @@ const Content = (props) => {
     if (props.visible !== undefined) return props.visible
     if (props.trigger === 'hover') return props.mouseEnter
     if (props.trigger === 'click') return props.clicked
+    if (props.trigger === 'rightClick') return props.rightClicked
     return false
-  }, [props.visible, props.trigger, props.mouseEnter, props.clicked])
+  }, [props.visible, props.trigger, props.mouseEnter, props.clicked, props.rightClicked])
 
   const contentClass = useMemo(() => {
     return genClassNameFromProps(
