@@ -3,7 +3,7 @@
 |**className**||||透传类名|
 |**style**||||透传样式|
 |**zIndex**||||层级|
-|**attach**||||被附着的元素|
-|**visible**||||是否可见|
+|**attachBody**||||是否附着在body上（全局还是局部）|
+|**visible**||||是否可见（受控）|
 |**destoryOnClose**||||不可见时销毁元素|
 |**onClick**||||被点击时触发|

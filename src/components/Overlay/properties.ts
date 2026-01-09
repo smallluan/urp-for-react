@@ -4,6 +4,6 @@ export const defaultProps: Overlay = {
   className: '',
   style: {},
   zIndex: 1000,
-  attach: 'body',
+  attachBody: true,
   destoryOnClose: false,
 }
