@@ -4,7 +4,7 @@ import genStyleFromProps from "../utils/tools/style.ts"
 import { UIcon } from "../Icon/index.ts"
 import genClassNameFromProps from "../utils/tools/className.ts"
 import { TreeFlattenedNode, Tree } from "./type"
-import { expandNode, findNodeByKey } from "./utils.ts"
+import { deleteNodeByKey, expandNode, findNodeByKey } from "./utils.ts"
 import { UCheckBox } from "../CheckBox/index.ts"
 
 const UTree = forwardRef((props: Tree, ref) => {
@@ -166,7 +166,8 @@ const UTree = forwardRef((props: Tree, ref) => {
 
   /** 暴露方法 */
   useImperativeHandle(ref, () => ({
-    findNodeByKey: (key: string) => findNodeByKey(flatArray, key, keyToIndexMap)
+    findNodeByKey: (key: string) => findNodeByKey(flatArray, key, keyToIndexMap),
+    deleteNodeByKey: (originalNode, key) => deleteNodeByKey(flatArray, keyToIndexMap, originalNode, key)
   }), [flatArray, keyToIndexMap])
 
   return (

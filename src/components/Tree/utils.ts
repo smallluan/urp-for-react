@@ -23,25 +23,22 @@ export const expandNode = (
   ) return []
   
   const res: TreeFlattenedNode[] = []
-  const stack: [TreeOriginalNode, number, null | TreeFlattenedNode, number][] = []
+  const stack: [TreeOriginalNode, number, null | TreeFlattenedNode, number, number][] = []
 
   // 根节点逆序入栈，使用操作成本低的 push 和 pop
   for (let i = childrenNodes.length - 1; i >=0 ; i --) {
     const node = childrenNodes[i]
     if (typeof node !== 'object' || node === null) continue
     const childLevel = parentNode ? parentNode?.level + 1 : 0
-    stack.push([node, childLevel, parentNode, expandLevel])
+    stack.push([node, childLevel, parentNode, expandLevel, i])
   }
-
-  // 标记每个节点的字一个子节点（画线用的）
-  let isFirstChild = true   
 
   // 使用迭代，时间复杂度保持在 O(n)
   while (stack.length) {
     const poped = stack.pop()
     if (!poped) continue
 
-    const [node, level, parent, remainingExpandLevel] = poped
+    const [node, level, parent, remainingExpandLevel, childIndex] = poped
     const label = node.label ?? ''
     const value = node.value ?? ''
     const children = Array.isArray(node.children) ? node.children : []
@@ -55,13 +52,11 @@ export const expandNode = (
       parentNode: parent,
       children,
       isOpen: false,
-      isFirstChild: isFirstChild,
+      childrenRank: childIndex,
       selected: false,
-      active: false
+      active: false,
     }
     res.push(newFlattenedNode)
-
-    isFirstChild = false
 
     // 处理展开层级，将子元素的后代依次逆序入栈
     if (remainingExpandLevel > 0 && children.length > 0) {
@@ -70,8 +65,7 @@ export const expandNode = (
         const childNode = children[i]
         if (typeof childNode !== 'object' || childNode === null) continue
         const nextLevel = level + 1
-        i == 0 && (isFirstChild = true)
-        stack.push([childNode, nextLevel, newFlattenedNode, remainingExpandLevel - 1])
+        stack.push([childNode, nextLevel, newFlattenedNode, remainingExpandLevel - 1, i])
       }
     }
   }
@@ -93,4 +87,58 @@ export const findNodeByKey = (
   keyToIndexMap: Record<string, number>
 ) => {
   return flattenedNodes[keyToIndexMap[key]] || null
+}
+
+/**
+ * forWord: 根据 key 删除一个节点
+ * @param originalNode - 原始节点数据
+ * @param key - 将被删除节点的 key
+ * @description - 这个方法暴露出去,处理的不是内部的扁平化数组
+ *              - 而是用户的嵌套层级数据结构,目的是为用户提供一种高效的删除节点的方法
+ *              - 该方法得益于之前进行的预处理,时间复杂度为 O(K)
+ *              - 其中 K 是被删除节点在树中的层级,实现精准删除
+ */
+export const deleteNodeByKey = (
+  flattenedNodes: TreeFlattenedNode[],
+  keyToIndexMap: Record<string, number>,
+  originalNode: TreeOriginalNode[],
+  key: TreeOriginalNode['key'],
+) => {
+  const indexPath = []
+  // 先在扁平化数据中找到目标元素,该节点上记录了它父元素的信息
+  let targetNode: TreeFlattenedNode | null = flattenedNodes[keyToIndexMap[key]]
+
+  if (!targetNode) {
+    console.warn(`对 key = ${key} 的节点删除失败,因为该节点不存在!`)
+    return [...originalNode]
+  }
+  
+  while (targetNode) {
+    // 把他是他父元素的第几个子节点 push 到路径数组中
+    indexPath.push(targetNode.childrenRank)
+    // 把他父元素当作目标节点继续向上寻找
+    targetNode = targetNode.parentNode
+  }
+
+  // 在用户提供的源数据中根据路径直接删除该节点
+
+  const nodeCopy = [...originalNode]
+  let currentNodeList: TreeOriginalNode[] = nodeCopy
+  while (indexPath.length > 1) {
+    const popIndex = indexPath.pop()
+
+    if (popIndex === undefined || popIndex >= currentNodeList.length) {
+      break
+    }
+
+    currentNodeList = currentNodeList[popIndex].children || []
+  }
+  
+  // 最后将该孩子节点删除
+  const finalIndex = indexPath[0]
+  if (typeof finalIndex === 'number' && finalIndex >= 0 && finalIndex < currentNodeList.length) {
+    currentNodeList.splice(finalIndex, 1)
+  }
+
+  return nodeCopy
 }

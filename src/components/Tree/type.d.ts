@@ -14,7 +14,7 @@ export type TreeFlattenedNode = {
   parentNode: null | TreeFlattenedNode;
   children: TreeOriginalNode[],
   isOpen: boolean,
-  isFirstChild: boolean,
+  childrenRank: number,  // 是它付元素的第几个元素
   selected: boolean,
   active: boolean
 }
