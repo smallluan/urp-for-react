@@ -80,7 +80,7 @@ const UImage = (props: Image) => {
         objectPosition: _props.objectPosition
       }
     )
-  }, [_props.objectFit])
+  }, [_props.objectFit, _props.objectPosition])
 
   return (
     <div
