@@ -59,7 +59,13 @@ const USubMenu = (props: SubMenu) => {
           onMouseLeave={() => setIsHover(false)}
         >
           <USpace className={subMenuClass}>
-            { props.icon && props.icon }
+            { 
+              props.icon && 
+              <UIcon 
+                size={16}
+                type={props.icon}
+              />
+            }
             {props.title}
             <UIcon 
               size={10}
