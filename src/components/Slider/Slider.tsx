@@ -1,5 +1,5 @@
 import { UTooltip } from "../Tooltip/index.ts"
-import { Slider } from "./type"
+import { Slider, SliderButton } from "./type"
 import "./style.less"
 import { useCallback, useEffect, useRef, useState } from "react"
 import useMergedProps from "../utils/hooks/useMergedProps.ts"
@@ -104,7 +104,7 @@ const USlider = (props: Slider) => {
   )
 }
 
-const USliderButton = (props) => {
+const USliderButton = (props: SliderButton) => {
   const [isHoverButton, setIsHoverButton] = useState(false)
   return (
     <UTooltip 

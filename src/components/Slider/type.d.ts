@@ -14,3 +14,10 @@ export interface Slider {
   onChange?: (value: number) => void;
   onComplete?: (value: number) => void;
 }
+
+export interface SliderButton {
+  isDragging: boolean;
+  value: number;
+  min: number;
+  max: number;
+}
