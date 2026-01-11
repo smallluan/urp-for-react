@@ -52,3 +52,17 @@ export const getButtonShouldMove = (
 
   return 'end'
 }
+
+export const genMarkClassName = (
+  markValue: number,
+  endValue: number,
+  startValue: number,
+) => {
+  let baseClassName = 'u-slider-mark '
+
+  if (endValue >= markValue && startValue <= markValue) {
+    baseClassName += 'u-slider-mark-active'
+  }
+
+  return baseClassName
+}

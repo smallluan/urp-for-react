@@ -40,3 +40,43 @@
   border-radius: 5px;
   background-color: var(--u-primary-color);
 }
+
+.u-slider-marks {
+  margin-top: 8px;
+  position: relative;
+  display: flex;
+  width: 100%;
+  // border: 1px solid red;
+}
+
+.u-slider-mark {
+  position: absolute;
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: var(--u-gray-color-9);
+  transition: all .2s ease-in-out;
+  transform: translate(-50%);
+  line-height: 12px;
+  margin-top: 2px;
+  &:hover {
+    color: var(--u-primary-color);
+  }
+  &::before {
+    display: block;
+    content: '';
+    width: 1px;
+    height: 8px;
+    background-color: var(--u-gray-color-9);
+  }
+  // border: 1px solid red;
+}
+
+.u-slider-mark-active {
+  color: var(--u-primary-color);
+  &::before {
+    background-color: var(--u-primary-color);
+  }
+}

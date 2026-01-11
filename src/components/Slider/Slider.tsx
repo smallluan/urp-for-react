@@ -4,7 +4,7 @@ import "./style.less"
 import { useCallback, useEffect, useRef, useState } from "react"
 import useMergedProps from "../utils/hooks/useMergedProps.ts"
 import { defaultProps } from "./properties.ts"
-import { setButtonPosition, getButtonShouldMove } from "./utils.ts"
+import { setButtonPosition, getButtonShouldMove, genMarkClassName } from "./utils.ts"
 
 const USlider = (props: Slider) => {
 
@@ -14,7 +14,7 @@ const USlider = (props: Slider) => {
     [
       'className', 'style', 'layout', 'max',
       'min', 'value', 'defaultValue', 'tooltipProps',
-      'step', 'range'
+      'step', 'range', 'marks'
     ]
   )
 
@@ -70,6 +70,21 @@ const USlider = (props: Slider) => {
     setIsDragging(false)
   }
 
+  const handleMarkClick = useCallback((
+    e: React.MouseEvent,
+    value: number
+  ) => {
+    e.preventDefault()
+    e.stopPropagation()
+
+    buttonShouldMove.current = getButtonShouldMove(e, sliderRef, startValue, endValue, _props.min, _props.max)
+    if (buttonShouldMove.current === 'end') {
+      setEndValue(value)
+    } else {
+      setStartValue(value)
+    }
+  }, [startValue, endValue, _props.max, _props.min])
+
   useEffect(() => {
     if (isDragging) {
       document.addEventListener('mousemove', handleMouseMove)
@@ -100,6 +115,23 @@ const USlider = (props: Slider) => {
         _props.range &&
         <USliderButton isDragging={isDragging} value={startValue} min={_props.min} max={_props.max} />
       }
+      {/* marks */}
+      <div className="u-slider-marks">
+        {
+          _props.marks?.map(mark => {
+            return (
+              <div
+                key={mark.value}
+                className={genMarkClassName(mark.value, endValue, startValue)}
+                style={{left: `${(mark.value - _props.min) * 100 / (_props.max - _props.min)}%`}}
+                onClick={(e) =>handleMarkClick(e, mark.value)}
+              >
+                {mark.label}
+              </div>
+            )
+          })
+        }
+      </div>
     </div>
   )
 }

@@ -1,5 +1,10 @@
 import { Tooltip } from "../Tooltip/type"
 
+type SliderMark = {
+  value: number;
+  label: React.ReactNode;
+}
+
 export interface Slider {
   className?: string;
   style?: React.CSSProperties;
@@ -11,6 +16,7 @@ export interface Slider {
   tooltipProps?: Tooltip;
   step?: number;
   range?: boolean;
+  marks?: Array<SliderMark>;
   onChange?: (value: number) => void;
   onComplete?: (value: number) => void;
 }
