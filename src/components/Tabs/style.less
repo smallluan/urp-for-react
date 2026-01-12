@@ -1,0 +1,40 @@
+@import "../utils/styles/colors/color.less";
+
+.u-tabs {
+  position: relative;
+  font-size: 14px;
+  cursor: pointer;
+  color: var(--u-gray-color-9);
+  background-color: white;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--u-gray-color-4);
+}
+
+.u-tab {
+  padding: 4px 8px;
+  border-radius: 2px;
+  // border: 1px solid red;
+  transition: all .2s ease-in-out;
+  user-select: none;
+  &:hover {
+    background-color: var(--u-gray-color-1);
+  }
+  &:active {
+    color: var(--u-primary-color);
+    background-color: var(--u-primary-color-light);
+  }
+}
+
+.u-tab-active {
+  color: var(--u-primary-color);
+}
+
+.u-tabs-curse {
+  position: absolute;
+  bottom: 0;
+  height: 2px;
+  border-radius: 2px;
+  background-color: var(--u-primary-color);
+  transition: all .2s ease-in-out;
+  // transform: translate(-50%);
+}
