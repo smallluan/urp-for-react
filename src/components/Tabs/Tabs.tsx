@@ -1,8 +1,8 @@
 import { Tabs, TabsPanel } from "./type"
 import { defaultTabsProps } from "./properties.ts"
 import useMergedProps from "../utils/hooks/useMergedProps.ts"
-import useExtractChildrenByType from "../utils/hooks/useExtractChildrenByType.ts"
-import { useEffect, useRef, useState } from "react"
+import extractChildrenByType from "../utils/tools/extractChildrenByType.ts"
+import { useEffect, useMemo, useRef, useState } from "react"
 import { USpace } from "../Space/index.ts"
 import classNames from "classnames"
 
@@ -25,7 +25,9 @@ const UTab = (props: Tabs) => {
   const finalValue = isControld ? _props.value : innerValue
 
   // 获取合法子元素
-  const panelChilren = useExtractChildrenByType<TabsPanel>(_props.children, UTabPanel)
+   const panelChilren = useMemo(() => {
+    return extractChildrenByType<TabsPanel>(_props.children, UTabPanel)
+  }, [_props.children])
 
   // 存储每个 tab 的 DOM 元素引用
   const tabRefs = useRef<(HTMLDivElement | null)[]>([])
