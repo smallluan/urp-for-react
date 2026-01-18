@@ -195,7 +195,12 @@ const UCheckBoxItem = memo((props: CheckBoxItemType) => {
   }, [isChecked])
 
   return(
-    <label className={checkBoxClass + ' ' + props.className}>
+    <label
+      title={
+        typeof label === 'string' ?  label : undefined
+      }
+      className={checkBoxClass + ' ' + props.className}
+    >
       {
         !props.labelOnly &&
         <div className={boxClass}>
@@ -237,7 +242,7 @@ const UCheckBoxLabel = (
   }
 ) => {
   return(
-    <div 
+    <div
       className={`u-checkbox-label ${props.className}`}
       style={{...props.style}}
     >

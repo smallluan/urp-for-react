@@ -38,6 +38,7 @@ const Options = forwardRef<HTMLDivElement, any>((props, ref) => {
               labelOnly={!context.multiple && context.hideRadioCircle}
               className="check-box"
               value={item.value}
+              label={item.label}
             >
               <div className={classNames("check-box-label", { "check-box-label-checked": item.value === context.value })}>{item.label}</div>
             </UCheckBox.Item>
