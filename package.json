@@ -4,15 +4,19 @@
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^6.1.0",
+    "@juggle/resize-observer": "^3.4.0",
     "@testing-library/dom": "^10.4.1",
     "classnames": "^2.5.1",
     "craco-less": "^3.0.1",
+    "flatted": "^3.3.3",
     "lodash": "^4.17.21",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-router-dom": "^7.9.5",
     "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4"
+    "reactflow": "^11.11.4",
+    "web-vitals": "^2.1.4",
+    "zustand": "^5.0.10"
   },
   "scripts": {
     "start": "craco start",

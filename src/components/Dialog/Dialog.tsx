@@ -6,6 +6,15 @@ import { defaultProps } from "./properties.ts"
 import { UButton } from "../Button/index.ts"
 import { UGrid } from "../Grid/index.ts"
 import { USpace } from "../Space/index.ts"
+import { UIcon } from "../Icon/index.ts"
+
+const themeToIcon = {
+  default: null,
+  primary: <UIcon size={20} style={{ color: 'var(--u-primary-color)' }} type="InfoCircleFilled" />,
+  success: <UIcon size={20} style={{ color: 'var(--u-success-color)' }} type="CheckCircleFilled" />,
+  warning: <UIcon size={20} style={{ color: 'var(--u-warning-color)' }} type="InfoCircleFilled" />,
+  error: <UIcon size={20} style={{ color: 'var(--u-error-color)' }} type="CloseCircleFilled" />,
+}
 
 const UDialog = (props: Dialog) => {
 
@@ -16,7 +25,8 @@ const UDialog = (props: Dialog) => {
       'className', 'style', 'cancelBtn', 'confirmBtn',
       'closeBtn', 'visible', 'children', 'destoryOnClose',
       'zIndex', 'onCloseBtnClick', 'onConfirm', 'onCancel',
-      'onOverlayClick', 'onEscKeydown', 'attachBody'
+      'onOverlayClick', 'onEscKeydown', 'attachBody', 'width',
+      'theme', 'title', 'content'
     ]
   )
 
@@ -33,11 +43,17 @@ const UDialog = (props: Dialog) => {
           direction="vertical"
           align="start"
           className="u-dialog"
-          style={{zIndex: _props.zIndex + 1}}
+          style={{
+            zIndex: _props.zIndex + 1,
+            width: typeof(_props.width) === 'string' ? _props.width : _props.width + 'px'
+          }}
           gap={16}
         >
           <UGrid.Row justify="space-between">
-            <div className="u-dialog-title">标题文字</div>
+            <USpace align="center">
+              {themeToIcon[_props.theme]}
+              <div className="u-dialog-title">{_props.title}</div>
+            </USpace>
             <UButton 
               content=""
               theme="default"
@@ -48,7 +64,7 @@ const UDialog = (props: Dialog) => {
             />
           </UGrid.Row>
           
-          <div className="u-dialog-content">{_props.children}</div>
+          <div className="u-dialog-content">{_props.children || _props.content}</div>
           <UGrid.Row justify="flex-end">
             <USpace style={{width: 'fit-content'}}>
               <UButton
