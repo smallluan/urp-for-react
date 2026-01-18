@@ -7,6 +7,7 @@ import { UButton } from "../Button/index.ts"
 import { UGrid } from "../Grid/index.ts"
 import { USpace } from "../Space/index.ts"
 import { UIcon } from "../Icon/index.ts"
+import { useCallback, useEffect } from "react"
 
 const themeToIcon = {
   default: null,
@@ -26,9 +27,72 @@ const UDialog = (props: Dialog) => {
       'closeBtn', 'visible', 'children', 'destoryOnClose',
       'zIndex', 'onCloseBtnClick', 'onConfirm', 'onCancel',
       'onOverlayClick', 'onEscKeydown', 'attachBody', 'width',
-      'theme', 'title', 'content'
+      'theme', 'title', 'content', 'footer'
     ]
   )
+
+  /**
+   * 监听 keyDown 
+   */
+  useEffect(() => {
+    const handleEscDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        _props.onEscKeydown?.()
+      }
+    }
+
+    window.addEventListener('keydown', handleEscDown)
+
+    return () => window.removeEventListener('keydown', handleEscDown)
+  }, [_props.onEscKeydown])
+
+  /**
+   * 渲染 footer 部分
+   */
+  const renderFooter = useCallback(() => {
+    const { cancelBtn, confirmBtn, footer } = _props
+
+    const genBtn = (
+      config: Dialog['confirmBtn'],
+      defaultContent: React.ReactNode,
+      defaultTheme: Dialog['theme']
+    ) => {
+      if (typeof config === 'boolean') {
+        if (config) {
+          return (
+            <UButton
+              content={defaultContent}
+              theme={defaultTheme}
+              onClick={_props.onConfirm}
+            />
+          )
+        }
+      } else if (typeof config === 'string') {
+        return (
+          <UButton
+            content={config}
+            theme={defaultTheme}
+            onClick={_props.onConfirm}
+          />
+        )
+      } else if (typeof config === 'object') {
+        return (
+          <UButton {...config} />
+        )
+      }
+      return null
+    }
+
+    return (
+      <UGrid.Row justify="flex-end">
+        <USpace style={{ width: 'fit-content' }}>
+          {footer}
+          {genBtn(cancelBtn, '取消', 'default')}
+          {genBtn(confirmBtn, '确认', 'primary')}
+        </USpace>
+      </UGrid.Row>
+    )
+  }, [_props.cancelBtn, _props.confirmBtn, _props.footer])
 
   return (
     <UOverlay
@@ -65,19 +129,7 @@ const UDialog = (props: Dialog) => {
           </UGrid.Row>
           
           <div className="u-dialog-content">{_props.children || _props.content}</div>
-          <UGrid.Row justify="flex-end">
-            <USpace style={{width: 'fit-content'}}>
-              <UButton
-                content="取消"
-                theme="default"
-                onClick={_props.onCancel}
-              />
-              <UButton
-                content="确认"
-                onClick={_props.onConfirm}
-              />
-            </USpace>
-          </UGrid.Row>
+          {renderFooter()}
         </USpace>
       </div>
       

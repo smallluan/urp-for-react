@@ -12,6 +12,7 @@ export interface Dialog {
   visible?: boolean;
   children?: React.ReactNode;
   content?: React.ReactNode;
+  footer?: React.ReactNode;
   destoryOnClose?: boolean;
   zIndex?: number;
   attachBody?: boolean;

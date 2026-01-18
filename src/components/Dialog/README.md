@@ -12,6 +12,7 @@
 |**visible**||||是否显示（受控）(overlay属性)|
 |**children**||||内容|
 |**content**||||内容，同上，优先级小于 children|
+|**footer**||||底部区域内容|
 |**destoryOnClose**||||关闭时销毁元素|
 |**zIndex**||||层级高度(overlay属性)|
 |**attachBody**||||是否挂载到body(overlay属性)|
