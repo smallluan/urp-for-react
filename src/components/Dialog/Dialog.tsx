@@ -50,12 +50,13 @@ const UDialog = (props: Dialog) => {
    * 渲染 footer 部分
    */
   const renderFooter = useCallback(() => {
-    const { cancelBtn, confirmBtn, footer } = _props
+    const { cancelBtn, confirmBtn, footer, onConfirm, onCancel } = _props
 
     const genBtn = (
       config: Dialog['confirmBtn'],
       defaultContent: React.ReactNode,
-      defaultTheme: Dialog['theme']
+      defaultTheme: Dialog['theme'],
+      onClick: () => void
     ) => {
       if (typeof config === 'boolean') {
         if (config) {
@@ -63,7 +64,7 @@ const UDialog = (props: Dialog) => {
             <UButton
               content={defaultContent}
               theme={defaultTheme}
-              onClick={_props.onConfirm}
+              onClick={onClick}
             />
           )
         }
@@ -72,7 +73,7 @@ const UDialog = (props: Dialog) => {
           <UButton
             content={config}
             theme={defaultTheme}
-            onClick={_props.onConfirm}
+            onClick={onClick}
           />
         )
       } else if (typeof config === 'object') {
@@ -87,8 +88,8 @@ const UDialog = (props: Dialog) => {
       <UGrid.Row justify="flex-end">
         <USpace style={{ width: 'fit-content' }}>
           {footer}
-          {genBtn(cancelBtn, '取消', 'default')}
-          {genBtn(confirmBtn, '确认', 'primary')}
+          {genBtn(cancelBtn, '取消', 'default', onCancel) }
+          {genBtn(confirmBtn, '确认', 'primary', onConfirm)}
         </USpace>
       </UGrid.Row>
     )
