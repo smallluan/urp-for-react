@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { USpace } from "../Space/index.ts"
 import { USlider } from "../Slider/index.ts"
+import { UGrid } from "../Grid/index.ts"
+import { positionToSv, hsvToRgb } from "./utils.ts"
 
 import "./style.less"
 import genStyleFromProps from "../utils/tools/style.ts"
@@ -45,6 +47,7 @@ const UColorPickerPanel = () => {
     return { x, y }
   }, [])
 
+
   /**
    * 色值面板鼠标按下事件处理函数
    */
@@ -53,6 +56,7 @@ const UColorPickerPanel = () => {
     const newPos = calculateIndicatorPos(e)
     setIndicatorPos(newPos)
   }, [calculateIndicatorPos])
+
 
   /**
    * 色值面板鼠标移动事件处理函数
@@ -67,6 +71,7 @@ const UColorPickerPanel = () => {
     setIsDragging(false)
   }, [])
 
+
   /**
    * 处理色相变化
    */
@@ -77,16 +82,41 @@ const UColorPickerPanel = () => {
     setHue(validHue)
   }, [])
 
+
+  /**
+   * 将色值面板的指示器位置映射为 s 和 v
+   */
+  const { s, v } = useMemo(() => {
+    const panelDom = hsvPanelRef.current
+    if (!panelDom) return { s: 0, v: 1 }
+
+    const { width, height } = panelDom.getBoundingClientRect()
+
+    return positionToSv(width, height, indicatorPos)
+  }, [indicatorPos])
+
+  /**
+   * 当前颜色: RGB
+   */
+  const rgbColor = useMemo(() => {
+    const { r, g, b } = hsvToRgb(hue, s, v)
+    return `rgb(${r}, ${g}, ${b})`
+  }, [hue, s, v])
+
+
+
   /**
    * hue slider 动态 style
    */
   const colorPickerStyle = useMemo(() => {
     return genStyleFromProps(
       {
-        hue: `hsl(${hue}, 100%, 50%)`
+        'hue': `hsl(${hue}, 100%, 50%)`,
+        'preview-color': rgbColor
       }
     )
-  }, [hue])
+  }, [hue, rgbColor])
+
 
   /**
    * 支持鼠标拖动到面板外
@@ -127,14 +157,15 @@ const UColorPickerPanel = () => {
         />
       </div>
       {/* 色相选择器 */}
-      <USpace>
+      <UGrid.Row justify="space-between" align="center">
         <USlider
           className="u-color-picker-panel-hue-slider"
           showLabel={false}
           max={360}
           onChange={handleHueChange}
         />
-      </USpace>
+        <div className="u-color-picker-panel-color-preview"/>
+      </UGrid.Row>
     </USpace>
   )
 }
