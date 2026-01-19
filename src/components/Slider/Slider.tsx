@@ -14,7 +14,8 @@ const USlider = (props: Slider) => {
     [
       'className', 'style', 'layout', 'max',
       'min', 'value', 'defaultValue', 'tooltipProps',
-      'step', 'range', 'marks'
+      'step', 'range', 'marks', 'onChange', 'onComplete',
+      'showLabel'
     ]
   )
 
@@ -97,10 +98,21 @@ const USlider = (props: Slider) => {
     }
   }, [isDragging])
 
+   useEffect(() => {
+    _props.onChange?.(endValue, startValue)
+   }, [endValue, startValue])
+
+   useEffect(() => {
+    if (!isDragging) {
+      _props.onComplete?.(endValue, startValue)
+    }
+   }, [isDragging, endValue, startValue])
+
   return (
     <div 
       ref={sliderRef}
-      className="u-slider"
+      style={_props.style}
+      className={`u-slider${_props.className ? ' ' + _props.className : ''}`}
       onMouseDown={handleMouseDown}
     >
       <div
@@ -110,10 +122,10 @@ const USlider = (props: Slider) => {
           marginLeft: `${(startValue - _props.min) * 100 / (_props.max - _props.min)}%`
         }}
       />
-      <USliderButton isDragging={isDragging} value={endValue} min={_props.min} max={_props.max} />
+      <USliderButton isDragging={isDragging} value={endValue} min={_props.min} max={_props.max} showLabel={_props.showLabel} />
       {
         _props.range &&
-        <USliderButton isDragging={isDragging} value={startValue} min={_props.min} max={_props.max} />
+        <USliderButton isDragging={isDragging} value={startValue} min={_props.min} max={_props.max} showLabel={_props.showLabel} />
       }
       {/* marks */}
       <div className="u-slider-marks">
@@ -145,7 +157,7 @@ const USliderButton = (props: SliderButton) => {
       position="top"
       arrow
       popupProps={{
-        visible: props.isDragging || isHoverButton,
+        visible: props.showLabel && (props.isDragging || isHoverButton),
         className: 'u-slider-button-tooltip',
         style: {left: `${(props.value - props.min) * 100 / (props.max - props.min)}%`},
       }}

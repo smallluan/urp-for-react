@@ -17,8 +17,9 @@ export interface Slider {
   step?: number;
   range?: boolean;
   marks?: Array<SliderMark>;
-  onChange?: (value: number) => void;
-  onComplete?: (value: number) => void;
+  showLabel?: boolean;
+  onChange?: (endValue: number, startValue?: number) => void;
+  onComplete?: (endValue: number, startValue?: number) => void;
 }
 
 export interface SliderButton {
@@ -26,4 +27,5 @@ export interface SliderButton {
   value: number;
   min: number;
   max: number;
+  showLabel?: boolean;
 }

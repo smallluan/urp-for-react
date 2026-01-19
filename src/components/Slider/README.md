@@ -11,5 +11,6 @@
 |**step**||||步长|
 |**range**||||双游标滑块|
 |**marks**||||标记|
+|**showLabel**||||是否显示 tooltip|
 |**onChange**||||滑块值变化事件|
 |**onComplete**||||滑块失焦时触发|

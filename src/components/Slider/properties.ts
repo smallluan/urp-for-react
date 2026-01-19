@@ -8,5 +8,6 @@ export const defaultProps: Slider = {
   min: 0,
   defaultValue: 0,
   step: 1,
+  showLabel: true,
   range: false
 }
