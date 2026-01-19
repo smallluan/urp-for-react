@@ -9,12 +9,12 @@
     height: 160px;
     background: 
       linear-gradient(to bottom, transparent, #000),
-      linear-gradient(to right, #fff, red);
+      linear-gradient(to right, #fff, var(--hue));
     cursor: pointer;
     overflow: hidden;
     border-radius: 2px;
     
-    .color-selector-indicator {
+    &-indicator {
       position: absolute;
       width: 16px;
       height: 16px;
@@ -22,6 +22,29 @@
       border: 2px solid white;
       transform: translate(-50%, -50%);
       pointer-events: none;
+    }
+  }
+
+  &-hue-slider {
+    background: linear-gradient(
+      to right,
+    hsl(0, 100%, 50%),
+    hsl(60, 100%, 50%),
+    hsl(120, 100%, 50%),
+    hsl(180, 100%, 50%),
+    hsl(240, 100%, 50%),
+    hsl(300, 100%, 50%),
+    hsl(360, 100%, 50%)
+    );
+
+    .u-slider-track {
+      background-color: transparent;
+    }
+
+    .u-slider-button {
+      transition: none;
+      background-color: var(--hue);
+      border-color: white;
     }
   }
 }
