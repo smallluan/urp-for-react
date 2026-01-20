@@ -1,6 +1,8 @@
 ## 二、参数定义（Props）
 |参数名|是否必填|参数类型|默认值|说明|
 |--|--|--|--|--|
+|**className**||||透传类名|
+|**style**||||透传样式|
 |`align`|N|`left \| center \| right`|`left`|文本内容位置，居左/居中/居右|
 |`autoWidth`|N|`boolean`|`false`|宽度随内容自适应|
 |`disabled`|N|`boolean`|`false`|是否禁用|

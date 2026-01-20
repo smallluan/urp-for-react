@@ -1,4 +1,6 @@
 interface InputType {
+  className?: string;
+  style?: React.CSSProperties;
   align?: 'left' | 'center' | 'right',
   autoWidth?: boolean,
   disabled?: boolean,

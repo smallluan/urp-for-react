@@ -1,6 +1,8 @@
 import InputType from "./type"
 
-const defaultProperties: Required<InputType> = {
+const defaultProperties: InputType = {
+  className: '',
+  style: {},
   align: 'left',
   autoWidth: false,
   disabled: false,
