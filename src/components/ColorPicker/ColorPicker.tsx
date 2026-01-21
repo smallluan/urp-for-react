@@ -2,10 +2,18 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { USpace } from "../Space/index.ts"
 import { USlider } from "../Slider/index.ts"
 import { UGrid } from "../Grid/index.ts"
-import { positionToSv, hsvToRgb } from "./utils.ts"
+import { USelect } from "../Select/index.ts"
+import { UInput } from "../Input/index.ts"
+import { positionToSv, hsvToRgb, hsvToHex ,extractRgbValues } from "./utils.ts"
 
 import "./style.less"
 import genStyleFromProps from "../utils/tools/style.ts"
+
+const valueType = [
+  { label: 'HEX', value: 'HEX' },
+  { label: 'RGB', value: 'RGB' },
+  { label: 'CSS', value: 'CSS' }
+]
 
 const UColorPicker = () => {
   return (
@@ -24,14 +32,16 @@ const UColorPickerPanel = () => {
   const [isDragging, setIsDragging] = useState(false)
   // 色相
   const [hue, setHue] = useState(0)
+  // 当前颜色格式(默认是 16 进制格式)
+  const [currValueType, setCurrValueType] = useState('HEX')
 
   // 色值面板 ref
-  const hsvPanelRef = useRef(null)
+  const hsvPanelRef = useRef<HTMLElement>(null)
 
   /**
    * 计算坐标，处理鼠标事件，返回合法的面板相对坐标
    */
-  const calculateIndicatorPos = useCallback((e) => {
+  const calculateIndicatorPos = useCallback((e: React.MouseEvent) => {
     const panelDom = hsvPanelRef.current
     if (!panelDom) return { x: 0, y: 0 }
 
@@ -51,7 +61,7 @@ const UColorPickerPanel = () => {
   /**
    * 色值面板鼠标按下事件处理函数
    */
-  const handleMouseDown = useCallback((e) => {
+  const handleMouseDown = useCallback((e: React.MouseEvent) => {
     setIsDragging(true)
     const newPos = calculateIndicatorPos(e)
     setIndicatorPos(newPos)
@@ -61,7 +71,7 @@ const UColorPickerPanel = () => {
   /**
    * 色值面板鼠标移动事件处理函数
    */
-  const handleMouseMove = useCallback((e) => {
+  const handleMouseMove = useCallback((e: React.MouseEvent) => {
     if (!isDragging) return
     const newPos = calculateIndicatorPos(e)
     setIndicatorPos(newPos)
@@ -95,6 +105,7 @@ const UColorPickerPanel = () => {
     return positionToSv(width, height, indicatorPos)
   }, [indicatorPos])
 
+
   /**
    * 当前颜色: RGB
    */
@@ -103,6 +114,13 @@ const UColorPickerPanel = () => {
     return `rgb(${r}, ${g}, ${b})`
   }, [hue, s, v])
 
+
+  /**
+   * 当前颜色: HEX
+   */
+  const hexColor = useMemo(() => {
+    return hsvToHex(hue, s, v)
+  }, [hue, s, v])
 
 
   /**
@@ -166,9 +184,112 @@ const UColorPickerPanel = () => {
         />
         <div className="u-color-picker-panel-color-preview"/>
       </UGrid.Row>
+      {/* 格式与值 */}
+      <UGrid.Row justify="space-between" align="center">
+        <USelect
+          style={{ width: '80px', height: '23px' }}
+          size="small"
+          value={currValueType}
+          options={valueType}
+          onChange={(newValue) => setCurrValueType(newValue as string)}
+        />
+        {
+          currValueType === 'HEX' &&
+          <HEXInput value={hexColor} /> 
+        }
+        {
+          currValueType === 'RGB' &&
+          <RGBInput value={rgbColor} />
+        }
+        {
+          currValueType === 'CSS' &&
+          <CSSInput value={rgbColor} />
+        }
+        
+      </UGrid.Row>  
     </USpace>
   )
 }
+
+
+/**
+ * 值修改: 16 进制格式
+ */
+const HEXInput = (
+  props: {
+    value:string
+  }
+) => {
+  return (
+    <UInput
+      size="small"
+      align="center"
+      value={props.value}
+      style={{ width: '120px' }}
+    />
+  )
+}
+
+
+/**
+ * 值修改: rgb 格式
+ */
+const RGBInput = (
+  props: {
+    value: string
+  }
+) => {
+  // 从传进来的 rgb 中分解出三个色值
+  const [r, g, b] = extractRgbValues(props.value)
+
+  return (
+    <UGrid.Row justify="flex-end">
+      <UInput
+        className="u-color-picker-panel-r-input"
+        size="small"
+        align="center"
+        value={String(r)}
+        style={{ width: '42px' }}
+      />
+      <UInput
+        className="u-color-picker-panel-g-input"
+        size="small"
+        align="center"
+        value={String(g)}
+        style={{ width: '42px' }}
+      />
+      <UInput
+        className="u-color-picker-panel-b-input"
+        size="small"
+        align="center"
+        value={String(b)}
+        style={{ width: '42px' }}
+      />
+    </UGrid.Row>
+    
+    
+  )
+}
+
+
+/**
+ * 值修改: rgb 格式
+ */
+const CSSInput = (
+  props: {
+    value: string
+  }
+) => {
+  return (
+    <UInput
+      size="small"
+      align="center"
+      value={props.value}
+      style={{ width: '120px' }}
+    />
+  )
+}
+
 
 UColorPicker.Panel = UColorPickerPanel
 

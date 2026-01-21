@@ -95,3 +95,27 @@ export const hsvToHex = (h: number, s: number, v: number) => {
   return `#${rr}${gg}${bb}`.toUpperCase()
 }
 
+
+/**
+ * 从 rgb 字符串中提取三个颜色的值
+ * @param rgbStr - rgb(255, 255, 255)
+ * @returns 提取的数组（如果提取失败默认是纯白）
+ */
+export const extractRgbValues = (
+  rgbStr: string
+): [number, number, number] => {
+  const rgbRegex = /rgb\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)/i
+  const matchRes = rgbStr.match(rgbRegex)
+
+  if (!matchRes || matchRes.length !== 4) {
+    return [255, 255, 255]
+  }
+
+  const [, rStr, gStr, bStr] = matchRes
+  const r = Math.max(0, Math.min(Number(rStr), 255))
+  const g = Math.max(0, Math.min(Number(gStr), 255))
+  const b = Math.max(0, Math.min(Number(bStr), 255))
+
+  return [r, g, b]
+}
+
