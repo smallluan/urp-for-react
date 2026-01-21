@@ -67,7 +67,7 @@ const UTag = (props: Tag) => {
   const handleCloseIconClicked = useCallback(() => {
     _props.onClose?.()
     setIsClose(true)
-  }, [])
+  }, [_props.onClose])
 
 
   return (
