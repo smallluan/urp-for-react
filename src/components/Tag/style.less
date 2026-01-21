@@ -1,0 +1,199 @@
+@import '../utils/styles/index.less';
+
+// default 颜色样式
+@u-tag-border-color-default: var(--u-default-color);
+@u-tag-font-color-default: var(--u-font-gray-2);
+@u-tag-background-color-default: var(--u-default-color);
+
+// default-light 颜色样式
+@u-tag-border-color-default-light: var(--u-font-gray-2);
+@u-tag-font-color-default-light: var(--u-font-gray-2);
+@u-tag-background-color-default-light: var(--u-default-color-light);
+
+// primary 颜色样式
+@u-tag-border-color-primary: var(--u-primary-color);
+@u-tag-font-color-primary: var(--u-font-white-1);
+@u-tag-background-color-primary: var(--u-primary-color);
+
+// primary-light 颜色样式
+@u-tag-border-color-primary-light: var(--u-primary-color);
+@u-tag-font-color-primary-light: var(--u-primary-color);
+@u-tag-background-color-primary-light: var(--u-primary-color-light);
+
+// success 颜色样式
+@u-tag-border-color-success: var(--u-success-color);
+@u-tag-font-color-success: var(--u-font-white-1);
+@u-tag-background-color-success: var(--u-success-color);
+
+// success-light 颜色样式
+@u-tag-border-color-success-light: var(--u-success-color);
+@u-tag-font-color-success-light: var(--u-success-color);
+@u-tag-background-color-success-light: var(--u-success-color-light);
+
+// warning 颜色样式
+@u-tag-border-color-warning: var(--u-warning-color);
+@u-tag-font-color-warning: var(--u-font-white-1);
+@u-tag-background-color-warning: var(--u-warning-color);
+
+// warning-light 颜色样式
+@u-tag-border-color-warning-light: var(--u-warning-color);
+@u-tag-font-color-warning-light: var(--u-warning-color);
+@u-tag-background-color-warning-light: var(--u-warning-color-light);
+
+// error 颜色样式
+@u-tag-border-color-error: var(--u-error-color);
+@u-tag-font-color-error: var(--u-font-white-1);
+@u-tag-background-color-error: var(--u-error-color);
+
+// error-light 颜色样式
+@u-tag-border-color-error-light: var(--u-error-color);
+@u-tag-font-color-error-light: var(--u-error-color);
+@u-tag-background-color-error-light: var(--u-error-color-light);
+
+// size 相关
+@u-tag-size-small-padding: 4px;
+@u-tag-size-normal-padding: 4px 6px;
+@u-tag-size-large-padding: 6px 8px;
+
+@u-tag-size-small-font-size: 12px;
+@u-tag-size-normal-font-size: 14px;
+@u-tag-size-large-font-size: 16px;
+
+// shape 相关
+@u-tag-shape-rect-border-radius: 2px;
+@u-tag-shape-round-border-radius: 100vh;
+@u-tag-shape-mark-border-radius: 2px;
+@u-tag-shape-arrow-border-radius: 2px;
+
+.u-tag {
+  position: relative;
+  line-height: 1;
+  cursor: pointer;
+  user-select: none;
+  box-sizing: border-box;
+}
+
+// theme
+.define-u-tag-theme(
+  @border-color,
+  @background-color,
+  @font-color,
+) {
+  border: 1px solid @border-color;
+  background-color: @background-color;
+  color: @font-color;
+
+}
+
+.u-tag-theme-default {
+  .define-u-tag-theme(
+    @u-tag-border-color-default,
+    @u-tag-background-color-default,
+    @u-tag-font-color-default
+  )
+}
+
+.u-tag-theme-default-light {
+  .define-u-tag-theme(
+    @u-tag-border-color-default-light,
+    @u-tag-background-color-default-light,
+    @u-tag-font-color-default-light
+  )
+}
+
+
+.u-tag-theme-primary {
+  .define-u-tag-theme(
+    @u-tag-border-color-primary,
+    @u-tag-background-color-primary,
+    @u-tag-font-color-primary
+  )
+}
+
+.u-tag-theme-primary-light {
+  .define-u-tag-theme(
+    @u-tag-border-color-primary-light,
+    @u-tag-background-color-primary-light,
+    @u-tag-font-color-primary-light
+  )
+}
+
+.u-tag-theme-success {
+  .define-u-tag-theme(
+    @u-tag-border-color-success,
+    @u-tag-background-color-success,
+    @u-tag-font-color-success
+  )
+}
+
+.u-tag-theme-success-light {
+  .define-u-tag-theme(
+    @u-tag-border-color-success-light,
+    @u-tag-background-color-success-light,
+    @u-tag-font-color-success-light
+  )
+}
+
+.u-tag-theme-warning {
+  .define-u-tag-theme(
+    @u-tag-border-color-warning,
+    @u-tag-background-color-warning,
+    @u-tag-font-color-warning
+  )
+}
+
+.u-tag-theme-warning-light {
+  .define-u-tag-theme(
+    @u-tag-border-color-warning-light,
+    @u-tag-background-color-warning-light,
+    @u-tag-font-color-warning-light
+  )
+}
+
+.u-tag-theme-error {
+  .define-u-tag-theme(
+    @u-tag-border-color-error,
+    @u-tag-background-color-error,
+    @u-tag-font-color-error
+  )
+}
+
+.u-tag-theme-error-light {
+  .define-u-tag-theme(
+    @u-tag-border-color-error-light,
+    @u-tag-background-color-error-light,
+    @u-tag-font-color-error-light
+  )
+}
+
+// size
+.u-tag-size-small {
+  padding: @u-tag-size-small-padding;
+  font-size: @u-tag-size-small-font-size;
+}
+
+.u-tag-size-normal {
+  padding: @u-tag-size-normal-padding;
+  font-size: @u-tag-size-normal-font-size;
+}
+
+.u-tag-size-large {
+  padding: @u-tag-size-large-padding;
+  font-size: @u-tag-size-large-font-size;
+}
+
+// shape
+.u-tag-shape-rect {
+  border-radius: @u-tag-shape-rect-border-radius;
+}
+
+.u-tag-shape-round {
+  border-radius: @u-tag-shape-round-border-radius;
+}
+
+.u-tag-shape-mark {
+  border-radius: @u-tag-shape-mark-border-radius
+                 @u-tag-shape-round-border-radius 
+                 @u-tag-shape-round-border-radius 
+                 @u-tag-shape-mark-border-radius;
+}

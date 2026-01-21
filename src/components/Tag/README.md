@@ -9,7 +9,6 @@
 |**shape**||||形状|
 |**size**||||尺寸|
 |**prefixIcon**||||内容前置图标|
-|**suffixIcon**||||内容后置图标|
-|**title**||||鼠标悬浮内容|
+|**title**||||鼠标悬浮内容（默认按照 title, children , content 的顺序走 false 时不显示）|
 |**onClick**||||被点击时触发|
 |**onClose**||||被关闭时触发（对于可关闭标签）|

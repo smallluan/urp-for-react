@@ -9,11 +9,10 @@ export interface Tag {
           'success' | 'success-light' |
           'warning' | 'warning-light' |
           'error' | 'error-light';
-  shape?: 'rect' | 'round' | 'mark' | 'arrow';
+  shape?: 'rect' | 'round' | 'mark';
   size?: 'normal' | 'small' | 'large';
   prefixIcon?: string;
-  suffixIcon?: string;
-  title?: string;
+  title?: string | boolean;
   onClick?: () => void;
   onClose?: () => void;
 }
