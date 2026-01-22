@@ -87,7 +87,8 @@ const UOverlay = (props: Overlay) => {
         hide: !_props.destoryOnClose && !displayOverlay
       },
       'u-overlay',
-      'u-overlay' + (_props.className ? ` ${_props.className}` : '') 
+      'u-overlay',
+      _props.className
     )
   }, [displayOverlay, overlayVisible, _props.attachBody, _props.destoryOnClose, _props.className])
 
