@@ -4,6 +4,7 @@
  * @param excludeKeys - 不被处理的属性键名数组
  * @param prefix - className 的前缀
  * @param rootClassName - 根 className
+ * @param extraClass - 额外的类，通常是 props 里面传过来的，有就加进来，没有就不加
  * @returns - 处理好的 className
  * @description - 所有可枚举的属性都应该被处理成这样
  *              - 然后作为className的一部分
@@ -13,7 +14,8 @@ export default function genClassNameFromProps<T extends object>(
   props: T,
   rootClassName = '',
   prefix = '',
-  excludeKeys: (keyof T)[] = []
+  extraClass = '',
+  excludeKeys: (keyof T)[] = [],
 ): string {
   let className = ''
   prefix = prefix ? `${prefix}-` : ''
@@ -34,5 +36,8 @@ export default function genClassNameFromProps<T extends object>(
     }
   }
 
-  return (rootClassName + className).trim()
+  const finalClass = extraClass ? 
+                    (rootClassName + className).trim() + ' ' + extraClass :
+                    (rootClassName + className).trim()
+  return finalClass
 }

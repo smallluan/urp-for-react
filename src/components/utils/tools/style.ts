@@ -53,6 +53,9 @@ function isValidCSSValue(value: string): boolean {
     // objectFit 属性
     CSS.supports('object-fit', value) ||
     // objectPosition 属性
-    CSS.supports('object-position', value)
+    CSS.supports('object-position', value) ||
+    // 背景 | 背景颜色
+    CSS.supports('background', value) ||
+    CSS.supports('background-color', value)
   )
 }
