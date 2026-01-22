@@ -1,0 +1,71 @@
+@import "../utils/styles/colors/color.less";
+
+.u-loading {
+  background-color: transparent;
+  .u-loading-content {
+    color: var(--u-primary-color);
+  }
+  .u-loading-content-indicators {
+    &>.indicator {
+      background-color: var(--u-primary-color);
+    }
+  }
+}
+
+.u-loading-show-overlay {
+  background-color: rgba(0, 0, 0, .4);
+  .u-loading-content {
+    color: var(--u-font-white-1);
+  }
+  .u-loading-content-indicators {
+    &>.indicator {
+      background-color: var(--u-primary-color-light);
+    }
+  }
+}
+
+.u-loading-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: fit-content;
+  font-size: 12px;
+  user-select: none;
+}
+
+.u-loading-content-indicators {
+  width: 44px;
+  height: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  &>.indicator {
+    width: 6px;
+    border-radius: 100vh;
+    animation: growth 1s ease-in-out infinite;
+
+    &:nth-child(1) {
+      animation-delay: 0s;
+    }
+
+    &:nth-child(2) {
+      animation-delay: 0.25s;
+    }
+
+    &:nth-child(3) {
+      animation-delay: 0.5s;
+    }
+  }
+}
+
+@keyframes growth {
+  0%, 100% {
+    height: 0;
+    opacity: 0;
+  }
+  50% {
+    height: 30px;
+    opacity: 1;
+  }
+}
