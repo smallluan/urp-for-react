@@ -1,0 +1,21 @@
+@import "../utils/styles/colors/color.less";
+
+@u-qrcode-border-color: var(--u-gray-color-4);
+
+.u-qrcode {
+  position: relative;
+  border: 1px solid @u-qrcode-border-color;
+  width: fit-content;
+  border-radius: 4px;
+}
+
+.u-qrcode-borderless {
+  border: none;
+}
+
+.u-qrcode-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

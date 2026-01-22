@@ -9,3 +9,6 @@
 |**color**||||二维码色块颜色|
 |**bgColor**||||二维码背景颜色|
 |**value**||||扫描后的值|
+|**errorCorrectionLevel**||||二维码纠错等级|
+|**icon**||||二维码内图标(src)|
+|**iconSize**||||二维码内的图标尺寸|

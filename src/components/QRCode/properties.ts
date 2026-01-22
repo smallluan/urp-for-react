@@ -9,5 +9,7 @@ export const defaultProps: QRCodeType = {
   status: 'active',
   color: '#000',
   bgColor: '#fff',
-  value: 'Hello UrpDesign!'
+  value: 'Hello UrpDesign!',
+  errorCorrectionLevel: 'M',
+  iconSize: 40,
 }
