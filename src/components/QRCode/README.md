@@ -12,3 +12,4 @@
 |**errorCorrectionLevel**||||二维码纠错等级|
 |**icon**||||二维码内图标(src)|
 |**iconSize**||||二维码内的图标尺寸|
+|**onRefresh**||||点击重新获取|

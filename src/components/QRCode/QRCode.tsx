@@ -7,6 +7,9 @@ import { UImage } from "../Image/index.ts"
 import { UOverlay } from "../Overlay/index.ts"
 import "./style.less"
 import genClassNameFromProps from '../utils/tools/className.ts'
+import { ULoading } from "../Loading/index.ts"
+import { UIcon } from "../Icon/index.ts" 
+import USpace from '../Space/Space.tsx'
 
 const sizeWidth = {
   normal: 150,
@@ -22,7 +25,8 @@ const UQRCode = (props: QRCodeType) => {
     [
       'className', 'style', 'borderless', 'size',
       'renderType', 'status', 'color', 'bgColor',
-      'value', 'errorCorrectionLevel', 'icon', 'iconSize'
+      'value', 'errorCorrectionLevel', 'icon', 'iconSize',
+      'onRefresh'
     ]
   )
 
@@ -111,11 +115,50 @@ const UQRCode = (props: QRCodeType) => {
           src={_props.icon}
         />
       }
-      <UOverlay 
+      {/* 加载状态 */}
+      <ULoading
         attachBody={false}
-        visible={_props.status !== 'active'}
+        visible={_props.status === 'loading'}
+        className='u-qrcode-overlay'
+        showOverlay={false}
+      />
+      {/* 已扫描 */}
+      <UOverlay
+        attachBody={false}
+        visible={_props.status === 'scanned'}
+        className='u-qrcode-overlay'
       >
-        
+        <USpace className='u-qrcode-scanned'>
+          <UIcon type='CheckCircleFilled'/>
+          <div className='u-qrcode-scanned-text'>已扫描</div>
+        </USpace>
+      </UOverlay>
+      {/* 已过期 */}
+      <UOverlay
+        attachBody={false}
+        visible={_props.status === 'expired'}
+        className='u-qrcode-overlay'
+      >
+        <USpace className='u-qrcode-expired' direction='vertical'>
+          <USpace className='u-qrcode-expired-space'>
+            <UIcon type='CloseCircleFilled'/>
+            <div className='u-qrcode-expired-text'>二维码已过期</div>
+          </USpace>
+          <USpace className='u-qrcode-expired-space'>
+            <UIcon
+              type='RedoOutlined'
+              className='reload-icon'
+              style={{color: 'var(--u-primary-color)'}}
+              onClick={_props.onRefresh}
+            />
+            <div
+              onClick={_props.onRefresh}
+              className='reload-text'
+            >
+              <span>重新获取</span>
+            </div>
+          </USpace>
+        </USpace>
       </UOverlay>
     </div>
   )

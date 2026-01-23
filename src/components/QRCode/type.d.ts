@@ -11,4 +11,5 @@ export interface QRCode {
   errorCorrectionLevel?: 'L' | 'M' | 'Q' | 'H',
   icon?: string,
   iconSize?: number;
+  onRefresh?: () => void;
 }

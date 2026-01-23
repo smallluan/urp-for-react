@@ -19,3 +19,47 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+.u-qrcode-overlay {
+  background-color: rgba(255, 255, 255, .9);
+}
+
+.u-qrcode-scanned {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--u-success-color);
+  font-size: 20px;
+  &-text {
+    color: black;
+    font-size: 14px;
+  }
+}
+
+.u-qrcode-expired {
+  position: absolute;
+  // background-color: pink;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--u-error-color);
+  font-size: 20px;
+  &-space {
+    display: flex;
+    justify-content: center;
+    .reload-icon {
+      font-size: 16px;
+    }
+    .reload-text {
+      font-size: 12px;
+      color: var(--u-primary-color);
+    }
+  }
+  &-text {
+    color: black;
+    font-size: 14px;
+  }
+}
