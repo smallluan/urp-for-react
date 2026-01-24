@@ -4,6 +4,7 @@ export interface Rate {
   value?: number;
   defaultValue?: number;
   count?: number;
+  icon?: string;
   disabled?: boolean;
   allowPartial?: boolean;
   clearable?: boolean;
@@ -11,5 +12,14 @@ export interface Rate {
   texts?: Array<Record<number, string>>;
   gap?: number;
   size?: 'small' | 'normal' | 'large';
-  onChange?: (value: number) => void
+  onChange?: (value: number) => void;
+}
+
+export interface ContextType {
+  currIconIndex: number;
+  currPercentage: number;
+  previewIconIndex: number;
+  previewPercentage: number;
+  allowPartial: boolean;
+  disabled: boolean;
 }

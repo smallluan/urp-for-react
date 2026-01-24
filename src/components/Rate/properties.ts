@@ -5,6 +5,7 @@ export const defaultProps: Rate = {
   style: {},
   defaultValue: 0,
   count: 5,
+  icon: 'StarOutlined',
   disabled: false,
   allowPartial: false,
   clearable: false,

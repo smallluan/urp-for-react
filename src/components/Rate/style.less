@@ -1,0 +1,37 @@
+@import "../utils/styles/colors/color.less";
+
+.u-rate-disabled {
+  cursor: not-allowed !important;
+  opacity: 0.6;
+}
+
+.u-rate-single-icon {
+  position: relative;
+  line-height: 1;
+  display: inline-block;
+  transition: all .2s ease-in-out;
+
+  .icon {
+    transition: all .1s ease-in-out;
+  }
+
+  .icon-unselected {
+    color: var(--u-gray-color-5) !important;
+  }
+
+  .icon-selected {
+    position: absolute;
+    top: 1px;
+    left: 0;
+    clip-path: var(--clip-path);
+    color: var(--u-warning-color-4) !important;
+  }
+
+  &-active {
+    scale: 1.2;
+  }
+}
+
+.u-rate-single-icon-disabled {
+  cursor: not-allowed !important;
+}
