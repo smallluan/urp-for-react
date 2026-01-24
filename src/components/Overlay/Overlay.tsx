@@ -1,9 +1,10 @@
 import { Overlay } from "./type"
 import { defaultProps } from "./properties.ts"
 import useMergedProps from "../utils/hooks/useMergedProps.ts"
+import useAnimatedVisibility from "../utils/hooks/useAnimatedVisibility.ts"
 
 import "./style.less"
-import { useEffect, useMemo, useRef, useState } from "react"
+import { useMemo } from "react"
 import genClassNameFromProps from "../utils/tools/className.ts"
 
 const UOverlay = (props: Overlay) => {
@@ -17,65 +18,11 @@ const UOverlay = (props: Overlay) => {
     ]
   )
 
-  // 定时器 ref
-  const timer = useRef<NodeJS.Timeout | null>(null)
-  // requestAnimationFrame ref
-  const rafRef = useRef<number | null>(null)
-
-  // 两个变量实现淡入淡出（支持销毁时淡入淡出）
-  const [displayOverlay, setDisplayOverlay] = useState(false)
-  const [overlayVisible, setOverlayVisible] = useState(false)
-
-  useEffect(() => {
-    return () => {
-      if (timer.current) {
-        clearTimeout(timer.current)
-        timer.current = null
-      }
-    }
-  }, [])
-  
-  useEffect(() => {
-    if (timer.current) {
-      clearTimeout(timer.current)
-      timer.current = null
-    }
-    if (rafRef.current !== null) {
-      cancelAnimationFrame(rafRef.current)
-      rafRef.current = null
-    }
-
-    if (_props.visible) {
-      setDisplayOverlay(true)
-      
-      rafRef.current = requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          setOverlayVisible(true)
-          rafRef.current = null
-        })
-        
-      })
-    }
-    else {
-      setOverlayVisible(false)
-
-      timer.current = setTimeout(() => {
-        setDisplayOverlay(false)
-        timer.current = null
-      }, 200)
-    }
-
-    return () => {
-      if (timer.current) {
-        clearTimeout(timer.current)
-        timer.current = null
-      }
-      if (rafRef.current !== null) {
-        cancelAnimationFrame(rafRef.current)
-        rafRef.current = null
-      }
-    }
-  }, [_props.visible])
+  // 支持 destoryOnClose
+  const {
+    display: displayOverlay,
+    visible: overlayVisible
+  } = useAnimatedVisibility(_props.visible, 200)
 
   const overlayClassName = useMemo(() => {
     return genClassNameFromProps(
