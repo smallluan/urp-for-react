@@ -145,7 +145,8 @@ const URate = (props: Rate) => {
   const rateClassName = useMemo(() => {
     return genClassNameFromProps(
       {
-        disabled: _props.disabled
+        disabled: _props.disabled,
+        size: _props.size
       },
       'u-rate',
       'u-rate',
@@ -159,7 +160,7 @@ const URate = (props: Rate) => {
   const rateStyle = useMemo(() => {
     return genStyleFromProps(
       {
-        color: _props.color
+        color: _props.color,
       }
     )
   }, [_props.color])
