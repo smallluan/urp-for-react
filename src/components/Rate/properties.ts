@@ -9,7 +9,7 @@ export const defaultProps: Rate = {
   disabled: false,
   allowPartial: false,
   clearable: false,
-  color: 'red',
+  color: 'var(--u-warning-color-4)',
   texts: [],
   gap: 8,
   size: 'normal'

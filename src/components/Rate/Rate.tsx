@@ -119,6 +119,27 @@ const URate = (props: Rate) => {
   }
 
   /**
+   * 获取当前 value 对应的问题
+   */
+  const getText = useCallback(() => {
+    const value = finalIndex + finalPercent
+    const sortedValue = Object.keys(_props.texts).sort((a, b) => Number(b) - Number(a))
+
+    if (!sortedValue.length) return ''
+
+    let text
+    for (let i = 0; i < sortedValue.length; i ++) {
+      if (value >= Number(sortedValue[i])) {
+        text = _props.texts[sortedValue[i]]
+        break
+      }
+    }
+
+    return text
+
+  }, [finalIndex, finalPercent, _props.texts])
+
+  /**
    * 容器类名
    */
   const rateClassName = useMemo(() => {
@@ -131,6 +152,17 @@ const URate = (props: Rate) => {
       _props.className
     )
   }, [_props.className, _props.disabled])
+
+  /**
+   * 容器动态样式
+   */
+  const rateStyle = useMemo(() => {
+    return genStyleFromProps(
+      {
+        color: _props.color
+      }
+    )
+  }, [_props.color])
 
   /**
    * 上下文 value
@@ -148,11 +180,12 @@ const URate = (props: Rate) => {
     <Context.Provider value={contextValue}>
       <div
         className={rateClassName}
-        style={_props.style}
+        style={{...rateStyle, ..._props.style}}
         onMouseLeave={() => setPreviewIconIndex(-1)}
       >
         <USpace gap={_props.gap}>
           {renderIcons()}
+          {getText()}
         </USpace>
       </div>
     </Context.Provider>

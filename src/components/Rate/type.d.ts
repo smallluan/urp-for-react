@@ -9,7 +9,7 @@ export interface Rate {
   allowPartial?: boolean;
   clearable?: boolean;
   color?: string | Array<string>;
-  texts?: Array<Record<number, string>>;
+  texts?: Record<number, React.ReactNode>;
   gap?: number;
   size?: 'small' | 'normal' | 'large';
   onChange?: (value: number) => void;
