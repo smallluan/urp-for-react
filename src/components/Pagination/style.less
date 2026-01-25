@@ -1,0 +1,32 @@
+@import "../utils/styles/colors/color.less";
+
+.u-pagination-button {
+  min-width: 30px;
+  min-height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid var(--u-gray-color-4);
+  background-color: white;
+  cursor: pointer;
+  transition: all .2s ease-in-out;
+  user-select: none;
+  border-radius: 4px;
+  color: var(--u-font-gray-2);
+
+  &:hover {
+    color: var(--u-primary-color);
+    border: 1px solid var(--u-primary-color);
+  }
+}
+
+.u-pagination-button-active {
+  background-color: var(--u-primary-color);
+  color: white;
+  border: 1px solid var(--u-primary-color);
+
+  &:hover {
+    background-color: var(--u-primary-color);
+    color: white;
+  }
+}

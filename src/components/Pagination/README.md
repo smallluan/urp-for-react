@@ -8,4 +8,9 @@
 |**current**||||当前所在的页码（受控属性）|
 |**defaultCurrent**||||当前所在的页码（非受控属性）|
 |**pageSizeOptions**||||分页大小数组|
+|**showJumper**||||是否显示页码跳转|
+|**maxPageBtn**||||不折叠情况下显示的最多页码按钮数量|
+|**foldedMaxPageBtn**||||折叠情况下显示的最多按钮数量|
+|**showFirstAndLastPageBtn**||||是否显示首页和尾页的按钮（仅折叠）|
 |**onPageSizeChange**||||分页大小发生变化时触发|
+|**onCurrentChange**||||当前所在页码发生变化时触发|
