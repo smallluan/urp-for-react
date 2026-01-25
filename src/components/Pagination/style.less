@@ -13,6 +13,7 @@
   user-select: none;
   border-radius: 4px;
   color: var(--u-font-gray-2);
+  font-size: 14px;
 
   &:hover {
     color: var(--u-primary-color);
@@ -28,5 +29,59 @@
   &:hover {
     background-color: var(--u-primary-color);
     color: white;
+  }
+}
+
+// 上一个/下一个按钮
+.u-pagination-prev-next-button {
+  min-width: 30px;
+  min-height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  // border: 1px solid var(--u-gray-color-4);
+  background-color: white;
+  cursor: pointer;
+  transition: all .2s ease-in-out;
+  user-select: none;
+  border-radius: 4px;
+  color: var(--u-font-gray-2);
+  font-size: 12px;
+
+  &:hover {
+    background-color: var(--u-gray-color-3);
+  }
+}
+
+.u-pagination-prev-next-button-disabled {
+  opacity: .8;
+  cursor: not-allowed;
+
+  .anticon[tabindex] {
+    cursor: not-allowed;
+  }
+
+  &:hover {
+    background-color: white;
+  }
+}
+
+.u-pagination-ellipsis-button {
+  min-width: 30px;
+  min-height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  // border: 1px solid var(--u-gray-color-4);
+  background-color: white;
+  cursor: pointer;
+  transition: all .2s ease-in-out;
+  user-select: none;
+  border-radius: 4px;
+  color: var(--u-font-gray-2);
+  font-size: 12px;
+
+  &:hover {
+    background-color: var(--u-gray-color-3);
   }
 }

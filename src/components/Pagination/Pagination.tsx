@@ -1,10 +1,12 @@
-import { Pagination, PaginationButtons, PaginationButton } from "./type"
+import { Pagination, PaginationButtons, PaginationButton, PrevNextButton, EllipsisButton } from "./type"
 import { paginationDefaultProps } from "./properties.ts"
 import useMergedProps from "../utils/hooks/useMergedProps.ts"
 import { USelect } from "../Select/index.ts"
 import { Select } from "../Select/type"
 import { USpace } from "../Space/index.ts"
 import { UInput } from "../Input/index.ts"
+import { UIcon } from "../Icon/index.ts"
+import { UGrid } from "../Grid/index.ts"
 import { useCallback, useMemo, useState } from "react"
 import "./style.less"
 import genClassNameFromProps from "../utils/tools/className.ts"
@@ -19,6 +21,7 @@ const UPagination = (props: Pagination) => {
       'className', 'style', 'defaultPageSize', 'defaultCurrent',
       'pageSizeOptions', 'total', 'pageSize', 'current',
       'showJumper', 'maxPageBtn', 'foldedMaxPageBtn', 'showFirstAndLastPageBtn',
+      'showPreviousAndNextBtn',
       'onPageSizeChange', 'onCurrentChange'
     ]
   )
@@ -99,27 +102,30 @@ const UPagination = (props: Pagination) => {
 
 
   return (
-    <USpace>
-      <div>共{_props.total}条数据</div>
-      <USelect
-        options={selectOptions}
-        value={finalPageSize}
-        onChange={handlePageSizeChange}
-      />
-      <UPaginationButtons
-        pageCount={pageCount}
-        current={finalCurrent}
-        maxPageBtn={_props.maxPageBtn}
-        foldedMaxPageBtn={_props.foldedMaxPageBtn}
-        showFirstAndLastPageBtn={_props.showFirstAndLastPageBtn}
-        onButtonClick={handlePageChange}
-      />
-      <USpace style={{width: 'fit-content'}}>
-        <span>跳至</span>
-        <UInput value={String(finalCurrent)} align="center" />
-        <span>/ {pageCount}</span>
+    <UGrid.Row justify="space-between" align="center">
+      <div>共 {_props.total} 条数据</div>
+      <USpace>
+        <USelect
+          options={selectOptions}
+          value={finalPageSize}
+          onChange={handlePageSizeChange}
+        />
+        <UPaginationButtons
+          pageCount={pageCount}
+          current={finalCurrent}
+          maxPageBtn={_props.maxPageBtn}
+          foldedMaxPageBtn={_props.foldedMaxPageBtn}
+          showFirstAndLastPageBtn={_props.showFirstAndLastPageBtn}
+          showPreviousAndNextBtn={_props.showPreviousAndNextBtn}
+          onButtonClick={handlePageChange}
+        />
+        <USpace style={{width: 'fit-content'}}>
+          <span>跳至</span>
+          <UInput value={String(finalCurrent)} align="center" />
+          <span>/ {pageCount}</span>
+        </USpace>
       </USpace>
-    </USpace>
+    </UGrid.Row>
   )
 }
 
@@ -148,6 +154,28 @@ const UPaginationButtons = (props: PaginationButtons) => {
           />
         )
       }
+    }
+
+    // 上一个/下一个按钮
+    if (props.showPreviousAndNextBtn) {
+      buttons.unshift(
+        <UPrevNextButton
+          type="prev"
+          current={props.current}
+          pageCount={props.pageCount}
+          disabled={props.current === 1}
+          onClick={props.onButtonClick}
+        />
+      )
+      buttons.push(
+        <UPrevNextButton
+          type="next"
+          current={props.current}
+          pageCount={props.pageCount}
+          disabled={props.current === props.pageCount}
+          onClick={props.onButtonClick}
+        />
+      )
     }
 
     return (
@@ -217,6 +245,73 @@ const UPaginationButtons = (props: PaginationButtons) => {
       )
     }
 
+    if (props.showFirstAndLastPageBtn) {
+      if (props.current - leftCount > 1) {
+        if (props.current - leftCount > 2) {
+          buttons.unshift(
+            <UEllipsisButton
+              type="prev"
+              current={props.current}
+              pageCount={props.pageCount}
+              foldedMaxPageBtn={props.foldedMaxPageBtn}
+              disabled={false}
+              onClick={props.onButtonClick}
+            />
+          )
+        }
+        buttons.unshift(
+          <UPaginationButton
+            onClick={props.onButtonClick}
+            pageIndex={1}
+            active={false}
+          />
+        )
+      }
+
+      if (props.current + rightCount < props.pageCount) {
+        if (props.current + rightCount < props.pageCount - 1) {
+          buttons.push(
+            <UEllipsisButton
+              type="next"
+              current={props.current}
+              pageCount={props.pageCount}
+              foldedMaxPageBtn={props.foldedMaxPageBtn}
+              disabled={false}
+              onClick={props.onButtonClick}
+            />
+          )
+        }
+        buttons.push(
+          <UPaginationButton
+            onClick={props.onButtonClick}
+            pageIndex={props.pageCount}
+            active={false}
+          />
+        )
+      }
+    }
+
+    // 上一个/下一个按钮
+    if (props.showPreviousAndNextBtn) {
+      buttons.unshift(
+        <UPrevNextButton
+          type="prev"
+          current={props.current}
+          pageCount={props.pageCount}
+          disabled={props.current === 1}
+          onClick={props.onButtonClick}
+        />
+      )
+      buttons.push(
+        <UPrevNextButton
+          type="next"
+          current={props.current}
+          pageCount={props.pageCount}
+          disabled={props.current === props.pageCount}
+          onClick={props.onButtonClick}
+        />
+      )
+    }
 
     return buttons
   }
@@ -251,5 +346,94 @@ const UPaginationButton = (props: PaginationButton) => {
     </div>
   )
 }
+
+/**
+ * 上一个/下一个按钮
+ */
+const UPrevNextButton = (props: PrevNextButton) => {
+
+  const handleClick = useCallback(() => {
+    if (props.disabled) return
+    if (props.type === 'next') {
+      if (props.current < props.pageCount) {
+        props.onClick(props.current + 1)
+      }
+    } else {
+      if (props.current > 1) {
+        props.onClick(props.current - 1)
+      }
+    }
+  }, [props.disabled, props.type, props.current, props.pageCount])
+
+  const btnClassName = useMemo(() => {
+    return genClassNameFromProps(
+      {disabled: props.disabled},
+      "u-pagination-prev-next-button",
+      "u-pagination-prev-next-button"
+    )
+  }, [props.disabled])
+
+  return (
+    <div
+      className={btnClassName}
+      onClick={handleClick}
+    >
+      <UIcon type={props.type === 'prev' ? 'LeftOutlined' : 'RightOutlined'} />
+    </div>
+  )
+}
+
+
+/**
+ * Ellipsis 按钮
+ */
+const UEllipsisButton = (props: EllipsisButton) => {
+
+  const [isHover, setIsHover] = useState(false)
+
+  const btnClassName = useMemo(() => {
+    return genClassNameFromProps(
+      {
+        disabled: props.disabled,
+        hover: isHover
+      },
+      "u-pagination-ellipsis-button",
+      "u-pagination-ellipsis-button"
+    )
+  }, [props.disabled, isHover])
+
+  const iconType = useMemo(() => {
+    if (!isHover) return "EllipsisOutlined"
+    if (props.type === "prev") {
+      return "DoubleLeftOutlined"
+    } else {
+      return "DoubleRightOutlined"
+    }
+  }, [props.type, isHover])
+
+  const handleClick = () => {
+    if (props.disabled) return
+    if (props.type === 'prev') {
+      props.onClick(Math.max(1, props.current - props.foldedMaxPageBtn))
+    } else {
+      props.onClick(Math.min(props.pageCount, props.current + props.foldedMaxPageBtn))
+    }
+  }
+
+  return (
+    <div
+      className={btnClassName}
+      onClick={handleClick}
+      onMouseEnter={() => {
+        if (props.disabled) return
+        setIsHover(true)
+      }}
+      onMouseLeave={() => setIsHover(false)}
+    >
+      <UIcon type={iconType} />
+    </div>
+  )
+}
+
 
 export default UPagination

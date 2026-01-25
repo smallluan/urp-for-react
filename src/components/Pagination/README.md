@@ -12,5 +12,7 @@
 |**maxPageBtn**||||不折叠情况下显示的最多页码按钮数量|
 |**foldedMaxPageBtn**||||折叠情况下显示的最多按钮数量|
 |**showFirstAndLastPageBtn**||||是否显示首页和尾页的按钮（仅折叠）|
+|**showPreviousAndNextBtn**||||是否显示上一个/下一个按钮|
+|**size**||||尺寸|
 |**onPageSizeChange**||||分页大小发生变化时触发|
 |**onCurrentChange**||||当前所在页码发生变化时触发|
