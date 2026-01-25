@@ -57,6 +57,10 @@ const UPagination = (props: Pagination) => {
   ), [isCurrentControlled, _props.current, innerCurrent])
 
 
+  // 页数输入框的值（不能简单和 finalCurrent 绑定，否则会有问题）
+  const [pageInputValue, setPageInputValue] = useState(finalCurrent)
+
+
   /**
    * 页数尺寸 select 的选项 
    */
@@ -98,6 +102,7 @@ const UPagination = (props: Pagination) => {
     } else {
       setInnerCurrent(newPageIndex)
     }
+    setPageInputValue(newPageIndex)
   }, [isCurrentControlled, _props.onCurrentChange])
 
 
@@ -121,7 +126,26 @@ const UPagination = (props: Pagination) => {
         />
         <USpace style={{width: 'fit-content'}}>
           <span>跳至</span>
-          <UInput value={String(finalCurrent)} align="center" />
+          <UInput
+            className="u-pagination-input"
+            align="center"
+            value={String(pageInputValue)}
+            onChange={(value) => {
+              const page = Number(value)
+              setPageInputValue(Number(page))
+            }}
+            onBlur={() => {
+              if (pageInputValue >= 1 && pageInputValue <= pageCount) {
+                if (isCurrentControlled) {
+                  _props.onCurrentChange?.(pageInputValue)
+                } else {
+                  setInnerCurrent(pageInputValue)
+                }
+              } else {
+                setPageInputValue(finalCurrent)
+              }
+            }}
+          />
           <span>/ {pageCount}</span>
         </USpace>
       </USpace>
