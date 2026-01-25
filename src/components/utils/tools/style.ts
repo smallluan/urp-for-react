@@ -56,6 +56,8 @@ function isValidCSSValue(value: string): boolean {
     CSS.supports('object-position', value) ||
     // 背景 | 背景颜色
     CSS.supports('background', value) ||
-    CSS.supports('background-color', value)
+    CSS.supports('background-color', value) ||
+    // 裁切
+    CSS.supports('clip-path', value)
   )
 }
