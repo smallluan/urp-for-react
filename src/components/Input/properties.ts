@@ -1,6 +1,6 @@
-import InputType from "./type"
+import { Input } from "./type"
 
-const defaultProperties: InputType = {
+const defaultProperties: Input = {
   className: '',
   style: {},
   align: 'left',
@@ -9,7 +9,7 @@ const defaultProperties: InputType = {
   maxlength: -1,
   placeholder: '请输入',
   readonly: false,
-  value: '',
+  defaultValue: '',
   clearable: false,
   size: 'normal',
   shape: 'rect',
@@ -23,7 +23,7 @@ const defaultProperties: InputType = {
 
 export default defaultProperties
 
-export const formatProps = (props: Required<InputType>) => {
+export const formatProps = (props: Required<Input>) => {
   if (props.maxlength === 0) {
     props.disabled = true
   }

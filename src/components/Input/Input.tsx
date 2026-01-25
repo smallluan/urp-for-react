@@ -1,13 +1,16 @@
-import { useEffect, useMemo, useRef, useState, Dispatch, SetStateAction, useCallback } from "react"
-import InputType from "./type"
+import { useMemo, useRef, useState, useCallback } from "react"
+import { Input } from "./type"
 import defaultProperties, { formatProps } from './properties.ts'
 import genClassNameFromProps from '../utils/tools/className.ts'
 import { UIcon } from '../Icon/index.ts'
 import './style.less'
 import debounce from 'lodash/debounce'
 import useMergedProps from "../utils/hooks/useMergedProps.ts"
+import InputIcons from "./components/InputIcons.tsx"
+import PasswordIcon from "./components/PasswordIcon.tsx"
+import InputNumberIcon from "./components/InputNumberIcon.tsx"
 
-export default function UInput(props: InputType) {
+export default function UInput(props: Input) {
 
   const { merged: _props } = useMergedProps(
     defaultProperties,
@@ -16,25 +19,22 @@ export default function UInput(props: InputType) {
       'className', 'style', 'align', 'autoWidth', 'disabled',
       'maxlength', 'placeholder', 'readonly', 'value', 'clearable',
       'size', 'type', 'showCount', 'description', 'children',
-      'shape', 'icons', 'borderless', 'onChange' 
+      'shape', 'icons', 'borderless', 'onChange', 'defaultValue'
     ],
     formatProps
   )
 
-  const [value, setValue] = useState(_props.value)
+  // value 的受控性
+  const isValueControlled = _props.value !== undefined
+  const [innerValue, setInnerValue] = useState(_props.defaultValue || '')
+  const finalValue = useMemo(() => (
+    isValueControlled ? _props.value : innerValue
+  ), [_props.value, _props.defaultValue, innerValue, isValueControlled])
+
   const [hidePassword, setHidePassword] = useState(true)
   const [isFocused, setIsFocused] = useState(false)
   const [isHover, setIsHover] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
-
-  useEffect(() => {
-    setValue(_props.value)
-  }, [_props.value])
-
-  useEffect(() => {
-    debouncedOnchange(value)
-  }, [value])
-
 
   // 外层容器 class
   const containerClass = useMemo(() => {
@@ -44,8 +44,9 @@ export default function UInput(props: InputType) {
         size: _props.size,
         autoWidth: _props.autoWidth
       },
-      'u-input-container'  + _props.className ? ' ' + _props.className : '',
-      'u-input-container'
+      'u-input-container',
+      'u-input-container',
+      _props.className
     )
   }, [_props.shape, _props.size, _props.autoWidth, _props.className])
 
@@ -94,13 +95,21 @@ export default function UInput(props: InputType) {
     }, 200, { leading: true }), 
     [_props.onChange]
   )
-  
-  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value)
-  }
+   
+  const handleInput = useCallback((
+    e: { target: { value: string } }
+  ) => {
+    if (!isValueControlled) {
+      setInnerValue(e.target.value)
+    }
+    debouncedOnchange(e.target.value)
+  }, [_props.onChange])
 
   const handleClear = () => {
-    setValue('')
+    if (!isValueControlled) {
+      setInnerValue('')
+    }
+    debouncedOnchange('')
     inputRef.current?.focus()
   }
 
@@ -120,8 +129,8 @@ export default function UInput(props: InputType) {
         <input
           ref={inputRef}
           disabled={_props.disabled || _props.readonly}
-          maxLength={props.maxlength}
-          value={_props.value}
+          maxLength={_props.maxlength}
+          value={finalValue}
           className={inputClass}
           type={inputType}
           placeholder={_props.placeholder}
@@ -136,37 +145,22 @@ export default function UInput(props: InputType) {
           }
           {
             ( _props.clearable && (isFocused || isHover) &&
-              value.length > 0 &&
+              finalValue.length > 0 &&
               !_props.readonly && !_props.disabled
             ) &&
-            <span
-              onClick={handleClear}
-            >
-              <UIcon className="u-close-icon" type='CloseCircleOutlined' />
+            <span onClick={handleClear}>
+              <UIcon className="u-close-icon" type='CloseCircleOutlined'/>
             </span>
           }
           {
             _props.type === 'password' &&
-            <span>
-              {
-                hidePassword ?
-                  <UIcon
-                    onClick={() => {
-                      setHidePassword(false)
-                    }}
-                    className="u-close-icon"
-                    type='EyeInvisibleOutlined'
-                  /> :
-                  <UIcon
-                    onClick={() => setHidePassword(true)}
-                    className="u-close-icon"
-                    type='EyeOutlined'
-                  />
-              }
-            </span>
+            <PasswordIcon
+              passwordIconVisible={hidePassword}
+              onIconClick={setHidePassword}
+            />
           }
-          {/* 自定义组件 */}
-          { genCustomIcons(_props.icons) }
+          {/* 自定义图标 */}
+          <InputIcons icons={_props.icons} />
           {/* 数字类型输入框增减图标 */}
           {
             (
@@ -174,7 +168,12 @@ export default function UInput(props: InputType) {
               _props.type === 'number' &&
               !_props.readonly && !_props.disabled
             ) &&
-            genNumberIcons(setValue)
+            <InputNumberIcon
+              value={finalValue}
+              onChange={(value) => {
+                handleInput({target: { value: String(value) }})
+              }}
+            />
           }
         </div>
       </div>
@@ -185,7 +184,7 @@ export default function UInput(props: InputType) {
           {
             _props.showCount &&
             <span className="u-count">
-              <span>{ value.length }</span>
+              <span>{ finalValue.length }</span>
               {
                 _props.maxlength > 0 &&
                 <div> /{_props.maxlength}</div>
@@ -195,74 +194,5 @@ export default function UInput(props: InputType) {
         </div>
       }  
     </div>
-  )
-}
-
-/**
- * 数字类型输入框显示的增减图标生成函数
- * @param setValue - 设置输入框值的函数
- * @returns 
- */
-const genNumberIcons = (setValue: Dispatch<SetStateAction<string>>) => {
-  return (
-    <span className="u-number-icons">
-      <UIcon
-        onClick={() => setValue((prev: string) => {
-          const newValue = Number(prev) + 1
-          return String(newValue)
-        })}
-        className="u-number-icon-up"
-        type='CaretUpOutlined'
-      />
-      <UIcon
-        onClick={() => setValue((prev: string) => {
-          const newValue = Number(prev) - 1
-          return String(newValue)
-        })}
-        className="u-number-icon-down"
-        type='CaretDownOutlined'
-      />
-    </span>
-  )
-}
-
-/**
- * 用户自定义图标生成函数
- * @param icons - 用户传入的 icons
- */
-const genCustomIcons = (icons: InputType['icons']) => {
-  if (typeof icons === 'string') {
-    return (
-      <UIcon
-        className="u-close-icon"
-        type={icons}
-      />
-    )
-  }
-  if (Array.isArray(icons)) {
-    return(
-      icons.map((icon, index) => {
-        if (typeof icon === 'string') {
-          return (
-            <UIcon
-              key={index}
-              className="u-close-icon"
-              type={icon}
-            />
-          )
-        } else {
-          return (
-            <span className="u-close-icon" key={index}>
-              {icon}
-            </span>
-          )
-        }
-      })
-    )
-  }
-  return (
-    <span className="u-close-icon">
-      {icons}
-    </span>
   )
 }
