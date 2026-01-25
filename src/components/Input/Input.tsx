@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState, useCallback } from "react"
+import { useMemo, useRef, useState, useCallback, useEffect } from "react"
 import { Input } from "./type"
 import defaultProperties, { formatProps } from './properties.ts'
 import genClassNameFromProps from '../utils/tools/className.ts'
@@ -19,7 +19,8 @@ export default function UInput(props: Input) {
       'className', 'style', 'align', 'autoWidth', 'disabled',
       'maxlength', 'placeholder', 'readonly', 'value', 'clearable',
       'size', 'type', 'showCount', 'description', 'children',
-      'shape', 'icons', 'borderless', 'onChange', 'defaultValue'
+      'shape', 'icons', 'borderless', 'onChange', 'defaultValue',
+      'onBlur'
     ],
     formatProps
   )
@@ -89,13 +90,20 @@ export default function UInput(props: Input) {
   }, [_props.type, hidePassword])
   
 
+  /**
+   * 防抖处理后的onChange
+   */
   const debouncedOnchange = useCallback(
     debounce((val: string) => {
       _props.onChange?.(val)
     }, 200, { leading: true }), 
     [_props.onChange]
   )
-   
+  
+
+  /**
+   * 值变化事件
+   */
   const handleInput = useCallback((
     e: { target: { value: string } }
   ) => {
@@ -105,13 +113,27 @@ export default function UInput(props: Input) {
     debouncedOnchange(e.target.value)
   }, [_props.onChange])
 
-  const handleClear = () => {
+
+  /**
+   * 清空输入框内容
+   */
+  const handleClear = useCallback(() => {
     if (!isValueControlled) {
       setInnerValue('')
     }
     debouncedOnchange('')
     inputRef.current?.focus()
-  }
+  }, [isValueControlled])
+
+
+  /**
+   * 组件是去焦点
+   */
+  useEffect(() => {
+    if (!isFocused) {
+      _props.onBlur?.(finalValue)
+    }
+  }, [isFocused])
 
   return(
     <div 

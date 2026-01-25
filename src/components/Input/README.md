@@ -21,3 +21,4 @@
 |**icons**|N|`string \| string[]`|-|额外的图标|
 |**borderless**||||无边框|
 |**onChange**||||输入触发|
+|**onBlur**||||失焦时触发|
