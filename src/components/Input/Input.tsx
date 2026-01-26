@@ -127,13 +127,32 @@ export default function UInput(props: Input) {
 
 
   /**
-   * 组件是去焦点
+   * 组件失去焦点
    */
   useEffect(() => {
     if (!isFocused) {
       _props.onBlur?.(finalValue)
     }
   }, [isFocused])
+
+  
+  /**
+   * 监听 enter down,失去焦点
+   */
+  useEffect(() => {
+    const handleEnterDown = (e: KeyboardEvent) => {
+      if (!inputRef.current) return
+      // 仅在按下 enter 并且页面焦点在当前元素上时才触发失去焦点
+      if (e.code === 'Enter' && document.activeElement === inputRef.current) {
+        inputRef.current?.blur()
+      }
+    }
+    document.addEventListener('keydown', handleEnterDown)
+
+    return () => {
+      document.removeEventListener('keydown', handleEnterDown)
+    }
+  }, [])
 
   return(
     <div 
