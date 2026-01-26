@@ -19,7 +19,7 @@ const USelect = (props: Select) => {
     [
       'multiple', 'options', 'defaultValue', 'value', 'clearable', 'inputable',
       'hideSelected', 'hideRadioCircle', 'cancleable', 'selectLimit', 'onChange',
-      'borderless', 'size', 'maxVisibleNum', 'position'
+      'borderless', 'size', 'maxVisibleNum', 'position', 'className', 'style'
     ],
     formatProps
   )
@@ -167,6 +167,7 @@ const USelect = (props: Select) => {
         <div
           ref={selectRef}
           className={selectClass}
+          style={_props.style}
           tabIndex={0}
           onMouseEnter={() => setMouseEnter(true)}
           onMouseLeave={() => setMouseEnter(false)}

@@ -3,6 +3,8 @@ type OptionValue = Option['value']
 type Value = OptionValue | OptionValue[]
 
 export interface Select {
+  className?: string;
+  style?: React.CSSProperties;
   value?: Value,
   defaultValue?: string | string[],
   options:  Option[],  // options 必传
