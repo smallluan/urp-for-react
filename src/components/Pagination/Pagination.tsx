@@ -21,7 +21,7 @@ const UPagination = (props: Pagination) => {
       'className', 'style', 'defaultPageSize', 'defaultCurrent',
       'pageSizeOptions', 'total', 'pageSize', 'current',
       'showJumper', 'maxPageBtn', 'foldedMaxPageBtn', 'showFirstAndLastPageBtn',
-      'showPreviousAndNextBtn',
+      'showPreviousAndNextBtn', 'showPageSizeOptions',
       'onPageSizeChange', 'onCurrentChange'
     ]
   )
@@ -110,11 +110,14 @@ const UPagination = (props: Pagination) => {
     <UGrid.Row justify="space-between" align="center">
       <div>共 {_props.total} 条数据</div>
       <USpace>
-        <USelect
-          options={selectOptions}
-          value={finalPageSize}
-          onChange={handlePageSizeChange}
-        />
+        {
+          _props.showPageSizeOptions &&
+          <USelect
+            options={selectOptions}
+            value={finalPageSize}
+            onChange={handlePageSizeChange}
+          />
+        }
         <UPaginationButtons
           pageCount={pageCount}
           current={finalCurrent}
@@ -124,7 +127,8 @@ const UPagination = (props: Pagination) => {
           showPreviousAndNextBtn={_props.showPreviousAndNextBtn}
           onButtonClick={handlePageChange}
         />
-        <USpace style={{width: 'fit-content'}}>
+        {/* 快速跳转区域 */}
+        <USpace className="u-pagination-quick-jump">
           <span>跳至</span>
           <UInput
             className="u-pagination-input"
