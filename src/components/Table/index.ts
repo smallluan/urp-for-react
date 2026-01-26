@@ -1,0 +1,1 @@
+export { default as UTable } from "./Table.tsx"
