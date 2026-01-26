@@ -7,11 +7,12 @@ export interface Pagination {
   current?: number;
   defaultCurrent?: number;
   pageSizeOptions?: Array<number>;
-  showJumper?: boolean;
   maxPageBtn?: number;
   foldedMaxPageBtn?: number;
   showFirstAndLastPageBtn?: boolean;
   showPreviousAndNextBtn?: boolean;
+  showPageSizeOptions?: boolean;
+  showJumper?: boolean;
   onPageSizeChange?: (newPageSize: number) => void;
   onCurrentChange?: (newPageIndex: number) => void;
 }

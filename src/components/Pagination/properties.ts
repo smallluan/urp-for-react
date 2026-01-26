@@ -6,10 +6,10 @@ export const paginationDefaultProps: Pagination = {
   defaultPageSize: 5,
   defaultCurrent: 1,
   pageSizeOptions: [5, 10, 20, 50, 100],
-  showJumper: false,
   maxPageBtn: 10,
   foldedMaxPageBtn: 5,
   showFirstAndLastPageBtn: true,
   showPreviousAndNextBtn: false,
   showPageSizeOptions: true,
+  showJumper: false,
 }

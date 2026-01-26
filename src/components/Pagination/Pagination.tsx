@@ -113,6 +113,7 @@ const UPagination = (props: Pagination) => {
         {
           _props.showPageSizeOptions &&
           <USelect
+            style={{ width: '100px' }}
             options={selectOptions}
             value={finalPageSize}
             onChange={handlePageSizeChange}
@@ -128,30 +129,34 @@ const UPagination = (props: Pagination) => {
           onButtonClick={handlePageChange}
         />
         {/* 快速跳转区域 */}
-        <USpace className="u-pagination-quick-jump">
-          <span>跳至</span>
-          <UInput
-            className="u-pagination-input"
-            align="center"
-            value={String(pageInputValue)}
-            onChange={(value) => {
-              const page = Number(value)
-              setPageInputValue(Number(page))
-            }}
-            onBlur={() => {
-              if (pageInputValue >= 1 && pageInputValue <= pageCount) {
-                if (isCurrentControlled) {
-                  _props.onCurrentChange?.(pageInputValue)
+        {
+          _props.showJumper &&
+          <USpace className="u-pagination-quick-jump">
+            <span>跳至</span>
+            <UInput
+              className="u-pagination-input"
+              align="center"
+              value={String(pageInputValue)}
+              onChange={(value) => {
+                const page = Number(value)
+                setPageInputValue(Number(page))
+              }}
+              onBlur={() => {
+                if (pageInputValue >= 1 && pageInputValue <= pageCount) {
+                  if (isCurrentControlled) {
+                    _props.onCurrentChange?.(pageInputValue)
+                  } else {
+                    setInnerCurrent(pageInputValue)
+                  }
                 } else {
-                  setInnerCurrent(pageInputValue)
+                  setPageInputValue(finalCurrent)
                 }
-              } else {
-                setPageInputValue(finalCurrent)
-              }
-            }}
-          />
-          <span>/ {pageCount}</span>
-        </USpace>
+              }}
+            />
+            <span>/ {pageCount}</span>
+          </USpace>
+        }
+       
       </USpace>
     </UGrid.Row>
   )
