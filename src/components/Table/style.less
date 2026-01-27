@@ -1,17 +1,78 @@
+@import "../utils/styles/colors/color.less";
+
+@u-table-head-font-color: var(--u-gray-color-8);  // 表头标题颜色
+@u-table-head-bg-color: #f6f6f6;  // 表头背景颜色
+@u-table-row-bg-color: var(--u-font-white-1);  // 行默认背景颜色
+@u-table-row-hover-bg-color: var(--u-gray-color-1);  // 鼠标悬浮时的行背景颜色
+@u-table-row-stripe-bg-color: var(--u-gray-color-1);  // 斑马纹背景颜色
+@u-table-border-color: var(--u-gray-color-3);  // 边框颜色
+
 .u-table {
+  position: relative;
   width: 100%;
   border-collapse: collapse;
-  border: 1px solid #e8e8e8;
+  border-radius: 4px;
+  .u-table-head {
+    position: sticky;
+    top: 0;
+    border-bottom: 1px solid @u-table-border-color;
+    // 表头单元格
+    .u-table-th {
+      border: @u-table-border-color;
+      padding: 8px 16px;
+      text-align: left;
+      background-color: @u-table-row-bg-color;
+      color: @u-table-head-font-color;
+      font-weight: normal;
+      font-size: 14px;
+    }
+  }
+
+  // 标题行
+  .u-table-tr {
+    background-color: @u-table-row-bg-color;
+    transition: all .2s ease-in-out;
+    border-bottom: 1px solid @u-table-border-color;
+    // 表体单元格
+    .u-table-td {
+      padding: 8px 16px;
+    }
+  }
 }
 
-.u-table-th {
-  border: 1px solid #e8e8e8;
-  padding: 8px 16px;
-  text-align: left;
-  background-color: #fafafa;
+// 斑马纹
+.u-table-stripe {
+  .u-table-tr {
+    &:nth-child(odd) {
+      background-color: @u-table-row-bg-color;
+    }
+    &:nth-child(even) {
+      background-color: @u-table-row-hover-bg-color;
+    }
+  }
 }
 
-.u-table-td {
-  border: 1px solid #e8e8e8;
-  padding: 8px 16px;
+// 边框
+.u-table-bordered {
+  border: 1px solid @u-table-border-color;
+  .u-table-head {
+    border: 1px solid @u-table-border-color;
+    .u-table-th {
+      border: 1px solid @u-table-border-color;
+    }
+  }
+  .u-table-tr {
+    .u-table-td {
+      border: 1px solid @u-table-border-color;
+    }
+  }
+}
+
+// 悬浮效果
+.u-table-hover {
+  .u-table-tr {
+    &:hover {
+      background-color: @u-table-row-hover-bg-color;
+    }
+  }
 }
