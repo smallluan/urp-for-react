@@ -1,4 +1,4 @@
-import { Pagination } from "./type"
+import { Pagination, PaginationMini } from "./type"
 
 export const paginationDefaultProps: Pagination = {
   className: '',
@@ -12,4 +12,15 @@ export const paginationDefaultProps: Pagination = {
   showPreviousAndNextBtn: false,
   showPageSizeOptions: true,
   showJumper: false,
+  size: 'normal',
+}
+
+export const paginationMiniDefaultProps: PaginationMini = {
+  className: '',
+  style: {},
+  pageSize: 5,
+  defaultCurrent: 1,
+  size: 'normal',
+  disabled: false,
+  jumpable: false,
 }
