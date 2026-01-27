@@ -10,6 +10,7 @@ import { UGrid } from "../Grid/index.ts"
 import { useCallback, useMemo, useState } from "react"
 import "./style.less"
 import genClassNameFromProps from "../utils/tools/className.ts"
+import UPaginationMini from "./PaginationMini.tsx"
 
 
 const UPagination = (props: Pagination) => {
@@ -468,5 +469,6 @@ const UEllipsisButton = (props: EllipsisButton) => {
   )
 }
 
+UPagination.Mini = UPaginationMini
 
 export default UPagination
