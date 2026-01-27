@@ -12,5 +12,5 @@ export interface Button {
   icon?: string,
   size?: 'normal' | 'small' | 'large',
   pureIcon?: boolean,
-  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void,
+  onClick?: (e: React.MouseEvent) => void,
 }

@@ -59,7 +59,7 @@ export default function UButton(props: Button) {
   }, [])
 
   // 点击事件处理
-  const handleClick = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = useCallback((e: React.MouseEvent) => {
     if (disabled || loading) return
 
     clearActiveBgTimer()
@@ -79,7 +79,7 @@ export default function UButton(props: Button) {
   }, [disabled, loading, onClick, clearActiveBgTimer])
 
   // 鼠标按下显示激活背景
-  const handleMouseDown = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleMouseDown = useCallback((e: React.MouseEvent) => {
     if (disabled || loading || activeBg.visible) return
 
     clearActiveBgTimer()
@@ -99,7 +99,7 @@ export default function UButton(props: Button) {
   }, [disabled, loading, activeBg.visible, clearActiveBgTimer])
 
   // 鼠标抬起隐藏(或延时隐藏)背景，清空定时器
-  const handleMouseUp = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleMouseUp = useCallback((e: React.MouseEvent) => {
     if (disabled || loading) return
 
     clearActiveBgTimer()
