@@ -21,12 +21,15 @@ const Text = (props) => {
   const textClass = useMemo(() => {
     return genClassNameFromProps(
       {
-        mark: props.mark
+        mark: props.mark,
+        bold: props.bold,
+        code: props.code
       },
       'u-typo-text',
-      'u-typo-text'
+      'u-typo-text',
+      props.className
     )
-  }, [props.mark])
+  }, [props.mark, props.bold])
   return(
     <span className={textClass}>{props.children}</span>
   )
