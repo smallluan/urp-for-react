@@ -1,13 +1,23 @@
 import { LinkType } from "./type.ts"
-import defaultProperties from "./properties.ts"
+import { defaultProperties } from "./properties.ts"
 import { UIcon } from '../Icon/index.ts'
 import { useMemo } from "react"
 import genClassNameFromProps from "../utils/tools/className.ts"
 import { Link } from "react-router-dom"
 import './style.less'
+import useMergedProps from "../utils/hooks/useMergedProps.ts"
 
 export default function ULink(props: LinkType) {
-  const _props = { ...defaultProperties, ...props }
+  const { merged: _props } = useMergedProps (
+    defaultProperties,
+    props,
+    [
+      'className', 'style', 'content', 'children',
+      'theme', 'underline', 'size', 'disabled',
+      'prefixIcon', 'suffixIcon', 'href', 'target',
+      'to', 'onClick'
+    ]
+  )
   const { 
     content, children, href, target, theme, 
     size, disabled, underline, prefixIcon, suffixIcon, to,
@@ -19,8 +29,9 @@ export default function ULink(props: LinkType) {
     genClassNameFromProps(
       { theme, size, disabled, underline },
       'u-link',
-      'u-link'
-    ) + (className && ' ' + className)
+      'u-link',
+      className
+    )
   , [theme, size, disabled, underline, className])
 
   const renderLink = () => {

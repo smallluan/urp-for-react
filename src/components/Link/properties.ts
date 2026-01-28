@@ -1,6 +1,6 @@
 import { LinkType } from "./type"
 
-const defaultProperties: Required<LinkType> = {
+export const defaultProperties: LinkType = {
   className: '',
   style: {},
   content: null,
@@ -15,5 +15,3 @@ const defaultProperties: Required<LinkType> = {
   target: '_blank',
   to: ''
 }
-
-export default defaultProperties

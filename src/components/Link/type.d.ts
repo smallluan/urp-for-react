@@ -10,6 +10,7 @@ export interface LinkType {
   prefixIcon?: string,
   suffixIcon?: string,
   href?: string,
-  target?: '_self' | '_blank' | '_blank' | '_top' | string,
-  to?: string
+  target?: '_self' | '_blank' | '_top' | string,
+  to?: string,
+  onClick?: (e: MouseEvent) => void
 }
