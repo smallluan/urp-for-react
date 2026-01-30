@@ -9,4 +9,6 @@
 |**hover**||||是否有悬浮效果|
 |**showHeader**||||是否显示表头|
 |**showIndex**||||是否显示 index|
+|**status**||||表格状态|
+|**onChange**||||统一值变化回调|
 

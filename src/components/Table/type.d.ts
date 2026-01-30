@@ -21,6 +21,20 @@ export interface DataItem {
 
 export type DataType = DataItem[];
 
+export interface OnChangeEmit {
+  changed: {
+    index: {
+      rowIndex: number,
+      colIndex: number
+    }
+    value: {
+      oldValue: any,
+      newValue: any
+    }
+  },
+  value: DataType[]
+}
+
 export interface TableType {
   className?: string;
   style?: React.CSSProperties;
@@ -31,5 +45,7 @@ export interface TableType {
   hover?: boolean;
   showHeader?: boolean;
   showIndex?: boolean;
-  pagination?: Pagination | undefined
+  pagination?: Pagination | undefined;
+  status?: 'editable' | 'readOnly' | 'disabled';
+  onChange?: (params:OnChangeEmit) => void;
 }

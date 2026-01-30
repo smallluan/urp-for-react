@@ -4,14 +4,10 @@ import "./style.less"
 import { TableType } from "./type"
 import { tableDefaultProps } from "./properties.ts"
 
-import { UTag } from "../Tag/index.ts"
-import { USwitch } from "../Switch/index.ts"
-import { USelect } from "../Select/index.ts"
-import { ULink } from "../Link/index.ts"
-import { UTypo } from "../Typo/index.ts"
 import { USpace } from "../Space/index.ts"
 import { UPagination } from "../Pagination/index.ts"
 import useMergedProps from "../utils/hooks/useMergedProps.ts"
+import CellComponent from "./Components/CellComponents.tsx"
 
 const UTable = (props: TableType) => {
 
@@ -21,7 +17,7 @@ const UTable = (props: TableType) => {
     [
       'className', 'style', 'data', 'columns',
       'stripe', 'bordered', 'hover', 'showHeader',
-      'showIndex', 'pagination'
+      'showIndex', 'pagination', 'status', 'onChange'
     ]
   )
 
@@ -53,6 +49,12 @@ const UTable = (props: TableType) => {
   }, [_props.className, _props.stripe, _props.bordered, _props.hover])
 
 
+  // 统一值变化事件
+  const onChange = (oldValue, newValue) => {
+    _props.onChange?.(oldValue, newValue)
+  }
+
+
   return (
     <USpace direction="vertical" gap={16}>
       <table
@@ -74,16 +76,22 @@ const UTable = (props: TableType) => {
         
         <tbody>
           {
-            visibleData.map(row => {
+            visibleData.map((row, rowIndex) => {
               return <tr className="u-table-tr" key={row.id}>
                 {
-                  _props.columns.map(col => (
+                  _props.columns.map((col, colIndex) => (
                     <td className="u-table-td" key={col.key}>
                       <CellComponent
                         type={col.type}
                         value={row[col.key]?.value}
                         properties={row[col.key]?.props}
                         render={row[col.key]?.render}
+                        colProps={col.props}
+                        status={_props.status}
+                        position={{rowIndex, colIndex}}
+                        onChange={onChange}
+                        data={_props.data}
+                        columns={_props.columns}
                       />
                     </td>
                   ))
@@ -105,45 +113,6 @@ const UTable = (props: TableType) => {
     </USpace>
     
   )
-}
-
-const CellComponent = (
-  props: {
-    type: string,
-    value: any,
-    properties: Record<string, any>,
-    render: React.ReactNode
-  }
-) => {
-  if (props.type === 'tag') {
-    return (
-      <UTag content={props.value} {...props.properties}/>
-    )
-  } else if (props.type === 'switch') {
-    return (
-      <USwitch state={props.value} {...props.properties}/>
-    )
-  } else if (props.type === 'select') {
-    return (
-      <USelect value={props.value} {...props.properties}/>
-    )
-  } else if (props.type === 'link') {
-    return (
-      <ULink content={props.value} {...props.properties} />
-    )
-  } else if (props.type === 'text') {
-    return (
-      <UTypo.Text>{props.value}</UTypo.Text>
-    )
-  } else if (props.type === 'custom') {
-      return (
-        props.render
-      )
-  } else {
-    return (
-      <div>未知组件</div>
-    )
-  }
 }
 
 export default UTable

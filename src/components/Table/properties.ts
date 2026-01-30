@@ -10,4 +10,5 @@ export const tableDefaultProps: TableType = {
   hover: false,
   showHeader: true,
   showIndex: false,
+  status: 'editable',
 }
