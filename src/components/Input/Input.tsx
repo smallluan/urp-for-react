@@ -20,7 +20,7 @@ export default function UInput(props: Input) {
       'maxlength', 'placeholder', 'readonly', 'value', 'clearable',
       'size', 'type', 'showCount', 'description', 'children',
       'shape', 'icons', 'borderless', 'onChange', 'defaultValue',
-      'onBlur'
+      'onBlur', 'onFocus'
     ],
     formatProps
   )
@@ -127,10 +127,12 @@ export default function UInput(props: Input) {
 
 
   /**
-   * 组件失去焦点
+   * 组件获取/失去焦点
    */
   useEffect(() => {
-    if (!isFocused) {
+    if (isFocused) {
+      _props.onFocus?.(finalValue)
+    } else {
       _props.onBlur?.(finalValue)
     }
   }, [isFocused])
