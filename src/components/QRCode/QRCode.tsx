@@ -83,7 +83,7 @@ const UQRCode = (props: QRCodeType) => {
     } else {
       genSVGQR()
     }
-  }, [_props.renderType, _props.status, _props.errorCorrectionLevel, _props.size])
+  }, [_props])
 
   /**
    * 二维码类
