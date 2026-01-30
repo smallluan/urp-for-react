@@ -4,7 +4,7 @@ import { USlider } from "../Slider/index.ts"
 import { UGrid } from "../Grid/index.ts"
 import { USelect } from "../Select/index.ts"
 import { UInput } from "../Input/index.ts"
-import { positionToSv, hsvToRgb, hsvToHex ,extractRgbValues } from "./utils.ts"
+import { positionToSv, hsvToRgb, hsvToHex ,extractRgbValues, hexToRgb, rgbToHsv, svToPosition } from "./utils.ts"
 
 import "./style.less"
 import genStyleFromProps from "../utils/tools/style.ts"
@@ -32,8 +32,14 @@ const UColorPickerPanel = () => {
   const [isDragging, setIsDragging] = useState(false)
   // 色相
   const [hue, setHue] = useState(0)
+  // Slider专属受控状态
+  const [hueSliderValue, setHueSliderValue] = useState(0)
   // 当前颜色格式(默认是 16 进制格式)
   const [currValueType, setCurrValueType] = useState('HEX')
+
+  // 16进制色值输入框的值
+  const [hexInputValue, setHexInputValue] = useState('')
+
 
   // 色值面板 ref
   const hsvPanelRef = useRef<HTMLElement>(null)
@@ -61,7 +67,7 @@ const UColorPickerPanel = () => {
   /**
    * 色值面板鼠标按下事件处理函数
    */
-  const handleMouseDown = useCallback((e: React.MouseEvent) => {
+  const handleMouseDown = useCallback((e: MouseEvent) => {
     setIsDragging(true)
     const newPos = calculateIndicatorPos(e)
     setIndicatorPos(newPos)
@@ -71,7 +77,7 @@ const UColorPickerPanel = () => {
   /**
    * 色值面板鼠标移动事件处理函数
    */
-  const handleMouseMove = useCallback((e: React.MouseEvent) => {
+  const handleMouseMove = useCallback((e: MouseEvent) => {
     if (!isDragging) return
     const newPos = calculateIndicatorPos(e)
     setIndicatorPos(newPos)
@@ -91,6 +97,29 @@ const UColorPickerPanel = () => {
 
     setHue(validHue)
   }, [])
+
+
+  /**
+   * 处理输入 HEX 变化
+   */
+  const handleHexInputChange = useCallback((hexValue: string) => {
+    setHexInputValue(hexValue)
+  }, [])
+
+  const handleHexInputBlur = (hexValue: string) => {
+    const rgb = hexToRgb(hexValue)
+    if (!rgb) return
+
+    const { h, s, v } = rgbToHsv(rgb.r, rgb.g, rgb.b)
+
+    const panelDom = hsvPanelRef.current
+    if (!panelDom) return
+    const { width, height } = panelDom.getBoundingClientRect()
+    const newPos = svToPosition(width, height, s, v)
+
+    setHue(h)
+    setIndicatorPos(newPos)
+  }
 
 
   /**
@@ -151,6 +180,25 @@ const UColorPickerPanel = () => {
     }
   }, [isDragging, handleMouseMove, handleMouseEnd])
 
+
+  /**
+   * 同步全局hue到Slider受控状态
+   * 解决HEX输入后Slider位置更新的问题
+   */
+  useEffect(() => {
+    setHueSliderValue(hue)
+  }, [hue])
+
+
+  /**
+   * 同步计算态到输入态
+   */
+  useEffect(() => {
+    if (currValueType === 'HEX') {
+      setHexInputValue(hexColor)
+    }
+  }, [hexColor, currValueType])
+
   return (
     <USpace
       direction="vertical"
@@ -181,6 +229,7 @@ const UColorPickerPanel = () => {
           showLabel={false}
           max={360}
           onChange={handleHueChange}
+          value={hueSliderValue}
         />
         <div className="u-color-picker-panel-color-preview"/>
       </UGrid.Row>
@@ -195,7 +244,11 @@ const UColorPickerPanel = () => {
         />
         {
           currValueType === 'HEX' &&
-          <HEXInput value={hexColor} /> 
+          <HEXInput
+            value={hexInputValue}
+            onChange={handleHexInputChange}
+            onBlur={handleHexInputBlur}
+          /> 
         }
         {
           currValueType === 'RGB' &&
@@ -217,15 +270,41 @@ const UColorPickerPanel = () => {
  */
 const HEXInput = (
   props: {
-    value:string
+    value:string,
+    onChange: (value: string) => void
+    onBlur: (value: string) => void
   }
 ) => {
+
+  // 过滤逻辑 先replace再补#，避免覆盖
+  const filterHexValue = (value: string) => {
+    // 过滤非法字符
+    let filtered = value.replace(/[^#0-9a-fA-F]/g, '').slice(0, 7)
+    // 补#号（如果没有的话）
+    if (filtered && !filtered.startsWith('#')) {
+      filtered = `#${filtered}`
+    }
+    return filtered
+  }
+
+  const handleInput = (value: string) => {
+    const filtered = filterHexValue(value)
+    props.onChange(filtered)
+  }
+
+  const handleBlur = () => {
+    const filtered = filterHexValue(props.value)
+    props.onBlur(filtered)
+  }
+
   return (
     <UInput
       size="small"
       align="center"
       value={props.value}
       style={{ width: '120px' }}
+      onChange={handleInput}
+      onBlur={handleBlur}
     />
   )
 }

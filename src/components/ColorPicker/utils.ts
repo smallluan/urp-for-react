@@ -47,7 +47,7 @@ export const hsvToRgb = (
   const f = h - i
   const p = v * (1 - s)
   const q = v * (1 - s * f)
-  const t = v * (1 - s * (1- f))
+  const t = v * (1 - s * (1 - f))
 
   let r = 0, g = 0, b = 0
   switch (i) {
@@ -119,3 +119,79 @@ export const extractRgbValues = (
   return [r, g, b]
 }
 
+
+/**
+ * 从 HEX 十六进制颜色转为 RGB
+ * @param hex - 十六进制色彩字符串
+ * @returns RBG三个值
+ */
+export const hexToRgb = (hex: string) => {
+  // 去除#号，处理3位简写（如#fff → #ffffff）
+  hex = hex.replace(/^#/, '').trim()
+  if (hex.length === 3) {
+    hex = hex.split('').map(char => char + char).join('')
+  }
+  // 解析RGB值（0-255）
+  const r = parseInt(hex.substring(0, 2), 16)
+  const g = parseInt(hex.substring(2, 4), 16)
+  const b = parseInt(hex.substring(4, 6), 16)
+  // 校验合法性
+  if (isNaN(r) || isNaN(g) || isNaN(b) || hex.length !== 6) {
+    return null
+  }
+  return { r, g, b }
+}
+
+
+/**
+ * RGB 色彩转 HSV
+ * @param r 
+ * @param g 
+ * @param b 
+ * @returns HSV
+ */
+export const rgbToHsv = (r: number, g: number, b: number) => {
+  // 归一化到0-1区间
+  r /= 255
+  g /= 255
+  b /= 255
+
+  const max = Math.max(r, g, b)
+  const min = Math.min(r, g, b)
+  // eslint-disable-next-line prefer-const
+  let h = 0, s = 0, v = max
+
+  const delta = max - min
+  s = max === 0 ? 0 : delta / max
+
+  if (max !== min) {
+    switch (max) {
+      case r: h = (g - b) / delta + (g < b ? 6 : 0); break
+      case g: h = (b - r) / delta + 2; break
+      case b: h = (r - g) / delta + 4; break
+    }
+    h *= 60 // 转换为0-360的色相值
+  }
+
+  return { h: Math.round(h), s, v } // 色相取整，匹配滑块精度
+}
+
+
+/**
+ * SV值转面板坐标
+ * @param width 
+ * @param height 
+ * @param s 
+ * @param v 
+ * @returns 
+ */
+export const svToPosition = (width: number, height: number, s: number, v: number) => {
+  // 反向positionToSv逻辑：s = x/width → x = s*width；v = 1 - y/height → y = (1-v)*height
+  const x = s * width
+  const y = (1 - v) * height
+  // 边界限制（确保坐标在面板内）
+  return {
+    x: Math.max(0, Math.min(width, x)),
+    y: Math.max(0, Math.min(height, y))
+  }
+}
