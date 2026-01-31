@@ -1,185 +1,145 @@
 import { Popup } from "./type"
 import "./style.less"
-import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import { defaultProps } from "./properties.ts"
 import genClassNameFromProps from "../utils/tools/className.ts"
-import React from "react"
 import useMergedProps from "../utils/hooks/useMergedProps.ts"
+import UPopupContent from "./components/Content.tsx"
+import useAnimatedVisibility from "../utils/hooks/useAnimatedVisibility.ts"
+import useClickOutside from "../utils/hooks/useClickOutside.ts"
+import PortalContainer from "../utils/tools/portal.tsx"
+import { debounce } from "lodash"
 
 const UPopup = (props: Popup) => {
-
+  // 合并属性
   const { merged: _props } = useMergedProps(
     defaultProps,
     props,
     [
-      'content', 'visible', 'trigger', 'position', 'arrow', 
-      'className', 'style', 'onChange', 'contentClassName', 'contentStyle'
+      'content', 'visible', 'trigger', 'position', 'arrow', 'children',
+      'className', 'style', 'onChange', 'contentClassName', 'contentStyle',
+      'destoryOnClose'
     ]
   )
 
   const [mouseEnter, setMouseEnter] = useState(false)
   const [clicked, setClicked] = useState(false)
   const [rightClicked, setRightClicked] = useState(false)
+  const [contentPos, setContentPos] = useState({left: '', top: ''})
 
-  const popupRef = useRef(null)
-  const hasBindClickRef = useRef(false)
+  const popupRef = useRef<HTMLDivElement | null>(null)
 
-  const contentChildren = React.Children.toArray(props.children).find(item => item.type === UPopup.Content)
+  // 显示是否受控
+  const isVisibleControlled = _props.visible !== undefined
+  // 是否显示 content 的内部状态
+  const innerVisible = useMemo(() => {
+    const { trigger } = _props
+    if (trigger === 'hover') return mouseEnter
+    if (trigger === 'click') return clicked
+    if (trigger === 'rightClick') return rightClicked
+    return false
+  }, [_props.trigger, mouseEnter, clicked, rightClicked])
+  // 是否显示 content 最终值
+  const finalVisible = isVisibleControlled ? _props.visible : innerVisible
+
+  // 支持 destoryOnClose
+  const {
+    display: popupDisplay,
+    visible: popupVisible
+  } = useAnimatedVisibility(finalVisible, 200)
 
   useEffect(() => {
-    if (_props.trigger === 'click') {
-      _props.onChange?.(clicked)
-    } else if (_props.trigger === 'hover') {
-      _props.onChange?.(mouseEnter)
-    } else if (_props.trigger === 'rightClick') {
-      _props.onChange?.(rightClicked)
-    }
-  }, [_props.trigger, _props.onChange, mouseEnter, clicked, rightClicked])
+    if (!finalVisible || !popupRef.current) return
+
+    updatePos()
+  }, [finalVisible])
+
+  const updatePos = debounce(() => {
+    if (!popupRef.current) return
+      const rect = popupRef.current.getBoundingClientRect()
+      setContentPos({
+        left: `${rect.left + window.scrollX}px`,
+        top: `${rect.bottom + window.scrollY}px`,
+      })
+    }, 100)
 
   useEffect(() => {
-    if (hasBindClickRef.current) return
-    hasBindClickRef.current = true
+    window.addEventListener('scroll', updatePos, true)
+    window.addEventListener('resize', updatePos)
 
-    const handleWindowClick = (e) => {
-      if (
-        popupRef.current && 
-        !popupRef.current.contains(e.target)
-      ) {
-        setClicked(false)
-        setRightClicked(false)
-        props?.onClickOut?.()
-      }
-    }
-
-    window.addEventListener('click', handleWindowClick)
     return () => {
-      window.removeEventListener('click', handleWindowClick)
-      hasBindClickRef.current = false
+      window.removeEventListener('scroll', updatePos, true)
+      window.removeEventListener('resize', updatePos)
     }
   }, [])
 
-  const handleRightClick = useCallback((e) => {
-    e.preventDefault()
-    if (_props.trigger === 'rightClick') {
-      setRightClicked(true)
-    }
-  }, [_props.trigger])
+  // 不同触发类型的 onChange （不考虑受控模式）
+  useEffect(() => {
+    const { trigger, onChange } = _props
+    if (isVisibleControlled) return
 
-  const handleMouseEnter = useCallback(() => {
-    if (_props.trigger === 'hover') {
-      setMouseEnter(true)
+    if (trigger === 'hover') {
+      onChange?.(mouseEnter)
+    } else if (trigger === 'click') {
+      onChange?.(clicked)
+    } else if (trigger === 'rightClick') {
+      onChange?.(rightClicked)
     }
-  }, [_props.trigger])
+  }, [_props.trigger, props.onChange, mouseEnter, clicked, rightClicked])
 
-  const handleMouseLeave = useCallback(() => {
-    if (_props.trigger === 'hover') {
+  // 点击外部时，将内部 visible 设置为false
+  useClickOutside(
+    popupRef,
+    () => {
       setMouseEnter(false)
+      setClicked(false)
+      setRightClicked(false)
     }
-  }, [_props.trigger])
+  ) 
 
-  const handleTriggerClick = useCallback(() => {
-    setClicked(prev => !prev)
-  }, [])
+  const popupClassName = useMemo(() => {
+    return genClassNameFromProps(
+      {},
+      'u-popup',
+      'u-popup',
+      _props.className
+    )
+  }, [_props.className])
 
   return(
     <div
       ref={popupRef}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      onContextMenu={handleRightClick}
-      className={'u-popup' + ' ' + _props.className}
+      onMouseEnter={() => setMouseEnter(true)}
+      onMouseLeave={() => setMouseEnter(false)}
+      onContextMenu={(e) => {
+        e.preventDefault()
+        setRightClicked(true)
+      }}
+      className={popupClassName}
       style={_props.style}
     >
-      {/* 
-        这块 class 别搞混了，如果是在 popup 内部使用了 content，
-        走的是 content 标签内定义的 class 没问题
-        如果没使用 content 标签，也就是作为属性传进来的，在此处把他包装成 content
-        这个时候走的是 popup 上边透传下来的 content 样式。
-      */}
       {
-        contentChildren ?
-        contentChildren:
-        _props.content ?
-        <Content
-          style={{..._props.contentStyle}}
-          className={_props.contentClassName || ''}
-          visible={_props.visible}
-          position={_props.position}
-          mouseEnter={mouseEnter}
-          clicked={clicked}
-          trigger={_props.trigger}
-          arrow={_props.arrow}
-          rightClicked={rightClicked}
-          handleMouseEnter={handleMouseEnter}
-        >
-          {_props.content}
-        </Content> :
-        <div></div>
+        _props.content &&
+        <PortalContainer>
+          <UPopupContent
+            className={_props.contentClassName}
+            style={_props.contentStyle}
+            display={popupDisplay}
+            visible={popupVisible}
+            destoryOnClose={_props.destoryOnClose}
+            position={contentPos}
+          >
+            {_props.content}
+          </UPopupContent>
+        </PortalContainer>
       }
       {
-        React.Children.map(props.children, (child) => {
-          // 过滤掉 Content 类型的子元素
-          if (child.type === Content) return null
-
-          // 非元素节点（如文本节点）直接返回，避免克隆报错
-          if (!React.isValidElement(child)) {
-            return child
-          }
-
-          // 克隆子元素，合并 onClick 事件（保留原有事件 + 新增 handleTriggerClick）
-          return React.cloneElement(child, {
-            onClick: (e) => {
-              // 优先执行子元素自身的 onClick（如果有）
-              if (child.props?.onClick) {
-                child.props.onClick(e)
-              }
-              // 执行原外层 div 的点击逻辑
-              handleTriggerClick(e)
-            },
-          })
-        })
+        <div onClick={() => setClicked(prev => !prev)}>
+          {_props.children}
+        </div>
       }
     </div>
   )
 }
-
-const Content = (props) => {
-  const showPopup = useMemo(() => {
-    if (props.visible !== undefined) return props.visible
-    if (props.trigger === 'hover') return props.mouseEnter
-    if (props.trigger === 'click') return props.clicked
-    if (props.trigger === 'rightClick') return props.rightClicked
-    return false
-  }, [props.visible, props.trigger, props.mouseEnter, props.clicked, props.rightClicked])
-
-  const contentClass = useMemo(() => {
-    return genClassNameFromProps(
-      {
-        display: showPopup,
-        position: props.position,
-      },
-      'u-popup-content',
-      'u-popup-content'
-    )
-  }, [showPopup, props.position])
-
-  return (
-    <div
-      onMouseEnter={props.handleMouseEnter}
-      className={contentClass + ' ' + props.className}
-    >
-      {props.arrow && <div className="u-popup-arrow" />}
-      <div
-        style={{ ...props.style }}
-        onMouseEnter={props.onMouseEnter}
-        className={`u-popup-content-inner`}
-      >
-        {props.children}
-      </div>
-    </div>
-  )
-}
-
-UPopup.Content = Content
 
 export default UPopup

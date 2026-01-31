@@ -9,4 +9,5 @@ export const defaultProps: Popup = {
   arrow: false,
   trigger: 'hover',
   content: '',
+  destoryOnClose: true,  // 默认开启关闭时销毁
 }
