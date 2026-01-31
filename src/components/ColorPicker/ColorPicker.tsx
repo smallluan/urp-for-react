@@ -1,13 +1,15 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from "react"
 import { USpace } from "../Space/index.ts"
 import { USlider } from "../Slider/index.ts"
 import { UGrid } from "../Grid/index.ts"
 import { USelect } from "../Select/index.ts"
 import { UInput } from "../Input/index.ts"
+import { UPopup } from "../Popup/index.ts"
 import { positionToSv, hsvToRgb, hsvToHex ,extractRgbValues, hexToRgb, rgbToHsv, svToPosition } from "./utils.ts"
 
 import "./style.less"
 import genStyleFromProps from "../utils/tools/style.ts"
+import useClickOutside from "../utils/hooks/useClickOutside.ts"
 
 const valueType = [
   { label: 'HEX', value: 'HEX' },
@@ -15,16 +17,82 @@ const valueType = [
   { label: 'CSS', value: 'CSS' }
 ]
 
-const UColorPicker = () => {
-  return (
-    <div>colorpicker</div>
+const UColorPicker = forwardRef((props, ref) => {
+
+  const [panelVisible, setPanelVisible] = useState(false)
+  const [value, setValue] = useState('#000000')
+  const [previewBg, setPreviewBg] = useState('')
+  const containerRef = useRef(null)
+  const inputRef = useRef(null)
+
+  useClickOutside(
+    containerRef,
+    () => setPanelVisible(false)
   )
-}
+
+  useEffect(() => {
+    if (panelVisible) {
+      inputRef.current?.focus()
+    } else {
+      inputRef.current?.blur()
+    }
+  }, [panelVisible])
+
+  const handleValueChange = useCallback((hex, rgb) => {
+    setValue(hex)
+    setPreviewBg(rgb)
+    inputRef.current?.focus()
+  }, [])
+
+  /**
+   * 由于 onChange 只对外部暴露十六进制格式数据
+   * 这里需要向外暴露一些内部格式转换方法
+   */
+  useImperativeHandle(ref, () => ({
+    hsvToRgb: hsvToRgb,
+    hsvToHex: hsvToHex,
+    hexToRgb: hexToRgb,
+    rgbToHsv: rgbToHsv,
+    extractRgbValues: extractRgbValues
+  }))
+
+  return (
+    <div 
+      ref={containerRef}
+    >
+      <UPopup
+        arrow
+        content={
+          <UColorPickerPanel
+            onChange={handleValueChange}
+          />
+        }
+        contentStyle={{width: 'fit-content'}}
+        visible={panelVisible}
+      >
+        <UInput
+          ref={inputRef}
+          value={value}
+          align="center"
+          onFocus={() => {
+            setPanelVisible(true)
+          }}
+        >
+          <div style={{
+            width: '15px',
+            height: '15px',
+            background: previewBg
+          }}/>
+        </UInput>
+      </UPopup>
+    </div>
+  )
+})
 
 /**
  * 颜色选择面板
  */
-const UColorPickerPanel = () => {
+const UColorPickerPanel = forwardRef((props, ref) => {
 
   // 鼠标位置指示器的坐标
   const [indicatorPos, setIndicatorPos] = useState({ x: 0, y: 0 })
@@ -40,9 +108,9 @@ const UColorPickerPanel = () => {
   // 16进制色值输入框的值
   const [hexInputValue, setHexInputValue] = useState('')
 
-
   // 色值面板 ref
   const hsvPanelRef = useRef<HTMLElement>(null)
+
 
   /**
    * 计算坐标，处理鼠标事件，返回合法的面板相对坐标
@@ -148,7 +216,9 @@ const UColorPickerPanel = () => {
    * 当前颜色: HEX
    */
   const hexColor = useMemo(() => {
-    return hsvToHex(hue, s, v)
+    const hexValue = hsvToHex(hue, s, v)
+    props.onChange?.(hexValue, rgbColor)
+    return hexValue
   }, [hue, s, v])
 
 
@@ -199,8 +269,10 @@ const UColorPickerPanel = () => {
     }
   }, [hexColor, currValueType])
 
+
   return (
     <USpace
+      ref={ref}
       direction="vertical"
       gap={16}
       align="start"
@@ -262,7 +334,7 @@ const UColorPickerPanel = () => {
       </UGrid.Row>  
     </USpace>
   )
-}
+})
 
 
 /**
@@ -369,6 +441,9 @@ const CSSInput = (
   )
 }
 
+
+UColorPicker.displayName='UColorPicker'
+UColorPickerPanel.displayName = 'UColorPickerPanel'
 
 UColorPicker.Panel = UColorPickerPanel
 

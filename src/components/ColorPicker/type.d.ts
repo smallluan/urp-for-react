@@ -3,4 +3,5 @@ export interface ColorPicker {
   style?: React.CSSProperties;
   value?: string;
   defaultValue?: string;
+  onChange?: (newColor: string) => void;
 }
