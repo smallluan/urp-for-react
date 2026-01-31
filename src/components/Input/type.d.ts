@@ -19,5 +19,7 @@ export interface Input {
   icons?: string | string[] | React.ReactNode;
   borderless?: boolean;
   onChange?: (newValue: string) => void;
+  onFocus?: (newValue: string) => void;
   onBlur?: (newValue: string) => void;
+  ref?: React.ReactNode
 }

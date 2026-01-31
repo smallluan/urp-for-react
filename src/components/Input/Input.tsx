@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState, useCallback, useEffect } from "react"
+import { useMemo, useRef, useState, useCallback, useEffect, forwardRef, useImperativeHandle } from "react"
 import { Input } from "./type"
 import defaultProperties, { formatProps } from './properties.ts'
 import genClassNameFromProps from '../utils/tools/className.ts'
@@ -10,7 +10,7 @@ import InputIcons from "./components/InputIcons.tsx"
 import PasswordIcon from "./components/PasswordIcon.tsx"
 import InputNumberIcon from "./components/InputNumberIcon.tsx"
 
-export default function UInput(props: Input) {
+const UInput = forwardRef<HTMLDivElement, Input>((props, ref) => {
 
   const { merged: _props } = useMergedProps(
     defaultProperties,
@@ -36,6 +36,7 @@ export default function UInput(props: Input) {
   const [isFocused, setIsFocused] = useState(false)
   const [isHover, setIsHover] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
+  const containerRef = useRef(null)
 
   // 外层容器 class
   const containerClass = useMemo(() => {
@@ -156,8 +157,19 @@ export default function UInput(props: Input) {
     }
   }, [])
 
+
+  /**
+   * 向外暴露内部能力
+   */
+  useImperativeHandle(ref, () => ({
+    ...containerRef.current,
+    focus: () => inputRef.current?.focus(),
+    blur: () => inputRef.current?.blur()
+  }))
+
   return(
-    <div 
+    <div
+      ref={containerRef}
       style={_props.style}
       className={containerClass}>
       <div
@@ -238,4 +250,8 @@ export default function UInput(props: Input) {
       }  
     </div>
   )
-}
+})
+
+UInput.displayName = 'UInput'
+
+export default UInput
