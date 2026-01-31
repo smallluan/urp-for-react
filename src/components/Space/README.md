@@ -7,3 +7,4 @@
 |`overflow`|N|`breakLine \| scroll \| hidden\|breakLine`|breakLine|溢出（仅 breakLine）|
 |`gap`|N|`string \| number \| string[] `|`8px`|间距大小|
 |`scrollBar`|`display \| none \| x \| y`|`disaplay`||overflow = scroll 是否显示滚动条 |
+|**ref**||||外部透传 ref|

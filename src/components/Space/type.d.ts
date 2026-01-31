@@ -1,12 +1,13 @@
 export type SpaceGap = string | number
 
 export interface SpaceProps {
-  children?: React.ReactNode,
-  align?: 'start' | 'end' | 'center',
-  direction?: 'vertical' | 'horizontal',
-  overflow?: 'breakLine' | 'scroll' | 'hidden',
+  children?: React.ReactNode;
+  align?: 'start' | 'end' | 'center';
+  direction?: 'vertical' | 'horizontal';
+  overflow?: 'breakLine' | 'scroll' | 'hidden';
   gap?: SpaceGap | SpaceGap[],
-  scrollBar?: 'display' | 'none' | 'x' | 'y',
-  className?: string,
-  style?: React.CSSProperties,
+  scrollBar?: 'display' | 'none' | 'x' | 'y';
+  className?: string;
+  style?: React.CSSProperties;
+  ref?: React.ReactNode;
 }

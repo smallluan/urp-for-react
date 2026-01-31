@@ -1,4 +1,4 @@
-import { useMemo } from "react"
+import { forwardRef, useMemo } from "react"
 import { defaultProps } from "./properties.ts"
 import { SpaceProps } from "./type"
 import genClassNameFromProps from '../utils/tools/className.ts'
@@ -10,12 +10,12 @@ import { SpaceGap } from './type'
 
 import './style.less'
 
-const USpace = (props: SpaceProps) => {
+const USpace = forwardRef<HTMLDivElement, SpaceProps>((props, ref) => {
 
   const { merged: _props } = useMergedProps(
     defaultProps,
     props,
-    ['direction', 'overflow', 'gap', 'align', 'scrollBar'],
+    ['direction', 'overflow', 'gap', 'align', 'scrollBar', 'ref'],
     formatProps
   )
 
@@ -51,13 +51,16 @@ const USpace = (props: SpaceProps) => {
   }, [_props.gap, _props.align])
 
   return(
-    <div 
+    <div
+      ref={ref}
       className={spaceClassName + ' ' + props.className}
       style={{...spaceStyle, ...props.style}}
     >
       { props.children }
     </div>
   )
-}
+})
+
+USpace.displayName = 'USpace'
 
 export default USpace
