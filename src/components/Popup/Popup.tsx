@@ -28,6 +28,7 @@ const UPopup = (props: Popup) => {
   const [contentPos, setContentPos] = useState({left: '', top: ''})
 
   const popupRef = useRef<HTMLDivElement | null>(null)
+  const contentRef = useRef<HTMLDivElement | null>(null)
 
   // 显示是否受控
   const isVisibleControlled = _props.visible !== undefined
@@ -54,15 +55,17 @@ const UPopup = (props: Popup) => {
     updatePos()
   }, [finalVisible])
 
+  // 更新 content 位置
   const updatePos = debounce(() => {
     if (!popupRef.current) return
-      const rect = popupRef.current.getBoundingClientRect()
-      setContentPos({
-        left: `${rect.left + window.scrollX}px`,
-        top: `${rect.bottom + window.scrollY}px`,
-      })
-    }, 100)
+    const rect = popupRef.current.getBoundingClientRect()
+    setContentPos({
+      left: `${rect.left + window.scrollX}px`,
+      top: `${rect.bottom + window.scrollY}px`,
+    })
+  }, 100)
 
+  // 页面 scroll / resize 的时候需要重新计算 content 坐标
   useEffect(() => {
     window.addEventListener('scroll', updatePos, true)
     window.addEventListener('resize', updatePos)
@@ -91,9 +94,13 @@ const UPopup = (props: Popup) => {
   useClickOutside(
     popupRef,
     () => {
+      console.log(contentRef.current)
       setMouseEnter(false)
       setClicked(false)
       setRightClicked(false)
+    },
+    {
+      ignoreRefs: [contentRef]  // 防止点击 content 时触发 clickoutside
     }
   ) 
 
@@ -118,21 +125,18 @@ const UPopup = (props: Popup) => {
       className={popupClassName}
       style={_props.style}
     >
-      {
-        _props.content &&
-        <PortalContainer>
-          <UPopupContent
-            className={_props.contentClassName}
-            style={_props.contentStyle}
-            display={popupDisplay}
-            visible={popupVisible}
-            destoryOnClose={_props.destoryOnClose}
-            position={contentPos}
-          >
-            {_props.content}
-          </UPopupContent>
-        </PortalContainer>
-      }
+      <PortalContainer ref={contentRef}>
+        <UPopupContent
+          className={_props.contentClassName}
+          style={_props.contentStyle}
+          display={popupDisplay}
+          visible={popupVisible}
+          destoryOnClose={_props.destoryOnClose}
+          position={contentPos}
+        >
+          {_props.content}
+        </UPopupContent>
+      </PortalContainer>
       {
         <div onClick={() => setClicked(prev => !prev)}>
           {_props.children}
