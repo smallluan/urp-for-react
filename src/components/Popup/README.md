@@ -8,7 +8,7 @@
 |**content**|N|`string`|-|内容（标签属性）|
 |**children**|N|`React.ReactNode`|-|被挂载元素&内容|
 |**absolute**|N|`boolean`|`false`|是否脱离标准流显示|
-|**position**|N|`bottom \| top \| left \| right`|`bottom`|弹层位置|
+|**position**|N|`bottom \| top \| left \| right`|`bottom \| top-left \| top-right \| bottom-left \| bottom-right`|弹层位置|
 |**arrow**|N|`boolean`|`false`|是否显示箭头|
 |**trigger**|N|`hover \| click \| rightClick \|`|`hover`|如何触发|
 |**visible**|N|`boolean`|-|可见性（受控属性）|

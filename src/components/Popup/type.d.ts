@@ -4,7 +4,7 @@ export interface Popup {
   style?: React.CSSProperties;
   contentStyle?: React.CSSProperties;
   absolute?: boolean;
-  position?: 'bottom' | 'top' | 'left' | 'right';
+  position?: 'bottom' | 'top' | 'left' | 'right' | 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
   arrow?: boolean;
   trigger?: 'hover' | 'click' | 'rightClick';
   content?: React.ReactNode;
