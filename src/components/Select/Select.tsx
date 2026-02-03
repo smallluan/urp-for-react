@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef, useState } from "react"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { UIcon } from "../Icon/index.ts"
 import { UPopup } from "../Popup/index.ts"
 import { USpace } from "../Space/index.ts"
@@ -157,12 +157,42 @@ const USelect = (props: Select) => {
     return elems
   })
 
+
+  // 设置 popup 宽度与 select 保持一致
+  const [targetWidth, setTargetWidth] = useState(0)
+  useEffect(() => {
+    if (selectRef.current) {
+      const width = selectRef.current.offsetWidth
+      setTargetWidth(width)
+      
+      const handleResize = () => {
+        setTargetWidth(selectRef.current?.offsetWidth ?? 0)
+      }
+      window.addEventListener('resize', handleResize)
+      return () => window.removeEventListener('resize', handleResize)
+    }
+  }, []) 
+
+  const contentStyle = useMemo(() => ({
+    width: `${targetWidth || 0}px` 
+  }), [targetWidth])
   return (
     <SelectContext.Provider value={contextValue}>
       <UPopup
         trigger="click"
         className={popupClass}
         position={_props.position}
+        visible={isFocus}
+        contentStyle={contentStyle}
+        // contentClassName="u-select-popup-content"
+        arrow
+        content={
+          <div style={{ width: '100%' }}>
+            <USpace direction="vertial" gap={8}>
+              <Options ref={ignoreRefs} />
+            </USpace>
+          </div>
+        }
       >
         <div
           ref={selectRef}
@@ -211,19 +241,6 @@ const USelect = (props: Select) => {
           }
           <Icons />
         </div>
-        <UPopup.Content
-          position={_props.position}
-          visible={isFocus}
-          className="u-select-pop-content"
-          arrow
-        >
-          <div style={{ width: '100%' }}>
-            <USpace direction="vertial" gap={8}>
-              <Options ref={ignoreRefs} />
-              {/* <Footer/>  */}
-            </USpace>
-          </div>
-        </UPopup.Content>
       </UPopup>
     </SelectContext.Provider>
   )
