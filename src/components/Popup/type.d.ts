@@ -1,4 +1,4 @@
-export interface Popup {
+export interface PopupProps {
   className?: string;
   contentClassName?: string;
   style?: React.CSSProperties;

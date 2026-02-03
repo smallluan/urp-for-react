@@ -1,24 +1,31 @@
-import { Popup } from "./type"
+import { PopupProps } from "./type"
 import "./style.less"
-import { useEffect, useMemo, useRef, useState } from "react"
+import { useMemo, useRef, useState } from "react"
 import { defaultProps } from "./properties.ts"
 import genClassNameFromProps from "../utils/tools/className.ts"
 import useMergedProps from "../utils/hooks/useMergedProps.ts"
 import UPopupContent from "./components/Content.tsx"
-// import useAnimatedVisibility from "../utils/hooks/useAnimatedVisibility.ts"
 import useClickOutside from "../utils/hooks/useClickOutside.ts"
-// import PortalContainer from "../utils/tools/portal.tsx"
+import useTriggerOnChange from "./hooks/useTriggerOnChange.ts"
 
 
+const UPopup = (props: PopupProps) => {
 
-const UPopup = (props: Popup) => {
-  // 合并属性
   const { merged: _props } = useMergedProps(
     defaultProps,
     props,
     [
-      'content', 'visible', 'trigger', 'position', 'arrow', 'children',
-      'className', 'style', 'onChange', 'contentClassName', 'contentStyle',
+      'content',
+      'visible',
+      'trigger',
+      'position',
+      'arrow',
+      'children',
+      'className',
+      'style',
+      'onChange',
+      'contentClassName',
+      'contentStyle',
       'destoryOnClose'
     ]
   )
@@ -43,19 +50,10 @@ const UPopup = (props: Popup) => {
   // 是否显示 content 最终值
   const finalVisible = isVisibleControlled ? _props.visible : innerVisible
 
-
-  useEffect(() => {
-    const { trigger, onChange } = _props
-    if (isVisibleControlled) return
-
-    if (trigger === 'hover') {
-      onChange?.(mouseEnter)
-    } else if (trigger === 'click') {
-      onChange?.(clicked)
-    } else if (trigger === 'rightClick') {
-      onChange?.(rightClicked)
-    }
-  }, [_props.trigger, props.onChange, mouseEnter, clicked, rightClicked])
+  useTriggerOnChange(
+    _props.trigger, _props.onChange, mouseEnter,
+    clicked, rightClicked, isVisibleControlled
+  )
 
   // 点击外部时，将内部 visible 设置为false
   useClickOutside(
@@ -65,10 +63,8 @@ const UPopup = (props: Popup) => {
       setClicked(false)
       setRightClicked(false)
     },
-    {
-      ignoreRefs: [contentRef]  // 防止点击 content 时触发 clickoutside
-    }
-  ) 
+    {ignoreRefs: [contentRef]}
+  )
 
   const popupClassName = useMemo(() => {
     return genClassNameFromProps(
