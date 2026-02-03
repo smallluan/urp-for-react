@@ -27,7 +27,8 @@ const USpace = forwardRef<HTMLDivElement, SpaceProps>((props, ref) => {
         scrollBar: _props.scrollBar
       },
       'u-space',
-      'u-space'
+      'u-space',
+      props.className
     )
   }, [_props.direction, _props.overflow])
 
@@ -53,7 +54,7 @@ const USpace = forwardRef<HTMLDivElement, SpaceProps>((props, ref) => {
   return(
     <div
       ref={ref}
-      className={spaceClassName + ' ' + props.className}
+      className={spaceClassName }
       style={{...spaceStyle, ...props.style}}
     >
       { props.children }
