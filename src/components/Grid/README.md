@@ -2,6 +2,8 @@
 **Grid.Row**
 |参数名|是否必填|参数类型|默认值|说明|
 |--|--|--|--|--|
+|**className**|||||
+|**style**|||||
 |**align**|N|`start \| center \| end`|`center`|纵向对齐方式|
 |**justify**|N|`start \| center \| end \| space-around \| space-between`|`center`|水平方向排列方式|
 |**gutter**|N|`string \| number`|0|列间隔|
@@ -11,6 +13,7 @@
 **Grid.Col**
 |参数名|是否必填|参数类型|默认值|说明|
 |--|--|--|--|--|
+|**className**|||||
 |**style**||||栅格容器列内联样式|
 |**span**|N|`number`|0|列跨栅格数|
 |**offset**|N|`number`|0|列向右偏移栅格数|

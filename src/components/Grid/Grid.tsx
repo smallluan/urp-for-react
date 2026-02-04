@@ -14,7 +14,8 @@ const UGridRow = (props: GridRow) => {
       grid: !props.justify
     },
     '',
-    'u-grid-row'
+    'u-grid-row',
+    props.className
   )
   const rowStyle = genStyleFromProps({
     grids: props.grids,
@@ -41,6 +42,7 @@ const UGridRow = (props: GridRow) => {
         const clonedCol = React.cloneElement(child, {
           beforeOffset: beforeOffset, // 累计值传给Col
           beforeSpan: beforeSpan,
+          grids: props.grids
         })
 
         // 3. 更新累计偏移量 = 现有值 + 当前Col的offset + 当前Col的span
@@ -69,7 +71,8 @@ const UGridCol = (props: GridCol) => {
                 || !!props.lg || !!props.xl || !!props.xxl
     },
     'u-grid-col',
-    'u-grid-col'
+    'u-grid-col',
+    props.className
   )
 
   const getFallbackSizeValue = useCallback((targetSize) => {
@@ -111,6 +114,7 @@ const UGridCol = (props: GridCol) => {
       }
     }
     offset += 1
+    offset %= props.grids
   
     return (
       genStyleFromProps({
