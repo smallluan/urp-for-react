@@ -152,7 +152,7 @@ const URate = (props: Rate) => {
       'u-rate',
       _props.className
     )
-  }, [_props.className, _props.disabled])
+  }, [_props.className, _props.disabled, _props.size])
 
   /**
    * 容器动态样式
