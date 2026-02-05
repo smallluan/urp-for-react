@@ -1,7 +1,7 @@
 export interface Pagination {
   className?: string;
   style?: React.CSSProperties;
-  total?: number;
+  total: number;
   pageSize?: number;
   defaultPageSize?: number;
   current?: number;
@@ -14,6 +14,7 @@ export interface Pagination {
   showPageSizeOptions?: boolean;
   showJumper?: boolean;
   size?: 'small' | 'normal' | 'large';
+  disabled?: boolean;
   onPageSizeChange?: (newPageSize: number) => void;
   onCurrentChange?: (newPageIndex: number) => void;
 }

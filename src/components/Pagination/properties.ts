@@ -8,9 +8,9 @@ export const paginationDefaultProps: Pagination = {
   pageSizeOptions: [5, 10, 20, 50, 100],
   maxPageBtn: 10,
   foldedMaxPageBtn: 5,
-  showFirstAndLastPageBtn: true,
+  showFirstAndLastPageBtn: false,
   showPreviousAndNextBtn: false,
-  showPageSizeOptions: true,
+  showPageSizeOptions: false,
   showJumper: false,
   size: 'normal',
 }

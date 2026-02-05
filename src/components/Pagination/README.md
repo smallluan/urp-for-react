@@ -16,6 +16,7 @@
 |**showPageSizeOptions**||||是否显示页码选择|
 |**showJumper**||||是否显示快速跳转|
 |**size**||||尺寸|
+|**disabled**||||是否禁用|
 |**onPageSizeChange**||||分页大小发生变化时触发|
 |**onCurrentChange**||||当前所在页码发生变化时触发|
 

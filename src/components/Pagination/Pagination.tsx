@@ -23,7 +23,7 @@ const UPagination = (props: Pagination) => {
       'pageSizeOptions', 'total', 'pageSize', 'current',
       'showJumper', 'maxPageBtn', 'foldedMaxPageBtn', 'showFirstAndLastPageBtn',
       'showPreviousAndNextBtn', 'showPageSizeOptions',
-      'onPageSizeChange', 'onCurrentChange'
+      'onPageSizeChange', 'onCurrentChange', 'size'
     ]
   )
 
@@ -81,6 +81,21 @@ const UPagination = (props: Pagination) => {
 
 
   /**
+   * class
+   */
+  const paginationClassName = useMemo(() => {
+    return genClassNameFromProps(
+      {
+        size: _props.size
+      },
+      'u-pagination',
+      'u-pagination',
+      _props.className
+    )
+  }, [_props.className, _props.size])
+
+
+  /**
    * select 选择器 pagesize 大小变化
    */
   const handlePageSizeChange = useCallback((newPageSize: Select['value']) => {
@@ -108,7 +123,7 @@ const UPagination = (props: Pagination) => {
 
 
   return (
-    <UGrid.Row justify="space-between" align="center">
+    <UGrid.Row className={paginationClassName} style={_props.style} justify="space-between" align="center">
       <div>共 {_props.total} 条数据</div>
       <USpace>
         {
@@ -133,7 +148,7 @@ const UPagination = (props: Pagination) => {
         {
           _props.showJumper &&
           <USpace className="u-pagination-quick-jump">
-            <span>跳至</span>
+            {/* <span>跳至</span> */}
             <UInput
               className="u-pagination-input"
               align="center"
