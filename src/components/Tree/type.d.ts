@@ -1,5 +1,5 @@
 export type TreeOriginalNode = {
-  label: string;
+  label: React.ReactNode;
   key: string;
   value?: string | number;
   children: Array<TreeOriginalNode>;
@@ -27,10 +27,10 @@ export interface Tree {
   activeMultiple?: boolean;
   checkable?: boolean;
   value?: Array<TreeOriginalNode['key']>;
-  defaultValue: Array<TreeOriginalNode['key']>;
+  defaultValue?: Array<TreeOriginalNode['key']>;
   expandOnClickNode?: boolean;
   expandAll?: boolean;
-  expandLevel: number;
+  expandLevel?: number;
   onActive?: (nodes: TreeFlattenedNode[]) => void;
   onClickNode?: (node: TreeFlattenedNode) => void;
 }

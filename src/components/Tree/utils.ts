@@ -74,7 +74,7 @@ export const expandNode = (
 }
 
 /**
- * forWord: 根据 key 找到一个节点
+ * forWard: 根据 key 找到一个节点
  * @param flattenedNodes 
  * @param key 
  * @param keyToIndexMap 
@@ -90,7 +90,7 @@ export const findNodeByKey = (
 }
 
 /**
- * forWord: 根据 key 删除一个节点
+ * forWard: 根据 key 删除一个节点
  * @param originalNode - 原始节点数据
  * @param key - 将被删除节点的 key
  * @description - 这个方法暴露出去,处理的不是内部的扁平化数组

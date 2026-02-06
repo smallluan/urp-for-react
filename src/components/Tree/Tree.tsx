@@ -145,24 +145,25 @@ const UTree = forwardRef((props: Tree, ref) => {
     })
   }, [props.activable, props.activeMultiple, keyToIndexMap])
 
-  // // 通过 level 生成阴影
-  // const genShadowByLevel = (level: number) => {
-  //   if (level <= 0) {
-  //     return 'none'
-  //   }
-    
-  //   const shadows = []
-  //   // 将循环的起始值从 2 改为 1
-  //   for (let i = 1; i <= level; i++) {
-  //     // 阴影的计算逻辑可以保持不变，或者根据需要调整
-  //     shadows.push(`calc(-${i} * 8px)) 0 black`)
-  //   }
-  //   const res = shadows.join(',')
+  // 通过 level 生成阴影
+  const genShadowByLevel = (level: number) => {
+  if (level <= 0) {
+    return {
+      boxShadow: 'none'
+    }
+  }
+  
+  const shadows = []
+  for (let i = 2; i <= level; i++) {
+    shadows.push(`calc(-${i} * 16px + 16px) 0 red`)
+  }
+  
+  const boxShadowValue = shadows.join(',')
 
-  //   return {
-  //     boxShadow: res
-  //   }
-  // }
+  return {
+    boxShadow: boxShadowValue
+  }
+}
 
   /** 暴露方法 */
   useImperativeHandle(ref, () => ({
@@ -181,16 +182,18 @@ const UTree = forwardRef((props: Tree, ref) => {
             data-level={item.level} 
             key={item.key}
           >
-            {/* {
+            {
               (item.parentNode) &&
               <>
                 {
-                  item.isFirstChild ? 
-                  <div className="line-first-child"/> : 
+                  (item.childrenRank === item.parentNode.children.length - 1) ?
+                  <div style={genShadowByLevel(item.level)} className="line"/> :
+                  item.childrenRank === 0 ? 
+                  <div style={genShadowByLevel(item.level)} className="line-first-child"/> : 
                   <div style={genShadowByLevel(item.level)} className="line"/>
                 }
               </>
-            } */}
+            }
             <div className={iconContainerClass(item.hasChildren)}>
               {
                 item.hasChildren &&
