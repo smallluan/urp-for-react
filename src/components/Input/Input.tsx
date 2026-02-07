@@ -79,7 +79,7 @@ const UInput = forwardRef<HTMLDivElement, Input>((props, ref) => {
         align: _props.align
       },
       'u-input','u-input')
-  }, [_props.size, _props.shape, _props.disabled, _props.readonly])
+  }, [_props.size, _props.shape, _props.disabled, _props.readonly, _props.align])
 
 
   // 输入框类型（针对 password 类型）
