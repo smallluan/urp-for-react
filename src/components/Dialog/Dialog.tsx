@@ -85,7 +85,7 @@ const UDialog = (props: Dialog) => {
     }
 
     return (
-      <UGrid.Row justify="flex-end">
+      <UGrid.Row justify="flex-end" className="u-dialog-footer">
         <USpace style={{ width: 'fit-content' }}>
           {footer}
           {genBtn(cancelBtn, '取消', 'default', onCancel) }
@@ -93,7 +93,7 @@ const UDialog = (props: Dialog) => {
         </USpace>
       </UGrid.Row>
     )
-  }, [_props.cancelBtn, _props.confirmBtn, _props.footer])
+  }, [_props.cancelBtn, _props.confirmBtn, _props.footer, _props.onConfirm, _props.onCancel])
 
   return (
     <UOverlay
@@ -110,7 +110,8 @@ const UDialog = (props: Dialog) => {
           className="u-dialog"
           style={{
             zIndex: _props.zIndex + 1,
-            width: typeof(_props.width) === 'string' ? _props.width : _props.width + 'px'
+            width: typeof(_props.width) === 'string' ? _props.width : _props.width + 'px',
+            ..._props.style
           }}
           gap={16}
         >
