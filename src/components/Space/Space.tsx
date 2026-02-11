@@ -15,7 +15,7 @@ const USpace = forwardRef<HTMLDivElement, SpaceProps>((props, ref) => {
   const { merged: _props } = useMergedProps(
     defaultProps,
     props,
-    ['direction', 'overflow', 'gap', 'align', 'scrollBar', 'ref'],
+    ['direction', 'overflow', 'gap', 'align', 'scrollBar', 'ref', 'block', 'className'],
     formatProps
   )
 
@@ -24,13 +24,14 @@ const USpace = forwardRef<HTMLDivElement, SpaceProps>((props, ref) => {
       {
         direction: _props.direction,
         overflow: _props.overflow,
-        scrollBar: _props.scrollBar
+        scrollBar: _props.scrollBar,
+        block: _props.block
       },
       'u-space',
       'u-space',
-      props.className
+      _props.className
     )
-  }, [_props.direction, _props.overflow])
+  }, [_props.direction, _props.overflow, _props.className, _props.scrollBar, _props.block])
 
   const spaceStyle = useMemo(() => {
     let horizontalGap: SpaceGap
@@ -54,7 +55,7 @@ const USpace = forwardRef<HTMLDivElement, SpaceProps>((props, ref) => {
   return(
     <div
       ref={ref}
-      className={spaceClassName }
+      className={spaceClassName}
       style={{...spaceStyle, ...props.style}}
     >
       { props.children }

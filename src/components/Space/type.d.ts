@@ -10,4 +10,5 @@ export interface SpaceProps {
   className?: string;
   style?: React.CSSProperties;
   ref?: React.ReactNode;
+  block?: boolean;
 }

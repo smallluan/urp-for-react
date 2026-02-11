@@ -7,6 +7,7 @@ export const defaultProps: SpaceProps = {
   overflow: 'breakLine',
   gap: '8px',
   scrollBar: 'display',
+  block: false,
 }
 
 export const formatProps = (props: Required<SpaceProps>) => {
