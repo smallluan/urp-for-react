@@ -5,7 +5,7 @@ export const ListDefaultProps: ListProps = {
   style: {},
   split: false,
   gap: 8,
-  width: '300px',
+  width: '100%',
   height: 500,
   type: 'normal',
 }

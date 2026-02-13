@@ -5,6 +5,7 @@ import { ListDefaultProps } from "./properties.ts"
 import { useMemo, useCallback, forwardRef } from 'react'
 import React from 'react'
 import { USpace } from '../Space/index.ts'
+import { UGrid } from "../Grid/index.ts"
 
 const VIRTUAL_LIST_DEFAULT_CONFIG: Partial<VirtualListConfig> = {
   initialScrollOffset: 0,
@@ -33,7 +34,6 @@ const UList = forwardRef<HTMLDivElement, ListProps>((props) => {
     ]
   )
 
-  // 生成列表项，补充完整依赖项，确保仅在children变化时重新计算
   const itemElements = useMemo(() => {
     const validItems = React.Children.toArray(_props.children).filter(item => 
       React.isValidElement(item) && item.type === UListItem
@@ -44,14 +44,13 @@ const UList = forwardRef<HTMLDivElement, ListProps>((props) => {
     return validItems
   }, [_props.children, _props.type, _props.virtual?.count])
 
-
   const renderList = useMemo(() => {
     if (_props.type === 'virtual') {
       // 虚拟列表逻辑
       const { virtual } = _props
       const {
-        count = itemElements.length, // 优先使用实际列表项数量
-        size,
+        count = itemElements.length,
+        size: originSize, 
         initialScrollOffset,
         overscanCount,
         onItemsRendered
@@ -59,14 +58,21 @@ const UList = forwardRef<HTMLDivElement, ListProps>((props) => {
         ...VIRTUAL_LIST_DEFAULT_CONFIG,
         ...virtual
       }
+
+      const baseItemSize = originSize || 40
+      const itemSizeWithGap = baseItemSize + _props.gap
+
       return (
         <UVirtualList
+          ref={undefined}
           height={_props.height}
           count={count}
-          size={size}
+          size={itemSizeWithGap}
+          gap={_props.gap}
           initialScrollOffset={initialScrollOffset}
           overscanCount={overscanCount}
           onItemsRendered={onItemsRendered}
+          onScroll={_props.onScroll}
         >
           {itemElements}
         </UVirtualList>
@@ -77,49 +83,58 @@ const UList = forwardRef<HTMLDivElement, ListProps>((props) => {
         {itemElements}
       </USpace>
     )
-  }, [_props.virtual, _props.type, _props.height, _props.gap])
-
+  }, [_props.virtual, _props.type, _props.height, _props.gap, itemElements])
 
   return (
-    <div
+    <USpace
+      direction='vertical'
+      align='start'
       className={_props.className}
-      style={{
-        width: _props.width,
-        height: _props.height,
-        gap: `${_props.gap}px`,
-        border: '1px solid red',
-        ..._props.style
-      }}
+      style={_props.style}
     >
       {_props.header}
-      {renderList}
+      <div
+        style={{
+          width: _props.width,
+          height: _props.height,
+          ...(_props.type === 'virtual' ? { paddingBottom: -_props.gap } : {})
+        }}
+      >
+        {renderList}
+      </div>
       {_props.footer}
-    </div>
+    </USpace>
   )
-
 })
-
 
 const UVirtualList = forwardRef<HTMLDivElement, VirtualListProps>((props, ref) => {
   const renderRow = useCallback(({ index, style }: { index: number, style: React.CSSProperties }) => {
     const itemElement = props.children[index]
     if (!itemElement) return null
 
+    // 判断是否是最后一项
+    const isLastItem = index === props.count - 1
+
+    const itemStyle = {
+      ...style,
+      ...(itemElement.props.style || {}),
+      boxSizing: 'border-box',
+      marginBottom: isLastItem ? 0 : `${props.gap}px`,
+      height: `${props.size - props.gap}px`
+    }
+
     return React.cloneElement(itemElement, {
       key: itemElement.key || `list-item-${index}`,
-      style: {
-        ...style,
-        ...(itemElement.props.style || {}),
-      }
+      style: itemStyle
     })
-  }, [props.children])
+  }, [props.children, props.count, props.gap, props.size])
 
   return (
     <List
       ref={ref}
       height={props.height}
       itemCount={props.count}
-      itemSize={props.size}
+      itemSize={props.size} // 使用包含gap的总高度
       width="100%"
       initialScrollOffset={props.initialScrollOffset}
       overscanCount={props.overscanCount}
@@ -131,12 +146,11 @@ const UVirtualList = forwardRef<HTMLDivElement, VirtualListProps>((props, ref) =
   )
 })
 
-
 const UListItem = (props: ListItemProps) => {
   return (
     <div 
       style={{ 
-        // height: '100%',
+        width: '100%',
         ...props.style 
       }}
     >

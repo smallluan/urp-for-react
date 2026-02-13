@@ -13,6 +13,7 @@ export interface VirtualListProps extends VirtualListConfig {
   height?: ListProps['height'];
   children?: ListProps['children'];
   onScroll?: ListProps['onScroll'];
+  gap?: ListProps['gap'];
 }
 
 export interface VirtualListInstance {
