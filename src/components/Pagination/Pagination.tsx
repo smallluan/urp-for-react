@@ -7,6 +7,7 @@ import { USpace } from "../Space/index.ts"
 import { UInput } from "../Input/index.ts"
 import { UIcon } from "../Icon/index.ts"
 import { UGrid } from "../Grid/index.ts"
+import { UTypo } from "../Typo/index.ts"
 import { useCallback, useMemo, useState } from "react"
 import "./style.less"
 import genClassNameFromProps from "../utils/tools/className.ts"
@@ -124,7 +125,7 @@ const UPagination = (props: Pagination) => {
 
   return (
     <UGrid.Row className={paginationClassName} style={_props.style} justify="space-between" align="center">
-      <div>共 {_props.total} 条数据</div>
+      <UTypo.Text>共 {_props.total} 条数据</UTypo.Text>
       <USpace>
         {
           _props.showPageSizeOptions &&
