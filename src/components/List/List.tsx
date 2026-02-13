@@ -38,10 +38,25 @@ const UList = forwardRef<HTMLDivElement, ListProps>((props) => {
     const validItems = React.Children.toArray(_props.children).filter(item => 
       React.isValidElement(item) && item.type === UListItem
     ) as React.ReactElement<ListItemProps>[]
-    if (_props.type === 'virtual' && _props.virtual?.count !== validItems.length) {
-      console.warn(`虚拟列表count(${_props.virtual?.count})与实际列表项数量(${validItems.length})不匹配，已自动修正`)
+    // 2. 用 map 生成新数组（核心修改）
+    const processedItems = validItems.map(item => {
+      // 检查是否有 action 属性
+      if (item.props.action) {
+        // 返回包裹后的新元素（而非修改原变量）
+        return (
+          <UGrid.Row key={item.key} justify='space-between' align='start'>
+            {item}
+            {item.props.action}
+          </UGrid.Row>
+        )
+      }
+      // 无 action 则返回原元素
+      return item
+    })
+    if (_props.type === 'virtual' && _props.virtual?.count !== processedItems.length) {
+      console.warn(`虚拟列表count(${_props.virtual?.count})与实际列表项数量(${processedItems.length})不匹配，已自动修正`)
     }
-    return validItems
+    return processedItems
   }, [_props.children, _props.type, _props.virtual?.count])
 
   const renderList = useMemo(() => {
@@ -150,7 +165,7 @@ const UListItem = (props: ListItemProps) => {
   return (
     <div 
       style={{ 
-        width: '100%',
+        flex: '1',
         ...props.style 
       }}
     >
