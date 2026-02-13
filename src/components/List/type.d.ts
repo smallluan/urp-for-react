@@ -44,3 +44,11 @@ export interface ListItemProps {
   children?: React.ReactNode;
   action?: React.ReactNode;
 }
+
+export interface ListItemMetaProps {
+  className?: string;
+  style?: React.CSSProperties;
+  image?: React.ReactNode;
+  description?: React.ReactNode;
+  title?: React.ReactNode;
+}

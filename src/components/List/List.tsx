@@ -1,11 +1,13 @@
 import { FixedSizeList as List } from 'react-window'
-import { VirtualListConfig, ListItemProps, ListProps, VirtualListProps } from "./type"
+import { VirtualListConfig, ListItemProps, ListProps, VirtualListProps, ListItemMetaProps } from "./type"
 import useMergedProps from "../utils/hooks/useMergedProps.ts"
 import { ListDefaultProps } from "./properties.ts"
 import { useMemo, useCallback, forwardRef } from 'react'
 import React from 'react'
 import { USpace } from '../Space/index.ts'
 import { UGrid } from "../Grid/index.ts"
+import genClassNameFromProps from '../utils/tools/className.ts'
+import './style.less'
 
 const VIRTUAL_LIST_DEFAULT_CONFIG: Partial<VirtualListConfig> = {
   initialScrollOffset: 0,
@@ -42,7 +44,7 @@ const UList = forwardRef<HTMLDivElement, ListProps>((props) => {
     const processedItems = validItems.map(item => {
       if (item.props.action) {
         return (
-          <UGrid.Row key={item.key} justify='space-between' align='start'>
+          <UGrid.Row key={item.key} justify='space-between' align='center'>
             {item}
             {item.props.action}
           </UGrid.Row>
@@ -92,18 +94,27 @@ const UList = forwardRef<HTMLDivElement, ListProps>((props) => {
       )
     }
     return (
-      <USpace direction='vertical' gap={_props.gap} align='start' overflow='scroll'>
+      <USpace block direction='vertical' gap={_props.gap} align='start' overflow='scroll'>
         {itemElements}
       </USpace>
     )
   }, [_props.virtual, _props.type, _props.height, _props.gap, itemElements])
 
+  const listClassName = useMemo(() => {
+    return genClassNameFromProps(
+      {},
+      'u-list',
+      'u-list',
+      _props.className
+    )
+  }, [_props.className])
+
   return (
     <USpace
       direction='vertical'
       align='start'
-      className={_props.className}
-      style={_props.style}
+      className={listClassName}
+      style={{width: _props.width, ..._props.style} }
       gap={_props.gap}
     >
       {_props.header}
@@ -133,8 +144,8 @@ const UVirtualList = forwardRef<HTMLDivElement, VirtualListProps>((props, ref) =
       ...style,
       ...(itemElement.props.style || {}),
       boxSizing: 'border-box',
-      marginBottom: isLastItem ? 0 : `${props.gap}px`,
-      height: `${props.size - props.gap}px`
+      marginBottom: isLastItem ? 0 : `${(props.gap ?? 0) / 2}px`,
+      height: `${props.size - (props.gap ?? 0)}px`
     }
 
     return React.cloneElement(itemElement, {
@@ -164,17 +175,36 @@ const UListItem = (props: ListItemProps) => {
   return (
     <div 
       style={{ 
-        flex: '1',
         ...props.style 
       }}
+      className='u-list-item'
     >
       {props.children}
     </div>
   )
 }
 
+const ULIstItemMeta = (props: ListItemMetaProps) => {
+  return (
+    <USpace align='center' gap={16}>
+      {props.image}
+      <USpace direction='vertical' align='start'>
+        <div>{props.title}</div>
+        <div>{props.description}</div>
+      </USpace>
+    </USpace>
+  )
+}
+
+(UListItem as any).Meta = ULIstItemMeta
+
 UList.displayName = 'UList'
 UVirtualList.displayName = 'UVirtualList'
-UList.Item = UListItem
 
-export default UList
+const UListWithItems = UList as typeof UList & {
+  Item: typeof UListItem & { Meta: typeof ULIstItemMeta }
+}
+
+UListWithItems.Item = UListItem as typeof UListItem & { Meta: typeof ULIstItemMeta }
+
+export default UListWithItems

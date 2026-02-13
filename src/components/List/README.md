@@ -37,3 +37,12 @@
 |**content**||||内容，优先级小于 children|
 |**children**||||内容，优先级高于 content|
 |**action**||||操作栏|
+
+## List Item Meta
+|参数名|是否必填|参数类型|默认值|说明|
+|--|--|--|--|--|
+|**className**||||类名|
+|**style**||||样式|
+|**image**|||||图片|
+|**description**||||描述|
+|**title**||||标题|
