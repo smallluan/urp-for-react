@@ -38,11 +38,9 @@ const UList = forwardRef<HTMLDivElement, ListProps>((props) => {
     const validItems = React.Children.toArray(_props.children).filter(item => 
       React.isValidElement(item) && item.type === UListItem
     ) as React.ReactElement<ListItemProps>[]
-    // 2. 用 map 生成新数组（核心修改）
+
     const processedItems = validItems.map(item => {
-      // 检查是否有 action 属性
       if (item.props.action) {
-        // 返回包裹后的新元素（而非修改原变量）
         return (
           <UGrid.Row key={item.key} justify='space-between' align='start'>
             {item}
@@ -106,6 +104,7 @@ const UList = forwardRef<HTMLDivElement, ListProps>((props) => {
       align='start'
       className={_props.className}
       style={_props.style}
+      gap={_props.gap}
     >
       {_props.header}
       <div
