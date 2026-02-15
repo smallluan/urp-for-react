@@ -63,7 +63,6 @@ const USwiper = (props: SwiperProps) => {
     }).filter(Boolean)
   }, [_props.children])
 
-  // 下一个索引计算（原有）
   const getNextIndex = useCallback(() => {
     const current = latestCurrentRef.current
     const itemCount = validItem.length
@@ -72,18 +71,16 @@ const USwiper = (props: SwiperProps) => {
     return _props.loop ? (next % itemCount) : Math.min(next, itemCount - 1)
   }, [_props.loop, validItem.length])
 
-  // 新增：上一个索引计算（兼容循环模式）
   const getPrevIndex = useCallback(() => {
     const current = latestCurrentRef.current
     const itemCount = validItem.length
     if (itemCount <= 1) return current
     const prev = current - 1
-    // 循环模式：prev为-1时，取最后一个索引（(prev + itemCount) % itemCount 处理负数）
     return _props.loop ? (prev + itemCount) % itemCount : Math.max(prev, 0)
   }, [_props.loop, validItem.length])
 
   const triggerOnChange = useCallback((newIndex: number) => {
-    if (typeof _props.onChange === 'function') {
+    if (typeof _props.onChange === 'function' && newIndex !== latestCurrentRef.current) {
       _props.onChange(newIndex)
     }
   }, [_props.onChange])
@@ -110,9 +107,7 @@ const USwiper = (props: SwiperProps) => {
     if (!isControlled && validCurrent !== latestCurrentRef.current) {
       setInnerCurrent(validCurrent)
     }
-    if (validCurrent !== latestCurrentRef.current || isAutoPlay) {
-      triggerOnChange(validCurrent)
-    }
+    triggerOnChange(validCurrent)
     latestCurrentRef.current = validCurrent
   }, [_props.duration, _props.direction, isControlled, triggerOnChange])
 
@@ -135,29 +130,33 @@ const USwiper = (props: SwiperProps) => {
     }
   }, [])
 
-  // 新增：上一页点击处理
   const handlePrev = useCallback(() => {
     if (validItem.length <= 1) return
-    // 点击时暂停自动播放，避免定时器冲突
+    if (isControlled) {
+      _props.onChange?.(getPrevIndex())
+      return
+    }
     pauseAutoplay()
     const prevIndex = getPrevIndex()
     scrollToCurrent(prevIndex)
-    // 自动播放开启时，点击后重置定时器
     if (effectiveAutoplay) {
       startAutoplay()
     }
-  }, [validItem.length, pauseAutoplay, getPrevIndex, scrollToCurrent, effectiveAutoplay, startAutoplay])
+  }, [validItem.length, pauseAutoplay, getPrevIndex, scrollToCurrent, effectiveAutoplay, startAutoplay, isControlled, _props.onChange])
 
-  // 新增：下一页点击处理
   const handleNext = useCallback(() => {
     if (validItem.length <= 1) return
+    if (isControlled) {
+      _props.onChange?.(getNextIndex())
+      return
+    }
     pauseAutoplay()
     const nextIndex = getNextIndex()
     scrollToCurrent(nextIndex)
     if (effectiveAutoplay) {
       startAutoplay()
     }
-  }, [validItem.length, pauseAutoplay, getNextIndex, scrollToCurrent, effectiveAutoplay, startAutoplay])
+  }, [validItem.length, pauseAutoplay, getNextIndex, scrollToCurrent, effectiveAutoplay, startAutoplay, isControlled, _props.onChange])
 
   const handleMouseEnter = useCallback(() => {
     if (_props.stopOnHover) {
