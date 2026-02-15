@@ -307,7 +307,7 @@ const USwiperJumpBtns = (props: {
   const showNext = props.current !== props.count - 1
 
   return (
-    <div className="u-swiper-jump-btns">
+    <>
       {
         showPrev ? 
         <div onClick={props.onPrev} className="u-swiper-jump-btn-prev">
@@ -322,7 +322,7 @@ const USwiperJumpBtns = (props: {
         </div> :
         <div/>
       }
-    </div>
+    </> 
   )
 }
 
