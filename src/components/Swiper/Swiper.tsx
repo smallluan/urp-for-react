@@ -5,7 +5,8 @@ import React, { useMemo, useState, useRef, useCallback, useEffect } from "react"
 import genClassNameFromProps from "../utils/tools/className.ts"
 import "./style.less"
 import USpace from "../Space/Space.tsx"
-import classNames  from 'classnames'
+import classNames from 'classnames'
+import UIcon from "../Icon/Icon.tsx"
 
 const USwiper = (props: SwiperProps) => {
   const { merged: _props } = useMergedProps(
@@ -62,12 +63,23 @@ const USwiper = (props: SwiperProps) => {
     }).filter(Boolean)
   }, [_props.children])
 
+  // 下一个索引计算（原有）
   const getNextIndex = useCallback(() => {
     const current = latestCurrentRef.current
     const itemCount = validItem.length
     if (itemCount <= 1) return current
     const next = current + 1
     return _props.loop ? (next % itemCount) : Math.min(next, itemCount - 1)
+  }, [_props.loop, validItem.length])
+
+  // 新增：上一个索引计算（兼容循环模式）
+  const getPrevIndex = useCallback(() => {
+    const current = latestCurrentRef.current
+    const itemCount = validItem.length
+    if (itemCount <= 1) return current
+    const prev = current - 1
+    // 循环模式：prev为-1时，取最后一个索引（(prev + itemCount) % itemCount 处理负数）
+    return _props.loop ? (prev + itemCount) % itemCount : Math.max(prev, 0)
   }, [_props.loop, validItem.length])
 
   const triggerOnChange = useCallback((newIndex: number) => {
@@ -123,6 +135,30 @@ const USwiper = (props: SwiperProps) => {
     }
   }, [])
 
+  // 新增：上一页点击处理
+  const handlePrev = useCallback(() => {
+    if (validItem.length <= 1) return
+    // 点击时暂停自动播放，避免定时器冲突
+    pauseAutoplay()
+    const prevIndex = getPrevIndex()
+    scrollToCurrent(prevIndex)
+    // 自动播放开启时，点击后重置定时器
+    if (effectiveAutoplay) {
+      startAutoplay()
+    }
+  }, [validItem.length, pauseAutoplay, getPrevIndex, scrollToCurrent, effectiveAutoplay, startAutoplay])
+
+  // 新增：下一页点击处理
+  const handleNext = useCallback(() => {
+    if (validItem.length <= 1) return
+    pauseAutoplay()
+    const nextIndex = getNextIndex()
+    scrollToCurrent(nextIndex)
+    if (effectiveAutoplay) {
+      startAutoplay()
+    }
+  }, [validItem.length, pauseAutoplay, getNextIndex, scrollToCurrent, effectiveAutoplay, startAutoplay])
+
   const handleMouseEnter = useCallback(() => {
     if (_props.stopOnHover) {
       isHover.current = true
@@ -156,6 +192,7 @@ const USwiper = (props: SwiperProps) => {
       isHover.current = false
     }
   }, [effectiveAutoplay, _props.interval, _props.loop, startAutoplay, pauseAutoplay])
+  
 
   const swiperClassName = useMemo(() => (
     genClassNameFromProps(
@@ -194,6 +231,14 @@ const USwiper = (props: SwiperProps) => {
         </div>
       </div>
       <USwiperIndecator count={validItem.length} current={finalCurrent}/>
+      {/* 修复：补充onNext、loop等props传递 */}
+      <USwiperJumpBtns
+        count={validItem.length}
+        current={finalCurrent}
+        loop={_props.loop}
+        onPrev={handlePrev}
+        onNext={handleNext}
+      />
     </div>
   )
 }
@@ -224,10 +269,13 @@ const USwiperItem = React.forwardRef<HTMLDivElement, SwiperItemProps>((props, re
     </div>
   )
 })
+
 const USwiperIndecator = (props: {
   count: number,
   current: number
 }) => {
+  if (props.count <= 1) return null
+  
   return (
     <USpace className="u-swiper-indecator">
       {
@@ -242,6 +290,38 @@ const USwiperIndecator = (props: {
         ))
       }
     </USpace>
+  )
+}
+
+const USwiperJumpBtns = (props: {
+  loop: boolean
+  count: number
+  current: number
+  onPrev: () => void
+  onNext: () => void
+}) => {
+  if (props.count <= 1) return null
+
+  const showPrev = props.current !== 0
+  const showNext = props.current !== props.count - 1
+
+  return (
+    <div className="u-swiper-jump-btns">
+      {
+        showPrev ? 
+        <div onClick={props.onPrev} className="u-swiper-jump-btn-prev">
+          <UIcon type="LeftOutlined"/>
+        </div> :
+        <div/>
+      }
+      {
+        showNext ? 
+        <div onClick={props.onNext} className="u-swiper-jump-btn-next">
+          <UIcon type="RightOutlined"/>
+        </div> :
+        <div/>
+      }
+    </div>
   )
 }
 
