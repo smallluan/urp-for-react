@@ -1,0 +1,41 @@
+@import "../utils/styles/colors/color.less";
+
+.u-swiper {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-wrap: nowrap;
+  // overflow: hidden;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  
+}
+
+.u-swiper::-webkit-scrollbar {
+  display: none;
+}
+
+.u-swiper-item {
+  flex: 1 0 100%;
+  scroll-snap-align: start;
+}
+
+.u-swiper-indecator {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.u-swiper-indecator-item {
+  width: 10px;
+  height: 10px;
+  border: 1px solid white;
+  border-radius: 100vh;
+  transition: all .2s ease-in-out;
+}
+
+.u-swiper-indecator-item-active {
+  background-color: white;
+  // border-color: var(--u-primary-color);
+}
