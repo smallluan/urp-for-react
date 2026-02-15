@@ -9,5 +9,6 @@ export const swiperDefaultProps: SwiperProps = {
   duration: 300,
   interval: 4000,
   loop: false,
+  filterChildNode: true,
   stopOnHover: true,
 }

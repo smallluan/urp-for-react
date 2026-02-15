@@ -9,7 +9,8 @@ export interface SwiperProps {
   interval?: number;
   loop?: boolean;
   stopOnHover?: boolean;
-  children?: React.ReactElement<SwiperItemProps> | React.ReactElement<SwiperItemProps>[]
+  children?: React.ReactElement<SwiperItemProps> | React.ReactElement<SwiperItemProps>[];
+  filterChildNode?: boolean;
   onChange?: (current: number) => void;
 }
 

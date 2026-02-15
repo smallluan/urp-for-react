@@ -24,6 +24,7 @@ const USwiper = (props: SwiperProps) => {
       'loop',
       'stopOnHover',
       'children',
+      'filterChildNode',
       'onChange'
     ]
   )
@@ -49,6 +50,7 @@ const USwiper = (props: SwiperProps) => {
   }, [finalCurrent])
 
   const validItem = useMemo(() => {
+    if (!_props.filterChildNode) return _props.children
     itemRefs.current = []
     return React.Children.map(_props.children, (item, index) => {
       if (React.isValidElement(item) && item.type === USwiperItem) {
@@ -61,7 +63,7 @@ const USwiper = (props: SwiperProps) => {
       }
       return null
     }).filter(Boolean)
-  }, [_props.children])
+  }, [_props.children, _props.filterChildNode])
 
   const getNextIndex = useCallback(() => {
     const current = latestCurrentRef.current
