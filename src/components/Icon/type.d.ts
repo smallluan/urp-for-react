@@ -8,5 +8,5 @@ export interface IconProps {
   size?: number | string;
   style?: CSSProperties & { fontSize?: number };
   className?: string;
-  onClick?: (event?: MouseEvent) => void;
+  onClick?: (event: React.MouseEvent) => void;
 }
