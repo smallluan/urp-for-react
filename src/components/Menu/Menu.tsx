@@ -6,6 +6,7 @@ import UMenuHead from "./MenuHead.tsx"
 import React, { useMemo, Children, cloneElement } from "react"
 import genStyleFromProps from "../utils/tools/style.ts"
 import UIcon from "../Icon/Icon.tsx"
+import { UDivider } from "../Divider/index.ts"
 
 const UMenu = (props: Menu) => {
   const { level: rootLevel = 1, children, ...rest } = props
@@ -21,7 +22,21 @@ const UMenu = (props: Menu) => {
 
   return (
     <USpace block className="u-menu" direction="vertical" align="start" gap={4} {...rest}>
+      {
+        props.header &&
+        <USpace block direction="vertical" align="start">
+          {props.header}
+          <UDivider color="var(--u-gray-color-1)"/>
+        </USpace>
+      }
       {renderChildren()}
+      {
+        props.footer &&
+        <USpace block direction="vertical" align="start">
+          <UDivider color="var(--u-gray-color-1)"/>
+          {props.footer}
+        </USpace>
+      }
     </USpace>
   )
 }
@@ -42,7 +57,6 @@ const USubMenu = (props: SubMenu) => {
     <UCollapse.Panel
       className="u-sub-menu"
       borderless
-      defaultExpand
       iconPlacement="right"
       header={
         <MenuContainer icon={props.icon} level={level}>

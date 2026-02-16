@@ -36,6 +36,8 @@ export interface Menu {
   className?: string;
   style?: React.CSSProperties;
   children?: ReactElement<SubMenu> | ReactElement<MenuItem> | ReactElement<SubMenu>[] | ReactElement<MenuItem>[];
+  header?: React.ReactNode;
+  footer?: React.ReactNode;
 }
 
 export interface SubMenu {

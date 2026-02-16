@@ -38,6 +38,8 @@
 |**className**||||透传类名|
 |**style**||||透传样式|
 |**children**|||||submenu 或者 menuitem|
+|**header**||||头部区域|
+|**footer**||||底部区域|
 
 ### Submenu
 |参数名|是否必填|参数类型|默认值|说明|
