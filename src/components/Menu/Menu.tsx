@@ -107,11 +107,20 @@ const USubMenu = (props: SubMenu) => {
     }
   }, [context?.value, children, isExpand])
 
+  const subMenuClassName = useMemo(() => (
+    genClassNameFromProps(
+      {},
+      "u-sub-menu",
+      "u-sub-menu",
+      props.className
+    )
+  ))
+
   return (
     <UCollapse.Panel
       onChange={(_, state) => setIsExpand(state)}
       ref={collapseRef}
-      className="u-sub-menu"
+      className={subMenuClassName}
       borderless
       iconPlacement="right"
       header={
