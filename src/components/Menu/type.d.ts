@@ -1,6 +1,8 @@
 import React, { ReactElement } from "react";
 import { Popup } from "../Popup/type"
 
+type Value = string | number;
+
 export interface MenuHead {
   className?: string;
   style?: React.CSSProperties;
@@ -16,7 +18,7 @@ export interface SubMenuHead {
   icon?: string;
   popupProps?: Popup;
   title?: React.ReactNode;
-  value?: string;
+  value?: Value;
 }
 
 export interface MenuItemHead {
@@ -28,7 +30,7 @@ export interface MenuItemHead {
   disabled?: boolean;
   href?: '';
   target?: '_blank' | '_self' | '_parent' | '_top';
-  value?: string;
+  value?: Value;
   onClick?: (value: MenuItemHead['value']) => void;
 }
 
@@ -38,6 +40,9 @@ export interface Menu {
   children?: ReactElement<SubMenu> | ReactElement<MenuItem> | ReactElement<SubMenu>[] | ReactElement<MenuItem>[];
   header?: React.ReactNode;
   footer?: React.ReactNode;
+  defaultValue?: Value;
+  value?: Value;
+  onChange?: (value: Value) => void;
 }
 
 export interface SubMenu {
@@ -46,7 +51,7 @@ export interface SubMenu {
   children?: ReactElement<SubMenu> | ReactElement<MenuItem> | ReactElement<SubMenu>[] | ReactElement<MenuItem>[];
   icon?: string;
   title?: string;
-  value?: string; 
+  value?: Value; 
 }
 
 export interface MenuItem {
@@ -55,5 +60,5 @@ export interface MenuItem {
   children?: React.ReactNode;
   content?: React.ReactNode;
   icon?: string;
-  value?: string;
+  value?: Value;
 }
