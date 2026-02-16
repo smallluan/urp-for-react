@@ -72,14 +72,12 @@ const USubMenu = (props: SubMenu) => {
 }
 
 const UMenuItem = (props: MenuItem) => {
-  const { level = 1, children, ...rest } = props
+  const { level = 1, children } = props
   
   return (
-    <USpace block direction="vertical" align="start" gap={4} {...rest}>
-      <MenuContainer icon={props.icon} level={level}>
-        {children}
-      </MenuContainer>
-    </USpace>
+    <MenuContainer icon={props.icon} level={level}>
+      {children}
+    </MenuContainer>
   )
 }
 
