@@ -10,7 +10,7 @@ const UIcon: React.FC<IconProps> = (props) => {
   const AntdIconComponent = AllIcons[type] as unknown as React.ComponentType<any>
   if (!AntdIconComponent) {
     if (process.env.NODE_ENV === 'development') {
-      console.warn(`Icon type "${type}" is not supported. Check Ant Design icons docs.`)
+      // console.warn(`Icon type "${type}" is not supported. Check Ant Design icons docs.`)
     }
     return null
   }
@@ -21,7 +21,7 @@ const UIcon: React.FC<IconProps> = (props) => {
       {...restProps}
       style={{ fontSize: style?.fontSize || size || 'inherit', ...style }}
       className={`icon-custom ${className || ''}`}
-      onClick={() => onClick()}
+      onClick={(e: React.MouseEvent) => onClick(e)}
     />
   )
 }
