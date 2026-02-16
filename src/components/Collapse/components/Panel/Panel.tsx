@@ -80,6 +80,7 @@ const UPanel = (props: Panel) => {
         borderless: _props.borderless
       },
       "u-panel",
+      "u-panel",
       _props.className
     )
   }, [_props.disabled, _props.borderless, _props.className])
@@ -129,7 +130,6 @@ const UPanel = (props: Panel) => {
         </USpace>
       </div>
 
-      {/* 折叠内容区域：核心改造点 */}
       <div
         ref={contentRef}
         className="u-panel-content"
