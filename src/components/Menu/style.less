@@ -1,6 +1,6 @@
 @import "../utils/styles/colors/color.less";
 
-.u-menu {
+.u-menu-head {
   width: fit-content;
   /* 重写 poupup 的一些样式 */
   .u-popup-content-position-bottom {
@@ -13,7 +13,7 @@
 
 }
 
-.u-sub-menu {
+.u-sub-menu-head {
   flex-wrap: nowrap;
   padding: 4px 8px;
   border-radius: 4px;
@@ -21,21 +21,21 @@
   cursor: pointer;
   transition: all .2s ease-in-out;
 
-  .u-submenu-arrow {
+  .u-submenu-head-arrow {
     transition: all .2s ease-in-out;
   }
 }
 
-.u-sub-menu-hover {
+.u-sub-menu-head-hover {
   overflow: escape;
   color: var(--u-primary-color);
 
-  .u-submenu-arrow {
+  .u-submenu-head-arrow {
     transform: rotate(-180deg);
   }
 }
 
-.u-menu-item {
+.u-menu-head-item {
   width: fit-content;
   padding: 4px 8px;
   border-radius: 4px;

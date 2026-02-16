@@ -1,15 +1,15 @@
 import { ReactElement } from "react";
 import { Popup } from "../Popup/type"
 
-export interface Menu {
+export interface MenuHead {
   className?: string;
   style?: React.CSSProperties;
-  children?: ReactElement<SubMenu> | ReactElement<MenuItem> | ReactElement<SubMenu>[] | ReactElement<MenuItem>[];
+  children?: ReactElement<SubMenuHead> | ReactElement<MenuItemHead> | ReactElement<SubMenuHead>[] | ReactElement<MenuItemHead>[];
   onChange?: () => void;
   onExpand?: () => void;
 }
 
-export interface SubMenu {
+export interface SubMenuHead {
   className?: string;
   style?: React.CSSProperties;
   children?: React.ReactNode;
@@ -19,7 +19,7 @@ export interface SubMenu {
   value?: string;
 }
 
-export interface MenuItem {
+export interface MenuItemHead {
   className?: string;
   style?: React.CSSProperties;
   children?: React.ReactNode;
@@ -29,5 +29,5 @@ export interface MenuItem {
   href?: '';
   target?: '_blank' | '_self' | '_parent' | '_top';
   value?: string;
-  onClick?: (value: MenuItem['value']) => void;
+  onClick?: (value: MenuItemHead['value']) => void;
 }
