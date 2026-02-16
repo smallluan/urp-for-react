@@ -1,25 +1,91 @@
 import { Menu, SubMenu, MenuItem } from "./type"
-
+import { USpace } from "../Space/index.ts"
+import { UCollapse } from "../Collapse/index.ts"
 import "./style.less"
 import UMenuHead from "./MenuHead.tsx"
+import React, { useMemo, Children, cloneElement } from "react"
+import genStyleFromProps from "../utils/tools/style.ts"
+import UIcon from "../Icon/Icon.tsx"
 
 const UMenu = (props: Menu) => {
+  const { level: rootLevel = 1, children, ...rest } = props
+  
+  const renderChildren = () => {
+    return Children.map(children, (child) => {
+      if (!React.isValidElement(child)) return child
+      return cloneElement(child, {
+        level: (child.props.level || rootLevel),
+      })
+    })
+  }
+
   return (
-    <div>111</div>
+    <USpace block className="u-menu" direction="vertical" align="start" gap={4} {...rest}>
+      {renderChildren()}
+    </USpace>
   )
 }
 
 const USubMenu = (props: SubMenu) => {
-
+  const { level = 1, title, children } = props
   
+  const renderSubChildren = () => {
+    return Children.map(children, (child) => {
+      if (!React.isValidElement(child)) return child
+      return cloneElement(child, {
+        level: level + 1,
+      })
+    })
+  }
+
   return (
-    <div>222</div>
+    <UCollapse.Panel
+      className="u-sub-menu"
+      borderless
+      defaultExpand
+      iconPlacement="right"
+      header={
+        <MenuContainer icon={props.icon} level={level}>
+          {title}
+        </MenuContainer>
+      }
+    >
+      <USpace style={{ paddingTop: '4px' }} block direction="vertical" align="start" gap={4}>
+        {renderSubChildren()}
+      </USpace>
+    </UCollapse.Panel>
   )
 }
 
 const UMenuItem = (props: MenuItem) => {
+  const { level = 1, children, ...rest } = props
+  
   return (
-    <div>333</div>
+    <USpace block direction="vertical" align="start" gap={4} {...rest}>
+      <MenuContainer icon={props.icon} level={level}>
+        {children}
+      </MenuContainer>
+    </USpace>
+  )
+}
+
+const MenuContainer = (props: {
+  level: number,
+  children: React.ReactNode,
+  icon?: string
+}) => {
+  const containerStyle = useMemo(() => (
+    genStyleFromProps({ paddingLeft: `${props.level * 16}px` })
+  ), [props.level])
+
+  return (
+    <div style={containerStyle} className="u-meun-container">
+      {
+        props.icon &&
+        <UIcon style={{ marginRight: '8px' }} type={props.icon}/>
+      }
+      {props.children}
+    </div>
   )
 }
 

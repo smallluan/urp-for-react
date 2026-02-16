@@ -1,5 +1,32 @@
 @import "../utils/styles/colors/color.less";
 
+.u-menu {
+  border: 1px solid red;
+  padding: 8px;
+}
+
+.u-sub-menu {
+  .u-panel-header {
+    padding: 0;
+  }
+  .u-panel-content {
+    background-color: white;
+  }
+}
+
+.u-meun-container {
+  width: 100%;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: all .2s ease-in-out;
+  padding-left: var(--paddingLeft);
+  cursor: pointer;
+  &:hover {
+    background-color: var(--u-bg-gray-6);
+  }
+}
+
 .u-menu-head {
   width: fit-content;
   /* 重写 poupup 的一些样式 */

@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import React, { ReactElement } from "react";
 import { Popup } from "../Popup/type"
 
 export interface MenuHead {
@@ -30,4 +30,28 @@ export interface MenuItemHead {
   target?: '_blank' | '_self' | '_parent' | '_top';
   value?: string;
   onClick?: (value: MenuItemHead['value']) => void;
+}
+
+export interface Menu {
+  className?: string;
+  style?: React.CSSProperties;
+  children?: ReactElement<SubMenu> | ReactElement<MenuItem> | ReactElement<SubMenu>[] | ReactElement<MenuItem>[];
+}
+
+export interface SubMenu {
+  className?: string;
+  style?: React.CSSProperties;
+  children?: ReactElement<SubMenu> | ReactElement<MenuItem> | ReactElement<SubMenu>[] | ReactElement<MenuItem>[];
+  icon?: string;
+  title?: string;
+  value?: string; 
+}
+
+export interface MenuItem {
+  className?: string;
+  style?: React.CSSProperties;
+  children?: React.ReactNode;
+  content?: React.ReactNode;
+  icon?: string;
+  value?: string;
 }
