@@ -4,11 +4,16 @@ import defaultProperties, { formatProps } from './properties.ts'
 import genClassNameFromProps from '../utils/tools/className.ts'
 import { UIcon } from '../Icon/index.ts'
 import './style.less'
-import debounce from 'lodash/debounce'
 import useMergedProps from "../utils/hooks/useMergedProps.ts"
 import InputIcons from "./components/InputIcons.tsx"
 import PasswordIcon from "./components/PasswordIcon.tsx"
 import InputNumberIcon from "./components/InputNumberIcon.tsx"
+
+const FONT_SIZE = {
+  small: 12,
+  normal: 14,
+  large: 16
+}
 
 const UInput = forwardRef<HTMLDivElement, Input>((props, ref) => {
   const { merged: _props } = useMergedProps(
@@ -18,7 +23,7 @@ const UInput = forwardRef<HTMLDivElement, Input>((props, ref) => {
       'className', 'style', 'align', 'autoWidth', 'disabled',
       'maxlength', 'placeholder', 'readonly', 'value', 'clearable',
       'size', 'type', 'showCount', 'description', 'children',
-      'shape', 'icons', 'borderless', 'defaultValue',
+      'shape', 'icons', 'borderless', 'defaultValue', 'theme',
       'onChange', 'onBlur', 'onFocus'
     ],
     formatProps
@@ -27,7 +32,7 @@ const UInput = forwardRef<HTMLDivElement, Input>((props, ref) => {
   // value 的受控性
   const isValueControlled = _props.value !== undefined
   const [innerValue, setInnerValue] = useState(_props.defaultValue || '')
-  // 关键修改1：composingValue 初始化为 _props.value（继承初始值）
+  // composingValue 初始化为 _props.value（继承初始值）
   const [composingValue, setComposingValue] = useState(_props.value || '')
   const [displayValue, setDisplayValue] = useState(_props.defaultValue || '')
   const [hidePassword, setHidePassword] = useState(true)
@@ -37,22 +42,17 @@ const UInput = forwardRef<HTMLDivElement, Input>((props, ref) => {
   const inputRef = useRef<HTMLInputElement>(null)
   const containerRef = useRef(null)
 
-  // 关键：重构 finalValue，区分组合输入阶段的显示逻辑
   const finalValue = useMemo(() => {
-    // 组合输入阶段：优先显示临时的 composingValue（继承初始值）
     if (isComposing) {
       return isValueControlled ? composingValue : innerValue
     }
-    // 非组合输入阶段：受控用外部值，非受控用 innerValue
     return isValueControlled ? _props.value : innerValue
   }, [isComposing, isValueControlled, _props.value, innerValue, composingValue])
 
-  // 用于统计的字数（核心：基于displayValue，而非finalValue）
   const countValue = useMemo(() => {
     return isValueControlled ? _props.value : displayValue
   }, [_props.value, displayValue, isValueControlled])
 
-  // 关键修改2：监听外部 value 变化，同步更新 composingValue
   useEffect(() => {
     if (isValueControlled && !isComposing) {
       setComposingValue(_props.value || '')
@@ -61,16 +61,29 @@ const UInput = forwardRef<HTMLDivElement, Input>((props, ref) => {
 
   const containerClass = useMemo(() => {
     return genClassNameFromProps(
-      { shape: _props.shape, size: _props.size, autoWidth: _props.autoWidth },
+      {
+        shape: _props.shape,
+        size: _props.size,
+      },
       'u-input-container', 'u-input-container', _props.className
     )
-  }, [_props.shape, _props.size, _props.autoWidth, _props.className])
+  }, [_props.shape, _props.size, _props.className])
 
   const inputUpClass = useMemo(() => {
     return genClassNameFromProps(
-      { shape: _props.shape, size: _props.size, disabled: _props.disabled, readonly: _props.readonly, borderless: _props.borderless, isFocused: isFocused },
-      'u-input-up','u-input-up')
-  }, [_props.size, _props.shape, _props.disabled, _props.readonly, isFocused, _props.borderless])
+      {
+        shape: _props.shape,
+        size: _props.size,
+        disabled: _props.disabled,
+        readonly: _props.readonly,
+        borderless: _props.borderless,
+        isFocused: isFocused,
+        theme: _props.theme,
+      },
+      'u-input-up',
+      'u-input-up'
+    )
+  }, [_props.size, _props.shape, _props.disabled, _props.readonly, isFocused, _props.borderless, _props.themeh])
 
   const inputClass = useMemo(() => {
     return genClassNameFromProps(
@@ -83,15 +96,43 @@ const UInput = forwardRef<HTMLDivElement, Input>((props, ref) => {
     return _props.type === 'password' && !hidePassword ? 'text' : _props.type
   }, [_props.type, hidePassword])
 
-  /**
-   * 防抖处理后的onChange
-   */
-  const debouncedOnchange = useCallback(
-    debounce((val: string) => {
-      _props.onChange?.(val)
-    }, 200, { leading: true }),
-    [_props.onChange]
-  )
+  // const autoWidth = useMemo(() => {
+  //   const validText = finalValue || _props.placeholder
+  //   if (!validText) return '100px'
+  //   // 计算不同尺寸下的width
+  //   // 4. 创建临时 span 用于计算文本宽度（天然区分中英文/不同字符宽度）
+  // const tempSpan = document.createElement('span')
+  
+  // // 5. 设置和实际 input 一致的样式，保证宽度计算精准
+  // tempSpan.style.cssText = `
+  //   position: absolute
+  //   visibility: hidden
+  //   font-size: ${FONT_SIZE[_props.size || 'normal']}px
+  //   box-sizing: border-box
+  //   height: 0
+  // `
+
+  // // 6. 赋值文本并插入到文档（必须插入才能计算 offsetWidth）
+  // tempSpan.textContent = validText
+  // document.body.appendChild(tempSpan)
+
+  // // 7. 计算宽度：文本宽度 + 预留空间（避免光标被遮挡）
+  // const textWidth = tempSpan.offsetWidth
+  // const reserveWidth = 8 // 预留8px，可根据需求调整
+  // const totalWidth = textWidth + reserveWidth
+
+  // // 8. 移除临时元素，避免内存泄漏
+  // document.body.removeChild(tempSpan)
+
+  // // 9. 返回宽度（可加最大/最小宽度限制）
+  // const minWidth = 80  // 最小宽度，避免过窄
+  // const maxWidth = 500 // 最大宽度，避免过宽
+  // const finalWidth = Math.max(minWidth, Math.min(maxWidth, totalWidth))
+
+  // // 返回 px 单位的宽度值（也可返回数字，根据使用场景调整）
+  // return `${finalWidth}px`
+
+  // }, [finalValue, _props.placeholder, _props.size])
 
   /**
    * 重构 handleInput：区分受控/非受控 + 组合输入处理
@@ -114,21 +155,21 @@ const UInput = forwardRef<HTMLDivElement, Input>((props, ref) => {
     // 2. 非组合输入阶段：正常处理
     // 受控模式：直接触发onChange（外部更新value）
     if (isValueControlled) {
-      debouncedOnchange(val)
+      _props.onChange(val)
       setComposingValue(val) // 同步更新临时值，避免后续组合输入丢失
     }
     // 非受控模式：更新innerValue和displayValue
     else {
       setInnerValue(val)
       setDisplayValue(val)
-      debouncedOnchange(val)
+      _props.onChange(val)
     }
-  }, [isValueControlled, isComposing, debouncedOnchange])
+  }, [isValueControlled, isComposing, _props.onChange])
 
   const handleClear = useCallback(() => {
     // 受控模式：触发onChange清空
     if (isValueControlled) {
-      debouncedOnchange('')
+      _props.onChange('')
       setComposingValue('')
     }
     // 非受控模式：清空内部状态
@@ -137,7 +178,7 @@ const UInput = forwardRef<HTMLDivElement, Input>((props, ref) => {
       setDisplayValue('')
     }
     inputRef.current?.focus()
-  }, [isValueControlled, debouncedOnchange])
+  }, [isValueControlled, _props.onChange])
 
   /**
    * 组件获取/失去焦点
@@ -164,10 +205,8 @@ const UInput = forwardRef<HTMLDivElement, Input>((props, ref) => {
     return () => document.removeEventListener('keydown', handleEnterDown)
   }, [])
 
-  // 修复：用useCallback缓存，避免重渲染 + 组合开始时继承当前值
   const handleCompositionStart = useCallback(() => {
     setIsComposing(true)
-    // 关键修改3：组合输入开始时，将当前外部值赋值给 composingValue（保证接续）
     if (isValueControlled) {
       setComposingValue(_props.value || '')
     }
@@ -178,16 +217,15 @@ const UInput = forwardRef<HTMLDivElement, Input>((props, ref) => {
     setIsComposing(false)
     console.log('组合输入结束')
     const val = e.target.value
-    // 组合输入结束：统一处理最终值
     if (isValueControlled) {
-      debouncedOnchange(val) // 触发外部onChange更新value
+      _props.onChange(val) // 触发外部onChange更新value
       setComposingValue(val) // 同步临时值，避免后续操作丢失
     } else {
       setInnerValue(val)
       setDisplayValue(val)
-      debouncedOnchange(val)
+      _props.onChange(val)
     }
-  }, [isValueControlled, debouncedOnchange])
+  }, [isValueControlled, _props.onChange])
 
   /**
    * 向外暴露内部能力
@@ -219,6 +257,7 @@ const UInput = forwardRef<HTMLDivElement, Input>((props, ref) => {
           onChange={handleInput}
           onCompositionStart={handleCompositionStart}
           onCompositionEnd={handleCompositionEnd}
+          // style={{ width: autoWidth }}
         />
         <div className="u-input-icons">
           {

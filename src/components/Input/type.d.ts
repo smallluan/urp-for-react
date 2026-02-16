@@ -18,6 +18,7 @@ export interface Input {
   children?: React.ReactNode;
   icons?: string | string[] | React.ReactNode;
   borderless?: boolean;
+  theme?: 'primary' | 'success' | 'warning' | 'error';
   onChange?: (newValue: string) => void;
   onFocus?: (newValue: string) => void;
   onBlur?: (newValue: string) => void;

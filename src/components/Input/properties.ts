@@ -19,6 +19,7 @@ const defaultProperties: Input = {
   children: null,
   icons: '',
   borderless: false,
+  theme: 'primary',
 }
 
 export default defaultProperties
