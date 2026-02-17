@@ -9,11 +9,11 @@ import InputIcons from "./components/InputIcons.tsx"
 import PasswordIcon from "./components/PasswordIcon.tsx"
 import InputNumberIcon from "./components/InputNumberIcon.tsx"
 
-const FONT_SIZE = {
-  small: 12,
-  normal: 14,
-  large: 16
-}
+// const FONT_SIZE = {
+//   small: 12,
+//   normal: 14,
+//   large: 16
+// }
 
 const UInput = forwardRef<HTMLDivElement, Input>((props, ref) => {
   const { merged: _props } = useMergedProps(
@@ -155,21 +155,21 @@ const UInput = forwardRef<HTMLDivElement, Input>((props, ref) => {
     // 2. 非组合输入阶段：正常处理
     // 受控模式：直接触发onChange（外部更新value）
     if (isValueControlled) {
-      _props.onChange(val)
+      _props.onChange?.(val)
       setComposingValue(val) // 同步更新临时值，避免后续组合输入丢失
     }
     // 非受控模式：更新innerValue和displayValue
     else {
       setInnerValue(val)
       setDisplayValue(val)
-      _props.onChange(val)
+      _props.onChange?.(val)
     }
   }, [isValueControlled, isComposing, _props.onChange])
 
   const handleClear = useCallback(() => {
     // 受控模式：触发onChange清空
     if (isValueControlled) {
-      _props.onChange('')
+      _props.onChange?.('')
       setComposingValue('')
     }
     // 非受控模式：清空内部状态
@@ -218,12 +218,12 @@ const UInput = forwardRef<HTMLDivElement, Input>((props, ref) => {
     console.log('组合输入结束')
     const val = e.target.value
     if (isValueControlled) {
-      _props.onChange(val) // 触发外部onChange更新value
+      _props.onChange?.(val) // 触发外部onChange更新value
       setComposingValue(val) // 同步临时值，避免后续操作丢失
     } else {
       setInnerValue(val)
       setDisplayValue(val)
-      _props.onChange(val)
+      _props.onChange?.(val)
     }
   }, [isValueControlled, _props.onChange])
 
