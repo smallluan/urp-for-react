@@ -25,3 +25,5 @@ yarn-error.log*
 # pages
 src/pages/
 src/router/
+src/utils/
+src/api/
