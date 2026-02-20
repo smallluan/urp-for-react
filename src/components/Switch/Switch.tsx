@@ -81,7 +81,8 @@ export default function USwitch(props: SwitchType) {
         disabled: currLoading || _props.disabled
       }, 
       'u-switch',
-      'u-switch'
+      'u-switch',
+      _props.className
     )
   }, [currState, _props.shape, _props.size, currLoading, _props.disabled])
 
@@ -142,7 +143,7 @@ export default function USwitch(props: SwitchType) {
   
   // 返回主结构
   return (
-    <div data-testid="u-switch"  onClick={stateChange} className={switchClassName}>
+    <div data-testid="u-switch"  onClick={stateChange} className={switchClassName} style={_props.style}>
       <div className={sliderClassName}>
         <div className={descClassName}>
           { displayDesc() }
