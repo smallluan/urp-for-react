@@ -20,7 +20,7 @@ const ULayout = (props) => {
   )
 
   return(
-    <div className={layoutClass}>
+    <div style={props.style} className={layoutClass}>
       {props.children}
     </div>
   )
@@ -76,10 +76,16 @@ const Footer = (props) => {
       headHeight: props.height
     }
   )
+  const footerClassName = genClassNameFromProps(
+    {},
+    "u-layout-footer",
+    "u-layout-footer",
+    props.className
+  )
   return(
     <div
       style={{...props.style, ...footerStyle}}
-      className="u-layout-footer"
+      className={footerClassName}
     >
       {props.children}
     </div>
