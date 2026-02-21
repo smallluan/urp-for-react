@@ -7,7 +7,8 @@ import { UButton } from "../Button/index.ts"
 import { UGrid } from "../Grid/index.ts"
 import { USpace } from "../Space/index.ts"
 import { UIcon } from "../Icon/index.ts"
-import { useCallback, useEffect } from "react"
+import { useCallback, useEffect, useMemo } from "react"
+import genClassNameFromProps from "../utils/tools/className.ts"
 
 const themeToIcon = {
   default: null,
@@ -95,6 +96,15 @@ const UDialog = (props: Dialog) => {
     )
   }, [_props.cancelBtn, _props.confirmBtn, _props.footer, _props.onConfirm, _props.onCancel])
 
+  const dialogClassName = useMemo(() => (
+    genClassNameFromProps(
+      {},
+      "u-dialog",
+      "u-dialog",
+      _props.className
+    )
+  ), [_props.className])
+
   return (
     <UOverlay
       destoryOnClose={_props.destoryOnClose}
@@ -107,7 +117,7 @@ const UDialog = (props: Dialog) => {
         <USpace
           direction="vertical"
           align="start"
-          className="u-dialog"
+          className={dialogClassName}
           style={{
             zIndex: _props.zIndex + 1,
             width: typeof(_props.width) === 'string' ? _props.width : _props.width + 'px',
