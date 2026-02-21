@@ -114,8 +114,8 @@ const UDialog = (props: Dialog) => {
       attachBody={_props.attachBody}
     >
       <div onClick={(e) => e.stopPropagation()}>
-        <USpace
-          direction="vertical"
+        <UGrid.Row
+          justify="space-between"
           align="start"
           className={dialogClassName}
           style={{
@@ -123,7 +123,6 @@ const UDialog = (props: Dialog) => {
             width: typeof(_props.width) === 'string' ? _props.width : _props.width + 'px',
             ..._props.style
           }}
-          gap={16}
         >
           <UGrid.Row justify="space-between">
             <USpace align="center">
@@ -142,9 +141,8 @@ const UDialog = (props: Dialog) => {
           
           <div className="u-dialog-content">{_props.children || _props.content}</div>
           {renderFooter()}
-        </USpace>
+        </UGrid.Row>
       </div>
-      
     </UOverlay>
   )
 }
