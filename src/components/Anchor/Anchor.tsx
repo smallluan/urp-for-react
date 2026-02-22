@@ -177,11 +177,28 @@ const UAnchor = (props: Anchor) => {
     })
   }, [currAnchor, renderValidChildren])
 
+  const anchorClassName = useMemo(() => (
+    genClassNameFromProps(
+      {
+        size: props.size
+      },
+      "u-anchor",
+      "u-anchor",
+      props.className
+    )
+  ), [props.size, props.className])
+
   return (
     <AnchorContext.Provider value={contextValue}>
-      <div style={anchorStyle} className={"u-anchor " + (props.className || "")}>
+      <div style={anchorStyle} className={anchorClassName}>
         <div className="u-anchor-line">
-          <div className="u-anchor-line-cursor"></div>
+          {
+            props.cursor ? 
+            <div className="u-anchor-line-cursor-with-child">
+              {props.cursor}
+            </div> :
+            <div className="u-anchor-line-cursor"/>
+          }
         </div>
         <div>
           {renderValidChildren()}
