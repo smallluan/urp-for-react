@@ -23,7 +23,12 @@ const loading = {
     const finalProps = {
       ...defaultProps,
       ...props,
-      visible: true
+      visible: true,
+      style: {
+        position: 'fixed',
+        top: 0,
+        left: 0,
+      }
     } as Loading
 
     // 动态挂在原 ULoading 组件
