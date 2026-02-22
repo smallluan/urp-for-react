@@ -42,6 +42,8 @@ export interface Menu {
   footer?: React.ReactNode;
   defaultValue?: Value;
   value?: Value;
+  expand?: Value[];
+  defaultExpand?: Value[];
   onChange?: (value: Value) => void;
 }
 

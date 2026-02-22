@@ -40,6 +40,8 @@
 |**children**|||||submenu 或者 menuitem|
 |**header**||||头部区域|
 |**footer**||||底部区域|
+|**expand**||||展开的子菜单（受控属性）|
+|**defaultExpand**||||展开的子菜单（非受控属性）|
 
 ### Submenu
 |参数名|是否必填|参数类型|默认值|说明|
