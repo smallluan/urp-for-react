@@ -1,7 +1,7 @@
 type ObjectPositionHorizontal = 'left' | 'center' | 'right';
 type ObjectPositionVertical = 'top' | 'center' | 'bottom';
 
-type ObjectPosition = 
+export type ObjectPosition = 
   ObjectPositionHorizontal | 
   ObjectPositionVertical |
   `${ObjectPositionHorizontal} ${ObjectPositionVertical}` |
