@@ -1,7 +1,5 @@
-import { Layout } from '../utils/types/index.ts'
-
 export interface LineType {
-  layout?: Layout,
+  layout?: 'horizontal' | 'vertical',
   dashed?: boolean,
   color?: string,
   slope?: boolean,
