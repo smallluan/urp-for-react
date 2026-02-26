@@ -4,7 +4,7 @@ export interface Overlay {
   children?: React.ReactNode;
   content?: React.ReactNode;
   zIndex?: number;
-  attachBody?: boolean;
+  attach?: string;
   visible?: boolean;
   destoryOnClose?: boolean;
   onClick?: () => void;

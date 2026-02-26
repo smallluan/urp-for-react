@@ -5,7 +5,7 @@
 |**children**||||内容|
 |**content**||||同上|
 |**zIndex**||||层级|
-|**attachBody**||||是否附着在body上（全局还是局部）|
+|**attach**||||挂载到哪个元素|
 |**visible**||||是否可见（受控）|
 |**destoryOnClose**||||不可见时销毁元素|
 |**onClick**||||被点击时触发|
