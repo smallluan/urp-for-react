@@ -15,7 +15,7 @@ export interface Dialog {
   footer?: React.ReactNode;
   destoryOnClose?: boolean;
   zIndex?: number;
-  attachBody?: boolean;
+  attach?: string | React.ReactNode;
   onCloseBtnClick?: () => void;
   onConfirm?: () => void;
   onCancel?: () => void;

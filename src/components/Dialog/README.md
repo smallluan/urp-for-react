@@ -15,7 +15,7 @@
 |**footer**||||底部区域内容|
 |**destoryOnClose**||||关闭时销毁元素|
 |**zIndex**||||层级高度(overlay属性)|
-|**attachBody**||||是否挂载到body(overlay属性)|
+|**attach**||||挂载到哪个元素|
 |**onCloseBtnClick**||||右上角关闭点击事件|
 |**onConfirm**||||确认按钮点击事件|
 |**onCancel**||||取消按钮点击事件|

@@ -11,5 +11,4 @@ export const defaultProps: Dialog = {
   closeBtn: '关闭',
   destoryOnClose: false,
   zIndex: 1000,
-  attachBody: true,
 }

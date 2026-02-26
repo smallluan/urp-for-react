@@ -27,7 +27,7 @@ const UDialog = (props: Dialog) => {
       'className', 'style', 'cancelBtn', 'confirmBtn',
       'closeBtn', 'visible', 'children', 'destoryOnClose',
       'zIndex', 'onCloseBtnClick', 'onConfirm', 'onCancel',
-      'onOverlayClick', 'onEscKeydown', 'attachBody', 'width',
+      'onOverlayClick', 'onEscKeydown', 'attach', 'width',
       'theme', 'title', 'content', 'footer'
     ]
   )
@@ -111,7 +111,7 @@ const UDialog = (props: Dialog) => {
       visible={_props.visible}
       zIndex={_props.zIndex}
       onClick={_props.onOverlayClick}
-      attachBody={_props.attachBody}
+      attach={_props.attach}
     >
       <div onClick={(e) => e.stopPropagation()}>
         <UGrid.Row

@@ -49,7 +49,7 @@ const UOverlay = (props: Overlay) => {
     if (typeof _props.attach === 'string') {
       target = document.getElementById(_props.attach)
     } else if (_props.attach && !isValidElement(_props.attach)) {
-      target = _props.attach as HTMLElement
+      target = _props.attach as unknown as HTMLElement
     }
     return target || document.body
   }
@@ -105,7 +105,7 @@ const UOverlay = (props: Overlay) => {
       typeof _props.attach === 'string'
         ? document.getElementById(_props.attach)
         : isValidElement(_props.attach)
-         ? _props.attach
+         ? _props.attach as unknown as HTMLElement
          : document.body
       }>
       {
