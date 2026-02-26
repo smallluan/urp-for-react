@@ -37,12 +37,14 @@ const UOverlay = (props: Overlay) => {
     )
   }, [displayOverlay, overlayVisible, _props.destoryOnClose, _props.className])
 
-  // ===================== 防滚动穿透核心逻辑 =====================
+  // ===================== 防滚动穿透 =====================
   const originalStyleRef = useRef<{
     overflow: string
     paddingRight: string
   } | null>(null)
   const touchMoveHandlerRef = useRef<((e: TouchEvent) => void) | null>(null)
+  // 获取Overlay根元素的ref，用于判断元素是否在内部
+  const overlayRootRef = useRef<HTMLDivElement>(null)
 
   const getTargetContainer = () => {
     let target: HTMLElement | null = document.body
@@ -58,24 +60,28 @@ const UOverlay = (props: Overlay) => {
     const targetContainer = getTargetContainer()
 
     if (displayOverlay) {
-
+      // PC端：禁止背景滚动
       originalStyleRef.current = {
         overflow: targetContainer.style.overflow,
         paddingRight: targetContainer.style.paddingRight
       }
-
       targetContainer.style.overflow = 'hidden'
       const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth
       if (scrollBarWidth > 0) {
         targetContainer.style.paddingRight = `${scrollBarWidth}px`
       }
 
+      // 只判断是否是Overlay内部元素
       touchMoveHandlerRef.current = (e: TouchEvent) => {
+        const target = e.target as HTMLElement
+        // 只要触发元素是Overlay内部的子元素，就放过（不阻止默认行为）
+        if (overlayRootRef.current?.contains(target)) return
+        // 只有外部元素，才阻止滚动穿透
         e.preventDefault()
       }
       targetContainer.addEventListener('touchmove', touchMoveHandlerRef.current, { passive: false })
     } else {
-
+      // 恢复样式和移除监听
       if (originalStyleRef.current && targetContainer) {
         targetContainer.style.overflow = originalStyleRef.current.overflow
         targetContainer.style.paddingRight = originalStyleRef.current.paddingRight
@@ -86,6 +92,7 @@ const UOverlay = (props: Overlay) => {
       }
     }
 
+    // 组件卸载清理
     return () => {
       const targetContainer = getTargetContainer()
       if (originalStyleRef.current && targetContainer) {
@@ -100,20 +107,25 @@ const UOverlay = (props: Overlay) => {
     }
   }, [displayOverlay, _props.attach]) 
 
+  // Portal的target
+  const portalTarget = useMemo(() => {
+    if (typeof _props.attach === 'string') {
+      return document.getElementById(_props.attach) || document.body
+    }
+    return _props.attach && !isValidElement(_props.attach) 
+      ? (_props.attach as unknown as HTMLElement) 
+      : document.body
+  }, [_props.attach])
+
   return (
-    <PortalContainer target={
-      typeof _props.attach === 'string'
-        ? document.getElementById(_props.attach)
-        : isValidElement(_props.attach)
-         ? _props.attach as unknown as HTMLElement
-         : document.body
-      }>
+    <PortalContainer target={portalTarget}>
       {
         (
           (_props.destoryOnClose && displayOverlay) ||
           !_props.destoryOnClose
         ) &&
         <div
+          ref={overlayRootRef}
           style={{
             zIndex: _props.zIndex,
             ..._props.style
