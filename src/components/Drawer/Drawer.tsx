@@ -3,7 +3,7 @@ import useMergedProps from "../utils/hooks/useMergedProps.ts"
 import { defaultProps } from "./properties.ts"
 import { DrawerProps } from "./type"
 import "./style.less"
-import { useMemo } from "react"
+import { useEffect, useMemo, useState } from "react"
 import genClassNameFromProps from "../utils/tools/className.ts"
 
 const UDrawer = (props: DrawerProps) => {
@@ -35,15 +35,28 @@ const UDrawer = (props: DrawerProps) => {
     ]
   )
 
+  const [drawerVisible, setDrawerVisible] = useState(_props.visible)
+
+  useEffect(() => {
+    if (!_props.visible) {
+      setTimeout(() => {
+        setDrawerVisible(false)
+      }, 300)
+    } else {
+      setDrawerVisible(true)
+    }
+  }, [_props.visible])
+
   const drawerClassName = useMemo(() => (
     genClassNameFromProps(
       {
-        position: _props.position
+        position: _props.position,
+        leave: !drawerVisible
       },
       "u-drawer",
       "u-drawer"
     )
-  ), [_props.position])
+  ), [_props.position, drawerVisible])
 
   return (
     <UDialog
@@ -51,7 +64,7 @@ const UDrawer = (props: DrawerProps) => {
       footer={_props.footer}
       width={['top', 'bottom'].includes(_props.position) ? '100vw' : '300px'}
       className={drawerClassName}
-      visible={_props.visible}
+      visible={drawerVisible}
       cancelBtn={_props.cancelBtn}
       confirmBtn={_props.confirmBtn}
       closeBtn={_props.closeBtn}
