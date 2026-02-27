@@ -1,4 +1,4 @@
-import { Popup } from "../Popup/type"
+import { PopupProps } from "../Popup/type"
 
 export interface Tooltip {
   className?: string;
@@ -8,6 +8,7 @@ export interface Tooltip {
   position?: 'top' | 'bottom' | 'left' | 'right';
   arrow?: boolean;
   theme?: 'default' | 'primary' | 'success' | 'warning' | 'error' | 'light';
-  popupProps?: Popup;
+  destoryOnClose?: boolean;
+  popupProps?: PopupProps;
   children: React.ReactNode;
 }

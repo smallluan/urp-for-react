@@ -10,12 +10,14 @@ const UTooltip = (props: Tooltip) => {
     return genClassNameFromProps(
       { theme: props.theme || 'default' },
       'u-tooltip',
-      'u-tooltip'
-    ) + (props.className ? ` ${props.className}` : '')
-  }, [props.theme])
+      'u-tooltip',
+      props.className
+    )
+  }, [props.theme, props.className])
 
   return (
     <UPopup
+      destoryOnClose={props.destoryOnClose}
       content={props.content} 
       trigger={props.trigger}
       position={props.position}
