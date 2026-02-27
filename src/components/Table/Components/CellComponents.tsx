@@ -4,6 +4,7 @@ import { USelect } from "../../Select/index.ts"
 import { ULink } from "../../Link/index.ts"
 import { UTypo } from "../../Typo/index.ts"
 import { UInput } from "../../Input/index.ts"
+import { UButton } from "../../Button/index.ts"
 import { OnChangeEmit, TableType } from "../type"
 
 const CellComponent = (
@@ -40,16 +41,20 @@ const CellComponent = (
           state={props.value}
           {...props.colProps}
           {...props.properties}
-          onStateChange={(newValue) => props.onChange({
-            changed: {
-              index: props.position,
-              value: {
-                oldValue: props.value,
-                newValue: newValue
-              }
-            },
-            value: genChangedData(newValue)
-          })}
+          onStateChange={(newValue) => {
+            const nextData = genChangedData(newValue)
+            props.setInnerData(nextData)
+            props.onChange({
+              changed: {
+                index: props.position,
+                value: {
+                  oldValue: props.value,
+                  newValue: newValue
+                }
+              },
+              value: nextData
+            })
+          }}
         />
       )
     } else if (props.status === 'readOnly') {
@@ -62,16 +67,20 @@ const CellComponent = (
           value={props.value}
           {...props.colProps}
           {...props.properties}
-          onChange={(newValue) => props.onChange({
-            changed: {
-              index: props.position,
-              value: {
-                oldValue: props.value,
-                newValue: newValue
-              }
-            },
-            value: genChangedData(newValue)
-          })}
+          onChange={(newValue) => {
+            const nextData = genChangedData(newValue)
+            props.setInnerData(nextData)
+            props.onChange({
+              changed: {
+                index: props.position,
+                value: {
+                  oldValue: props.value,
+                  newValue: newValue
+                }
+              },
+              value: nextData
+            })
+        }}
         />
       )
     } else if (props.status === 'readOnly') {
@@ -87,16 +96,20 @@ const CellComponent = (
           value={props.value}
           {...props.colProps}
           {...props.properties}
-          onChange={(newValue) => props.onChange({
-            changed: {
-                index: props.position,
-                value: {
-                  oldValue: props.value,
-                  newValue: newValue
-                }
-              },
-              value: genChangedData(newValue)
-          })}
+          onChange={(newValue) => {
+            const nextData = genChangedData(newValue)
+            props.setInnerData(nextData)
+            props.onChange({
+              changed: {
+                  index: props.position,
+                  value: {
+                    oldValue: props.value,
+                    newValue: newValue
+                  }
+                },
+                value: nextData
+            })
+          }}
         />
       )
     } else if (props.status === 'readOnly') {
@@ -118,6 +131,39 @@ const CellComponent = (
       return (
         props.render
       )
+  } else if (props.type === 'button') {
+    return (
+      <UButton
+        {...props.colProps}
+        {...props.properties}
+        onClick={
+          () => {
+            const data = {
+              position: props.position,
+              tableData: props.data,
+              rowDate: props.data?.[props.position.rowIndex]
+            }
+            if (typeof props.properties.onClick === 'function') {
+              props.properties.onClick(data)
+            } else if (typeof props.colProps.onClick === 'function') {
+              props.colProps.onClick(data)
+            }
+          }
+        }
+      />
+    )
+  } else if (props.type === 'title') {
+    return (
+      <UTypo.Title {...props.colProps} {...props.properties}>
+        {props.value}
+      </UTypo.Title>
+    )
+  } else if (props.type === 'description') {
+    return (
+      <UTypo.Description {...props.colProps} {...props.properties}>
+        {props.value}
+      </UTypo.Description>
+    )
   } else {
     return (
       <div>未知组件</div>
